@@ -1,4 +1,6 @@
 class AuthoritiesController < ApplicationController
+  respond_to :html
+
   load_and_authorize_resource :authority
 
   # GET /authorities
@@ -14,7 +16,6 @@ class AuthoritiesController < ApplicationController
 
   # GET /authorities/new
   def new
-    @authority = Authority.new
   end
 
   # GET /authorities/1/edit
@@ -24,41 +25,22 @@ class AuthoritiesController < ApplicationController
   # POST /authorities
   # POST /authorities.json
   def create
-    @authority = Authority.new(authority_params)
-
-    respond_to do |format|
-      if @authority.save
-        format.html { redirect_to @authority, notice: 'Authority was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @authority }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @authority.errors, status: :unprocessable_entity }
-      end
-    end
+    @authority.save
+    respond_with(@authority)
   end
 
   # PATCH/PUT /authorities/1
   # PATCH/PUT /authorities/1.json
   def update
-    respond_to do |format|
-      if @authority.update(authority_params)
-        format.html { redirect_to @authority, notice: 'Authority was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @authority.errors, status: :unprocessable_entity }
-      end
-    end
+    @authority.update(params[:authority])
+    respond_with(@authority)
   end
 
   # DELETE /authorities/1
   # DELETE /authorities/1.json
   def destroy
     @authority.destroy
-    respond_to do |format|
-      format.html { redirect_to authorities_url }
-      format.json { head :no_content }
-    end
+    respond_with(@authority)
   end
 
   private
