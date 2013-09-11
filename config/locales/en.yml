@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  application:
+    name: Pakotoa
+    copyright: Copyright © 2013 Romain Tartière, Tous droits réservés

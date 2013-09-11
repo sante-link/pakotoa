@@ -1,0 +1,16 @@
+en:
+  authorities:
+    edit:
+      title: Edit Certification Authority
+    index:
+      confirm: Are you sure?
+      destroy: Destroy
+      edit: Edit
+      new: New Authority
+      show: Show
+      title: Certification Authorities
+    show:
+      back: Back
+      edit: Edit
+      managers: Managers
+      title: "%{name} CA"

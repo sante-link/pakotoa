@@ -38,8 +38,26 @@ end
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# Use thin as the app server
+gem 'thin'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Use devise for users authentication
+gem 'devise'
+
+# Use cancan to check users permissions
+gem 'cancan'
+
+# Write views in HAML
+gem 'haml-rails'
+
+# Use omniauth to authenticate users against out OAuth2 provider
+gem 'omniauth'
+
+# Use our custom Medispo omniauth strategy
+gem 'omniauth-medispo', path: "/home/romain/Projects/omniauth-medispo"

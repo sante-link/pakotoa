@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+allodocteur:
+  id: 1
+  name: AlloDocteur
+
+santelink:
+  id: 2
+  name: SantéLink

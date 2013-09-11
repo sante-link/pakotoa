@@ -1,0 +1,18 @@
+- content_for(:title) { t(".title", name: @authority.name) }
+
+%p
+  %b Name:
+  = @authority.name
+
+.panel.panel-default
+  .panel-heading
+    .panel-title
+      = t(".managers")
+      .badge= @authority.users.count
+  .panel-body
+    %ul
+      - @authority.users.each do |user|
+        %li= user.email
+= link_to t('.edit'), edit_authority_path(@authority)
+\|
+= link_to t('.back'), authorities_path
