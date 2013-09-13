@@ -3,6 +3,8 @@ class AuthoritiesController < ApplicationController
 
   load_and_authorize_resource :authority
 
+  add_breadcrumb "authorities.index.title", "authorities_path", except: :index
+
   # GET /authorities
   # GET /authorities.json
   def index

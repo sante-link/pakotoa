@@ -10,5 +10,5 @@
     = f.label :name
     = f.text_field :name, class: "form-control"
   .actions
-    = f.submit 'Save', class: "btn btn-primary"
-    = link_to 'Cancel', ( @authority.persisted? ? authority_path(@authority) : authorities_path  ), class: "btn btn-link"
+    = f.submit t('.save'), class: "btn btn-primary"
+    = link_to t('.back'), ( @authority.persisted? ? authority_path(@authority) : authorities_path  ), class: "btn btn-link"

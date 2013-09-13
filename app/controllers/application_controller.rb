@@ -16,4 +16,25 @@ class ApplicationController < ActionController::Base
   end
 
   check_authorization unless: :devise_controller?
+
+  def add_breadcrumb(title, url)
+    @breadcrumb ||= []
+    if Symbol === title then
+      title = send(title)
+    else
+      title = I18n.t(title)
+    end
+    url = eval(url) if url =~ /_url|_path/
+    @breadcrumb << [title, url]
+  end
+
+  def self.add_breadcrumb title, url, options = {}
+    before_filter options do |controller|
+      controller.send(:add_breadcrumb, title, url)
+    end
+  end
+
+  def authority_title
+    I18n.t("authorities.show.title", name: @authority.name)
+  end
 end

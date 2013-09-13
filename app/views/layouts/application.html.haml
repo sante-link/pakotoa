@@ -36,6 +36,15 @@
             - else
               %li.dropdown
                 = link_to "Sign-in with Médispo", user_omniauth_authorize_path(:medispo)
+    - if content_for?(:title)
+      .page-title
+        .container
+          %h1.pull-left= content_for(:title)
+          %ul.pull-right.breadcrumb
+            - if @breadcrumb
+              - @breadcrumb.each do |part|
+                %li= link_to part[0], part[1]
+            %li= content_for(:title)
     #main{:role => "main"}
       .container
         = yield

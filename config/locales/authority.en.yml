@@ -2,6 +2,9 @@ en:
   authorities:
     edit:
       title: Edit Certification Authority
+    form:
+      back: Back
+      save: Save
     index:
       confirm: Are you sure?
       destroy: Destroy
@@ -9,8 +12,11 @@ en:
       new: New Authority
       show: Show
       title: Certification Authorities
+    new:
+      title: Create Certification Authority
     show:
       back: Back
       edit: Edit
+      manage_certificates: Manage Certificates
       managers: Managers
-      title: "%{name} CA"
+      title: "%{name}"
