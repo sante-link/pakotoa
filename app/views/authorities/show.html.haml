@@ -4,15 +4,18 @@
   %b Name:
   = @authority.name
 
+%p= link_to t('.edit'), edit_authority_path(@authority), class: "btn btn-default"  if can? :edit, @authority
+
 .panel.panel-default
   .panel-heading
     .panel-title
       = t(".managers")
       .badge= @authority.users.count
   .panel-body
-    %ul
-      - @authority.users.each do |user|
-        %li= user.email
-= link_to t('.edit'), edit_authority_path(@authority)
-\|
-= link_to t('.back'), authorities_path
+    - @authority.users.each do |user|
+      - if user == current_user
+        .label.label-primary= user.email
+      - else
+        .label.label-default= user.email
+
+= link_to t(".manage_certificates"), authority_certificates_path(@authority), class: "btn btn-warning"

@@ -1,0 +1,8 @@
+- content_for(:title) { t(".title", serial: @certificate.serial) }
+
+%p
+  %b Serial:
+  = @certificate.serial
+
+- if can? :edit, @certificate
+  = link_to 'Edit', edit_authority_certificate_path(@authority, @certificate)

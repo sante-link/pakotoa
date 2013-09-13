@@ -35,6 +35,7 @@ class Ability
         can :read, Authority, user.authorities do |authority|
           authority.users.include?(user)
         end
+        can [:create, :read], Certificate
       end
     end
   end

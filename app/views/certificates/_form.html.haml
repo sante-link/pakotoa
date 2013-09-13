@@ -1,0 +1,13 @@
+= form_for [@authority, @certificate] do |f|
+  - if @certificate.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+      %ul
+        - @certificate.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :serial
+    = f.text_field :serial, class: "form-control"
+  = f.submit t('.save'), class: "btn btn-primary"
+  = link_to t('.back'), @certificate.persisted? ? [@authority, @certificate] : authority_certificates_path(@authority), class: "btn btn-link"

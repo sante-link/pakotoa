@@ -1,5 +1,7 @@
 Pakotoa::Application.routes.draw do
-  resources :authorities
+  resources :authorities do
+    resources :certificates
+  end
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 

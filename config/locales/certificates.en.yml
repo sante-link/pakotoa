@@ -1,0 +1,15 @@
+en:
+  certificates:
+    form:
+      back: Back
+      save: Save
+    index:
+      confirm: Are you sure?
+      edit: Edit
+      destroy: Destroy
+      new: Create Certificate
+      title: Certificates
+    new:
+      title: Create Certificate
+    show:
+      title: Certificate %{serial}

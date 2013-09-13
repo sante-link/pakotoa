@@ -1,0 +1,20 @@
+- content_for(:title) { t(".title") }
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Serial
+      - if can? :edit, Certificate
+        %th.col-lg-1
+      - if can? :destroy, Certificate
+        %th.col-lg-1
+  %tbody
+    - @certificates.each do |certificate|
+      %tr
+        %td= link_to certificate.serial, [@authority, certificate]
+        - if can? :edit, certificate
+          %td= link_to t('.edit'), edit_authority_certificate_path(@authority, certificate)
+        - if can? :destroy, certificate
+          %td= link_to t('.destroy'), [@authority, certificate], :method => :delete, :data => { :confirm => t('.confirm') }, class: "btn btn-danger btn-xs"
+
+= link_to t('.new'), new_authority_certificate_path(@authority), class: "btn btn-default"
