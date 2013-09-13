@@ -32,18 +32,9 @@ class Ability
       if user.id == 1 then
         can :manage, :all
       else
-        #can :read, Authority, :affiliations => { :user_id => user.id }
-        #can :read, Authority, :affiliations => { :authority_id => 1 }
-#        can :read, Authority, Authority.scoped do |p|
-#          p.users.include?(user)
-#        end
         can :read, Authority, user.authorities do |authority|
           authority.users.include?(user)
         end
-        #can :read, Authority do |p|
-        #  p.users.where(id: user.id).any?
-        #  #user.authorities.include?(p)
-        #end
       end
     end
   end
