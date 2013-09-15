@@ -1,0 +1,26 @@
+= form_for [@authority, @subject_attribute] do |f|
+  - if @subject_attribute.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@subject_attribute.errors.count, "error")} prohibited this subject_attribute from being saved:"
+      %ul
+        - @subject_attribute.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :object_id_id
+    = f.select :object_id_id, ObjectId.all.collect { |x| [ x.name, x.id ] }, {}, class: "form-control"
+  .form-group
+    = f.label :default
+    = f.text_field :default, class: "form-control"
+  .form-group
+    = f.label :min
+    = f.number_field :min, class: "form-control"
+  .form-group
+    = f.label :max
+    = f.number_field :max, class: "form-control"
+  .form-group
+    = f.label :policy
+    = f.select :policy, [ 'match', 'optional', 'supplied' ], {}, class: "form-control"
+  .actions
+    = f.submit t('.save'), class: "btn btn-primary"
+    = link_to t('.back'), @subject_attribute.persisted? ? authority_subject_attribute_path(@authority, @subject_attribute) : authority_subject_attributes_path(@authority), class: "btn btn-link"

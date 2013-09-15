@@ -1,0 +1,44 @@
+- content_for(:title) { t(".title") }
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Object
+      %th Default
+      %th Min
+      %th Max
+      %th Policy
+      %th.col-lg-1
+      %th.col-lg-1
+
+  %tbody{data: {"sort-url" => sort_authority_subject_attributes_url(@authority) }}
+    - @subject_attributes.each do |attribute|
+      /%tr
+      = content_tag_for :tr, attribute do
+        %td
+          %i{class: "icon-exchange icon-rotate-90", style: "cursor: move"}
+          = link_to attribute.object_id.name, [@authority, attribute]
+        %td= attribute.default
+        %td= attribute.min
+        %td= attribute.max
+        %td= attribute.policy
+        %td= link_to 'Edit', edit_authority_subject_attribute_path(@authority, attribute)
+        %td= link_to 'Destroy', [@authority, attribute], :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger btn-xs"
+
+= link_to 'New Attribute', new_authority_subject_attribute_path(@authority), class: "btn btn-default"
+
+:coffee
+  jQuery ->
+    $("table tbody").sortable({
+        axis: 'y'
+        handle: 'i'
+        helper: (e, tr) ->
+          originals = tr.children()
+          helper = tr.clone()
+          helper.children().each (index) ->
+            # Set helper cell sizes to match the original sizes
+            $(this).width(originals.eq(index).width())
+          return helper
+        update: ->
+          $.post($(this).data('sort-url'), $(this).sortable('serialize'))
+    }).disableSelection()

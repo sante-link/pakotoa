@@ -61,3 +61,7 @@ gem 'omniauth'
 
 # Use our custom Medispo omniauth strategy
 gem 'omniauth-medispo', path: "/home/romain/Projects/omniauth-medispo"
+
+gem 'acts_as_list'
+
+gem 'jquery-ui-rails'

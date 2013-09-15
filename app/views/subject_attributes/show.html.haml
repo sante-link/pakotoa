@@ -1,0 +1,19 @@
+- content_for(:title) { t(".title", attribute_name: @subject_attribute.object_id.name) }
+
+%p
+  %b Object:
+  = @subject_attribute.object_id.name
+%p
+  %b Default:
+  = @subject_attribute.default
+%p
+  %b Min:
+  = @subject_attribute.min
+%p
+  %b Max:
+  = @subject_attribute.max
+%p
+  %b Policy:
+  = @subject_attribute.policy
+
+= link_to 'Edit', edit_authority_subject_attribute_path(@authority, @subject_attribute), class: "btn btn-default"

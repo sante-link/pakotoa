@@ -15,6 +15,7 @@ en:
     new:
       title: Create Certification Authority
     show:
+      attributes: Manage Subject Attributes
       back: Back
       edit: Edit
       manage_certificates: Manage Certificates

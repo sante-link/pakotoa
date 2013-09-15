@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130911132257) do
+ActiveRecord::Schema.define(version: 20130915133248) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -37,6 +37,29 @@ ActiveRecord::Schema.define(version: 20130911132257) do
   end
 
   add_index "certificates", ["authority_id"], name: "index_certificates_on_authority_id"
+
+  create_table "object_ids", force: true do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.string   "oid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subject_attributes", force: true do |t|
+    t.integer  "object_id_id"
+    t.integer  "authority_id"
+    t.string   "default"
+    t.integer  "min"
+    t.integer  "max"
+    t.string   "policy"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subject_attributes", ["authority_id"], name: "index_subject_attributes_on_authority_id"
+  add_index "subject_attributes", ["object_id_id"], name: "index_subject_attributes_on_object_id_id"
 
   create_table "users", force: true do |t|
     t.string   "email",              default: "", null: false

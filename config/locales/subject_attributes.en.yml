@@ -1,0 +1,13 @@
+en:
+  subject_attributes:
+    edit:
+      title: "Edit %{attribute_name}"
+    form:
+      save: Save
+      back: Back
+    index:
+      title: Subject attributes
+    new:
+      title: New subject attribute
+    show:
+      title: "%{attribute_name}"

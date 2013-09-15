@@ -4,7 +4,9 @@
   %b Name:
   = @authority.name
 
-%p= link_to t('.edit'), edit_authority_path(@authority), class: "btn btn-default"  if can? :edit, @authority
+%p
+  = link_to t('.edit'), edit_authority_path(@authority), class: "btn btn-default"  if can? :edit, @authority
+  = link_to t('.attributes'), authority_subject_attributes_path(@authority), class: "btn btn-default"
 
 .panel.panel-default
   .panel-heading
