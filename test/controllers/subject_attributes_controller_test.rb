@@ -5,7 +5,7 @@ class SubjectAttributesControllerTest < ActionController::TestCase
     @authority = FactoryGirl.create(:authority)
     @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 1, authority: @authority, min: 2, max: 2, default: "FR", policy: "match")
     @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 6, authority: @authority, policy: "supplied")
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 7, authority: @authority, policy: "optionnal")
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 7, authority: @authority, policy: "optional")
 
     @admin = FactoryGirl.create(:user)
 

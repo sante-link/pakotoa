@@ -4,6 +4,7 @@
   %thead
     %tr
       %th Object
+      %th Description
       %th Default
       %th Min
       %th Max
@@ -18,6 +19,7 @@
         %td
           %i{class: "icon-exchange icon-rotate-90", style: "cursor: move"}
           = link_to attribute.oid.name, [@authority, attribute]
+        %td= attribute.description
         %td= attribute.default
         %td= attribute.min
         %td= attribute.max

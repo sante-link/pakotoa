@@ -9,6 +9,9 @@
   .form-group
     = f.label :name
     = f.text_field :name, class: "form-control"
+  .form-group
+    = f.label :basename
+    = f.text_field :basename, class: "form-control"
   .actions
     = f.submit t('.save'), class: "btn btn-primary"
     = link_to t('.back'), ( @authority.persisted? ? authority_path(@authority) : authorities_path  ), class: "btn btn-link"

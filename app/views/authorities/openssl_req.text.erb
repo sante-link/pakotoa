@@ -1,0 +1,45 @@
+[ req ]
+default_bits		= 2048
+default_keyfile 	= privkey.pem
+distinguished_name	= req_distinguished_name
+attributes		= req_attributes
+
+# Passwords for private keys if not present they will be prompted for
+# input_password = secret
+# output_password = secret
+
+# This sets a mask for permitted string types. There are several options. 
+# default: PrintableString, T61String, BMPString.
+# pkix	 : PrintableString, BMPString.
+# utf8only: only UTF8Strings.
+# nombstr : PrintableString, T61String (no BMPStrings or UTF8Strings).
+# MASK:XXXX a literal mask value.
+# WARNING: current versions of Netscape crash on BMPStrings or UTF8Strings
+# so use this option with caution!
+string_mask = nombstr
+
+# req_extensions = v3_req # The extensions to add to a certificate request
+
+[ req_distinguished_name ]
+<% attr_usage = {} %>
+<% @authority.subject_attributes.order('position').each do |attr| %>
+<% attr_usage[attr.oid.name] ||= 0 %>
+<%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name, attr.description ] %>
+<% if ! attr.default.empty? then %>
+<%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name + "_default", attr.default ] %>
+<% end %>
+<% if ! attr.min.nil? then %>
+<%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name + "_min", attr.min ] %>
+<% end %>
+<% if ! attr.max.nil? then %>
+<%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name + "_max", attr.max ] %>
+<% end %>
+<% attr_usage[attr.oid.name] += 1 %>
+
+<% end %>
+[ req_attributes ]
+challengePassword		= A challenge password
+challengePassword_min		= 4
+challengePassword_max		= 20
+
+unstructuredName		= An optional company name

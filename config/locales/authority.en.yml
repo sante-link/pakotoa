@@ -18,6 +18,7 @@ en:
       attributes: Manage Subject Attributes
       back: Back
       commit: Commit
+      creating_ca_title: Creating a Certification Authority
       edit: Edit
       manage_certificates: Manage Certificates
       managers: Managers

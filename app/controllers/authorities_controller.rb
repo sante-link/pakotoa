@@ -16,6 +16,16 @@ class AuthoritiesController < ApplicationController
   def show
   end
 
+  # GET /authorities/1/openssl_req
+  def openssl_req
+    render layout: false
+  end
+
+  # GET /authorities/1/openssl_ca
+  def openssl_ca
+    render layout: false
+  end
+
   # GET /authorities/new
   def new
   end
@@ -40,8 +50,19 @@ class AuthoritiesController < ApplicationController
 
   # PATCH/PUT /authorities/1/commit
   def commit
-    @authority.committed = true
-    @authority.save
+    root_ca_cert="#{Rails.root}/config/ssl/0.root/cacert.pem"
+    ca_cert="#{@authority.directory}/cacert.pem"
+
+    check = `openssl verify -CAfile "#{root_ca_cert}" "#{ca_cert}"`
+
+    if check == "#{ca_cert}: OK\n" then
+      @authority.committed = true
+      @authority.save
+      flash[:notice] = "Certification Authority's certificate verified successfuly."
+    else
+      flash[:alert] = "Certification Authority's certificate (#{ca_cert}) could not be verified."
+    end
+
     respond_with(@authority)
   end
 
@@ -55,6 +76,6 @@ class AuthoritiesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def authority_params
-      params.require(:authority).permit(:name)
+      params.require(:authority).permit(:name, :basename)
     end
 end

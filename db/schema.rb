@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130916094435) do
+ActiveRecord::Schema.define(version: 20130917135911) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20130916094435) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "committed",  default: false
+    t.string   "basename"
   end
 
   create_table "certificates", force: true do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(version: 20130916094435) do
     t.string   "oid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "default_description"
   end
 
   create_table "subject_attributes", force: true do |t|
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(version: 20130916094435) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
   end
 
   add_index "subject_attributes", ["authority_id"], name: "index_subject_attributes_on_authority_id"

@@ -20,7 +20,7 @@ class AuthoritiesControllerTest < ActionController::TestCase
 
   test "should create authority" do
     assert_difference('Authority.count') do
-      post :create, authority: { name: "Test Certification Authority" }
+      post :create, authority: { name: "Test Certification Authority", basename: "test" }
     end
 
     assert_redirected_to authority_path(assigns(:authority))

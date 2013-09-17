@@ -2,6 +2,8 @@ Pakotoa::Application.routes.draw do
   resources :authorities do
     member do
       put :commit
+      get :openssl_ca
+      get :openssl_req
     end
     resources :subject_attributes do
       collection do

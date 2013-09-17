@@ -10,6 +10,9 @@
     = f.label :oid_id
     = f.select :oid_id, Oid.all.collect { |x| [ x.name, x.id ] }, {}, class: "form-control"
   .form-group
+    = f.label :description
+    = f.text_field :description, class: "form-control"
+  .form-group
     = f.label :default
     = f.text_field :default, class: "form-control"
   .form-group

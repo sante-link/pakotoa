@@ -48,6 +48,13 @@
             %li= content_for(:title)
     #main{:role => "main"}
       .container
+        - flash.each do |kind, value|
+          - kind = "success" if kind == :notice
+          - kind = "danger" if kind == :alert
+          .alert{class: "alert-#{kind}"}
+            %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+            = value
+      .container
         = yield
 
     %footer
