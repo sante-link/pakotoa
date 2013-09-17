@@ -1,8 +1,8 @@
-- content_for(:title) { t(".title", attribute_name: @subject_attribute.object_id.name) }
+- content_for(:title) { t(".title", attribute_name: @subject_attribute.oid.name) }
 
 %p
   %b Object:
-  = @subject_attribute.object_id.name
+  = @subject_attribute.oid.name
 %p
   %b Default:
   = @subject_attribute.default

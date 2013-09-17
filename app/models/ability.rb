@@ -32,7 +32,7 @@ class Ability
       if user.id == 1 then
         can :manage, :all
       else
-        can :read, Authority, user.authorities do |authority|
+        can :read, Authority, user.authorities.where(committed: true) do |authority|
           authority.users.include?(user)
         end
         can [:create, :read], Certificate

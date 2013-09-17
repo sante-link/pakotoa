@@ -7,10 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-ObjectId.create(name: 'countryName', short_name: 'CN', oid: '2.5.4.6')
-ObjectId.create(name: 'stateOrProvinceName', short_name: 'ST', oid: '2.5.4.8')
-ObjectId.create(name: 'localityName', short_name: 'L', oid: '2.5.4.7')
-ObjectId.create(name: 'organizationName', short_name: 'O', oid: '2.5.4.10')
-ObjectId.create(name: 'organizationalUnitName', short_name: 'OU', oid: '2.5.4.11')
-ObjectId.create(name: 'commonName', short_name: 'CN', oid: '2.5.4.3')
-ObjectId.create(name: 'emailAddress', oid: '1.2.840.113549.1.9.1')
+Oid.create(name: 'countryName', short_name: 'CN', oid: '2.5.4.6')
+Oid.create(name: 'stateOrProvinceName', short_name: 'ST', oid: '2.5.4.8')
+Oid.create(name: 'localityName', short_name: 'L', oid: '2.5.4.7')
+Oid.create(name: 'organizationName', short_name: 'O', oid: '2.5.4.10')
+Oid.create(name: 'organizationalUnitName', short_name: 'OU', oid: '2.5.4.11')
+Oid.create(name: 'commonName', short_name: 'CN', oid: '2.5.4.3')
+Oid.create(name: 'emailAddress', oid: '1.2.840.113549.1.9.1')

@@ -54,6 +54,6 @@ class SubjectAttributesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_attribute_params
       return params[:subject_attribute] if Array === params[:subject_attribute]
-      params.require(:subject_attribute).permit(:object_id_id, :default, :min, :max, :policy)
+      params.require(:subject_attribute).permit(:oid_id, :default, :min, :max, :policy)
     end
 end

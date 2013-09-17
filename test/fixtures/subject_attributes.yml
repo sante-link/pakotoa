@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 c:
-  object_id_id: 1
+  oid: 1
   authority_id: 1
   default: FR
   min: 2

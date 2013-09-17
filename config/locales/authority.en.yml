@@ -17,7 +17,9 @@ en:
     show:
       attributes: Manage Subject Attributes
       back: Back
+      commit: Commit
       edit: Edit
       manage_certificates: Manage Certificates
       managers: Managers
       title: "%{name}"
+      users: Manage Users

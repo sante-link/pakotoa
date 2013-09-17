@@ -20,7 +20,7 @@ class SubjectAttributesControllerTest < ActionController::TestCase
 
   test "should create subject_attribute" do
     assert_difference('SubjectAttribute.count') do
-      post :create, authority_id: @authority, subject_attribute: { authority_id: @subject_attribute.authority_id, default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, object_id_id: @subject_attribute.object_id_id, policy: @subject_attribute.policy, position: @subject_attribute.position }
+      post :create, authority_id: @authority, subject_attribute: { authority_id: @subject_attribute.authority_id, default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, policy: @subject_attribute.policy, position: @subject_attribute.position }
     end
 
     assert_redirected_to authority_subject_attribute_path(@authority, assigns(:subject_attribute))
@@ -37,7 +37,7 @@ class SubjectAttributesControllerTest < ActionController::TestCase
   end
 
   test "should update subject_attribute" do
-    patch :update, authority_id: @authority, id: @subject_attribute, subject_attribute: { authority_id: @subject_attribute.authority_id, default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, object_id_id: @subject_attribute.object_id_id, policy: @subject_attribute.policy, position: @subject_attribute.position }
+    patch :update, authority_id: @authority, id: @subject_attribute, subject_attribute: { authority_id: @subject_attribute.authority_id, default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, policy: @subject_attribute.policy, position: @subject_attribute.position }
     assert_redirected_to authority_subject_attribute_path(@authority, assigns(:subject_attribute))
   end
 

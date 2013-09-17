@@ -7,8 +7,8 @@
           %li= msg
 
   .form-group
-    = f.label :object_id_id
-    = f.select :object_id_id, ObjectId.all.collect { |x| [ x.name, x.id ] }, {}, class: "form-control"
+    = f.label :oid_id
+    = f.select :oid_id, Oid.all.collect { |x| [ x.name, x.id ] }, {}, class: "form-control"
   .form-group
     = f.label :default
     = f.text_field :default, class: "form-control"

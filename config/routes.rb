@@ -1,5 +1,8 @@
 Pakotoa::Application.routes.draw do
   resources :authorities do
+    member do
+      put :commit
+    end
     resources :subject_attributes do
       collection do
         post :sort

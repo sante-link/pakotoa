@@ -38,6 +38,13 @@ class AuthoritiesController < ApplicationController
     respond_with(@authority)
   end
 
+  # PATCH/PUT /authorities/1/commit
+  def commit
+    @authority.committed = true
+    @authority.save
+    respond_with(@authority)
+  end
+
   # DELETE /authorities/1
   # DELETE /authorities/1.json
   def destroy

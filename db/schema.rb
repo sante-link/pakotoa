@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130915133248) do
+ActiveRecord::Schema.define(version: 20130916094435) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20130915133248) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "committed",  default: false
   end
 
   create_table "certificates", force: true do |t|
@@ -38,7 +39,7 @@ ActiveRecord::Schema.define(version: 20130915133248) do
 
   add_index "certificates", ["authority_id"], name: "index_certificates_on_authority_id"
 
-  create_table "object_ids", force: true do |t|
+  create_table "oids", force: true do |t|
     t.string   "name"
     t.string   "short_name"
     t.string   "oid"
@@ -47,7 +48,7 @@ ActiveRecord::Schema.define(version: 20130915133248) do
   end
 
   create_table "subject_attributes", force: true do |t|
-    t.integer  "object_id_id"
+    t.integer  "oid_id"
     t.integer  "authority_id"
     t.string   "default"
     t.integer  "min"
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(version: 20130915133248) do
   end
 
   add_index "subject_attributes", ["authority_id"], name: "index_subject_attributes_on_authority_id"
-  add_index "subject_attributes", ["object_id_id"], name: "index_subject_attributes_on_object_id_id"
+  add_index "subject_attributes", ["oid_id"], name: "index_subject_attributes_on_oid_id"
 
   create_table "users", force: true do |t|
     t.string   "email",              default: "", null: false

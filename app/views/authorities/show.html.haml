@@ -5,8 +5,12 @@
   = @authority.name
 
 %p
-  = link_to t('.edit'), edit_authority_path(@authority), class: "btn btn-default"  if can? :edit, @authority
-  = link_to t('.attributes'), authority_subject_attributes_path(@authority), class: "btn btn-default"
+  - if can?(:update, @authority)
+    = link_to t('.edit'), edit_authority_path(@authority), class: "btn btn-default"  if can? :edit, @authority
+  - if !@authority.committed? && can?(:manage, SubjectAttribute)
+    = link_to t('.attributes'), authority_subject_attributes_path(@authority), class: "btn btn-default"
+  - if !@authority.committed? && can?(:commit, Authority)
+    = link_to t('.commit'), commit_authority_path(@authority), class: "btn btn-success", method: :put
 
 .panel.panel-default
   .panel-heading
@@ -20,4 +24,5 @@
       - else
         .label.label-default= user.email
 
-= link_to t(".manage_certificates"), authority_certificates_path(@authority), class: "btn btn-warning"
+- if @authority.committed?
+  = link_to t(".manage_certificates"), authority_certificates_path(@authority), class: "btn btn-warning"
