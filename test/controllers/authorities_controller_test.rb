@@ -2,8 +2,9 @@ require 'test_helper'
 
 class AuthoritiesControllerTest < ActionController::TestCase
   setup do
-    @authority = authorities(:allodocteur)
-    sign_in(users(:one))
+    @authority = FactoryGirl.create(:authority)
+    @admin = FactoryGirl.create(:user)
+    sign_in(@admin)
   end
 
   test "should get index" do

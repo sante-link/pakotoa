@@ -35,6 +35,7 @@ class Ability
         can :read, Authority, user.authorities.where(committed: true) do |authority|
           authority.users.include?(user)
         end
+        can [:read, :grant, :revoke], User
         can [:create, :read], Certificate
       end
     end

@@ -2,9 +2,12 @@ require 'test_helper'
 
 class CertificatesControllerTest < ActionController::TestCase
   setup do
-    @certificate = certificates(:one)
-    @authority = certificates(:one).authority
-    sign_in(users(:one))
+    @authority = FactoryGirl.create(:authority)
+    @certificate = FactoryGirl.create(:certificate, authority: @authority)
+
+    @admin = FactoryGirl.create(:user)
+
+    sign_in(@admin)
   end
 
   test "should get index" do

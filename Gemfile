@@ -65,3 +65,5 @@ gem 'omniauth-medispo', path: "/home/romain/Projects/omniauth-medispo"
 gem 'acts_as_list'
 
 gem 'jquery-ui-rails'
+
+gem 'factory_girl_rails'

@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-c:
-  oid: 1
-  authority_id: 1
-  default: FR
-  min: 2
-  max: 2
-  policy: match

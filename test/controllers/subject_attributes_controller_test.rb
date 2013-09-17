@@ -2,9 +2,14 @@ require 'test_helper'
 
 class SubjectAttributesControllerTest < ActionController::TestCase
   setup do
-    @authority = authorities(:allodocteur)
-    @subject_attribute = subject_attributes(:c)
-    sign_in(users(:one))
+    @authority = FactoryGirl.create(:authority)
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 1, authority: @authority, min: 2, max: 2, default: "FR", policy: "match")
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 6, authority: @authority, policy: "supplied")
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid_id: 7, authority: @authority, policy: "optionnal")
+
+    @admin = FactoryGirl.create(:user)
+
+    sign_in(@admin)
   end
 
   test "should get index" do

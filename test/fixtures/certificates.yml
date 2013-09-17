@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  serial: A85B60641B41E607
-  authority_id: 1
-
-two:
-  serial: A85B60641B41E608
-  authority_id: 1
