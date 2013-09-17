@@ -10,7 +10,7 @@
       %tr
         %td= user.email
         %td
-          - if user != current_user
+          - if current_user.id == 1 || user != current_user
             - has_access = @authority.users.include?(user)
             .btn-group{data: { toggle: "buttons" } }
               %label.btn.btn-default.btn-sm{ class: ('active' if has_access), data: { "post-uri" => grant_authority_user_path(@authority, user) } }
