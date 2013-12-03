@@ -37,7 +37,12 @@ class AuthoritiesController < ApplicationController
   # POST /authorities
   # POST /authorities.json
   def create
-    @authority.save
+    if @authority.save then
+      @authority.subject_attributes << SubjectAttribute.new(oid: Oid.find_by_name('countryName'), min: 2, max: 2, policy: 'match', default: 'FR')
+      @authority.subject_attributes << SubjectAttribute.new(oid: Oid.find_by_name('organizationalUnitName'), policy: 'match', default: @authority.name)
+      @authority.subject_attributes << SubjectAttribute.new(oid: Oid.find_by_name('commonName'), policy: 'supplied')
+      @authority.subject_attributes << SubjectAttribute.new(oid: Oid.find_by_name('emailAddress'), policy: 'supplied')
+    end
     respond_with(@authority)
   end
 

@@ -36,12 +36,12 @@
                   %li= link_to(t("devise.shared.links.sign_out"), destroy_user_session_path)
             - else
               %li.dropdown
-                = link_to "Sign-in with Médispo", user_omniauth_authorize_path(:medispo)
+                = link_to "Sign in with Médispo", user_omniauth_authorize_path(:medispo)
     - if content_for?(:title)
       .page-title
         .container
           %h1.pull-left= content_for(:title)
-          %ul.pull-right.breadcrumb
+          %ul.breadcrumb
             - if @breadcrumb
               - @breadcrumb.each do |part|
                 %li= link_to part[0], part[1]

@@ -1,17 +1,5 @@
-= form_for @authority do |f|
-  - if @authority.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@authority.errors.count, "error")} prohibited this authority from being saved:"
-      %ul
-        - @authority.errors.full_messages.each do |msg|
-          %li= msg
-
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: "form-control"
-  .form-group
-    = f.label :basename
-    = f.text_field :basename, class: "form-control"
-  .actions
-    = f.submit t('.save'), class: "btn btn-primary"
-    = link_to t('.back'), ( @authority.persisted? ? authority_path(@authority) : authorities_path  ), class: "btn btn-link"
+= simple_form_for @authority do |f|
+  = f.input :name
+  = f.input :basename
+  = f.button :submit, value: t('.save'), class: "btn-primary"
+  = link_to t('.back'), ( @authority.persisted? ? authority_path(@authority) : authorities_path  ), class: "btn btn-link"

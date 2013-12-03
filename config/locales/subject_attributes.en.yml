@@ -1,4 +1,10 @@
 en:
+  activerecord:
+    attributes:
+      subject_attribute:
+        oid: Object ID
+        min: Minimum length
+        max: Maximum length
   subject_attributes:
     edit:
       title: "Edit %{attribute_name}"

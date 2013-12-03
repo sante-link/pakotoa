@@ -26,7 +26,29 @@ class CertificatesController < ApplicationController
 
   # POST /certificates
   def create
-    @certificate.save
+    case params[:method]
+      when "csr"
+      when "spkac"
+        if params[:public_key].nil?
+          @certificate.errors.add(:public_key, :not_set)
+        else
+          @certificate.save
+          f = File.new("/tmp/key.spkac", "w")
+          f.write("SPKAC=#{params[:public_key].split.join}\n");
+          attr_usage = {}
+          @authority.subject_attributes.order("position").each_with_index do |attr,i|
+            attr_usage[attr.oid.name] ||= 0
+            value = params["attr_#{i}"] || attr.default
+            if ! value.empty? then
+              f.write("#{attr_usage[attr.oid.name]}.#{attr.oid.name}=#{value}\n")
+            end
+            attr_usage[attr.oid.name] += 1
+          end
+          f.close
+          # openssl ca -config config/ssl/openssl.cnf -name CA_santelink -spkac /tmp/key.spkac -batch
+        end
+      when "insecure"
+    end
     respond_with(@authority, @certificate)
   end
 

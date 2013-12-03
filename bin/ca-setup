@@ -14,6 +14,7 @@ create_ca_tree()
 
   touch "${ca_name}/index.txt"
   echo "01" > "${ca_name}/crlnumber"
+  #echo "01" > "${ca_name}/serial"
 }
 
 if [ ! -d "config/ssl/0.root" ]; then
@@ -27,5 +28,5 @@ for ca; do
   create_ca_tree "config/ssl/${ca}"
   openssl genrsa -out "config/ssl/${ca}/private/cakey.pem" 2048
   openssl req -new -key "config/ssl/${ca}/private/cakey.pem" -out "config/ssl/${ca}/careq.pem" -config "config/ssl/openssl.cnf"
-  openssl ca -out "config/ssl/${ca}/cacert.pem" -days $((365*3)) -keyfile "config/ssl/0.root/private/cakey.pem" -extensions v3_ca -config "config/ssl/openssl.cnf" -name CA_root -infiles "config/ssl/${ca}/careq.pem"
+  openssl ca -create_serial -out "config/ssl/${ca}/cacert.pem" -days $((365*3)) -keyfile "config/ssl/0.root/private/cakey.pem" -extensions v3_ca -config "config/ssl/openssl.cnf" -name CA_root -infiles "config/ssl/${ca}/careq.pem"
 done
