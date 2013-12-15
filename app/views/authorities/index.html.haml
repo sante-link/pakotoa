@@ -11,6 +11,7 @@
   %thead
     %tr
       %th Name
+      %th Committed
       %th.col-lg-1
       %th.col-lg-1
 
@@ -18,6 +19,11 @@
     - @authorities.each do |authority|
       %tr
         %td= link_to authority.name, authority
+        %td
+          - if authority.committed?
+            %i{class: "fa fa-check-square-o"}
+          - else
+            %i{class: "fa fa-square-o"}
         %td= link_to t('.edit'), edit_authority_path(authority) if can?(:edit, authority)
         %td= link_to t('.destroy'), authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs" if can?(:destroy, authority)
 
