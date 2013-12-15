@@ -1,4 +1,7 @@
 class AuthoritiesController < ApplicationController
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::OutputSafetyHelper
+
   respond_to :html
 
   load_and_authorize_resource :authority
@@ -58,14 +61,14 @@ class AuthoritiesController < ApplicationController
     root_ca_cert="#{Rails.root}/config/ssl/0.root/cacert.pem"
     ca_cert="#{@authority.directory}/cacert.pem"
 
-    check = `openssl verify -CAfile "#{root_ca_cert}" "#{ca_cert}"`
+    check = `openssl verify -CAfile "#{root_ca_cert}" "#{ca_cert}" 2>&1`
 
     if check == "#{ca_cert}: OK\n" then
       @authority.committed = true
       @authority.save
       flash[:notice] = "Certification Authority's certificate verified successfuly."
     else
-      flash[:alert] = "Certification Authority's certificate (#{ca_cert}) could not be verified."
+      flash[:alert] = "<strong>Certification Authority's certificate could not be verified.</strong>#{simple_format(check)}".html_safe
     end
 
     respond_with(@authority)
