@@ -72,3 +72,8 @@ gem 'simple_form', '~> 3.0.0'
 
 # FIXME: This is a RC release
 gem 'show_for', '~> 0.3.0.rc'
+
+group :test do
+  gem 'spork-rails'
+  gem 'spork-testunit'
+end

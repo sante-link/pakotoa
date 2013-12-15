@@ -138,6 +138,12 @@ GEM
     simple_form (3.0.1)
       actionpack (>= 4.0.0, < 4.1)
       activemodel (>= 4.0.0, < 4.1)
+    spork (1.0.0rc4)
+    spork-rails (4.0.0)
+      rails (>= 3.0.0, < 5)
+      spork (>= 1.0rc0)
+    spork-testunit (0.0.8)
+      spork (>= 0.6.0)
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -188,6 +194,8 @@ DEPENDENCIES
   sdoc
   show_for (~> 0.3.0.rc)
   simple_form (~> 3.0.0)
+  spork-rails
+  spork-testunit
   sqlite3
   thin
   turbolinks
