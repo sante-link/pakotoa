@@ -8,10 +8,10 @@
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
-    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"
-    = javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"
-    = stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css"
+    = javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
     = csrf_meta_tags
   %body
     %nav.navbar.navbar-inverse.navbar-static-top{ role: "navigation" }
@@ -29,7 +29,7 @@
             - if user_signed_in?
               %li.dropdown
                 %a.dropdown-toggle{data:{toggle: "dropdown"}, href: '#'}
-                  %i{class: "icon-user icon-large"}
+                  %i{class: "fa fa-user fa-lg"}
                   = current_user.email
                   %strong.caret
                 %ul.dropdown-menu

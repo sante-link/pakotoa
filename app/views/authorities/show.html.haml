@@ -31,7 +31,7 @@
   .panel-heading
     .panel-title
       = t(".managers")
-      = link_to content_tag(:i, "", class: "icon-edit") + " " + t(".users"), authority_users_path(@authority), class: "btn btn-link btn-xs pull-right"
+      = link_to content_tag(:i, "", class: "fa fa-edit") + " " + t(".users"), authority_users_path(@authority), class: "btn btn-link btn-xs pull-right"
       .badge= @authority.users.count
   .panel-body
     - @authority.users.each do |user|
