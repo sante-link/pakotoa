@@ -60,7 +60,7 @@ gem 'haml-rails'
 gem 'omniauth'
 
 # Use our custom Medispo omniauth strategy
-gem 'omniauth-medispo', path: "/home/romain/Projects/omniauth-medispo"
+gem 'omniauth-medispo', git: 'git@dev.medispo.fr:omniauth-medispo.git'
 
 gem 'acts_as_list'
 
