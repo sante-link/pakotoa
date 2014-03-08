@@ -25,7 +25,7 @@ string_mask = nombstr
 <% @authority.subject_attributes.order('position').each do |attr| %>
 <% attr_usage[attr.oid.name] ||= 0 %>
 <%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name, attr.description ] %>
-<% if ! attr.default.empty? then %>
+<% if ! attr.default.blank? then %>
 <%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name + "_default", attr.default ] %>
 <% end %>
 <% if ! attr.min.nil? then %>

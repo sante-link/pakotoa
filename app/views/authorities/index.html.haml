@@ -1,6 +1,6 @@
 - content_for(:title) { t(".title") }
 
-- if !can?(:manage, :all) && current_user.authorities.empty?
+- if !can?(:manage, :all) && current_user.authorities.blank?
   .panel.panel-danger
     .panel-heading
       .panel-title No authority available

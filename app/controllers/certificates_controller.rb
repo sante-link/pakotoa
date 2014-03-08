@@ -39,7 +39,7 @@ class CertificatesController < ApplicationController
           @authority.subject_attributes.order("position").each_with_index do |attr,i|
             attr_usage[attr.oid.name] ||= 0
             value = params["attr_#{i}"] || attr.default
-            if ! value.empty? then
+            if ! value.blank? then
               f.write("#{attr_usage[attr.oid.name]}.#{attr.oid.name}=#{value}\n")
             end
             attr_usage[attr.oid.name] += 1
