@@ -42,7 +42,9 @@ end
 # gem 'unicorn'
 
 # Use thin as the app server
-gem 'thin'
+group :development do
+  gem 'thin'
+end
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -63,7 +65,7 @@ gem 'haml-rails'
 gem 'omniauth'
 
 # Use our custom Medispo omniauth strategy
-gem 'omniauth-medispo', git: 'git@dev.medispo.fr:omniauth-medispo.git'
+gem 'omniauth-medispo', git: 'ssh://git@dev.medispo.fr/sante-link/medispo/omniauth-medispo.git'
 
 gem 'acts_as_list'
 
