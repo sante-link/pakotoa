@@ -21,5 +21,10 @@ module Pakotoa
     # config.i18n.default_locale = :de
 
     config.i18n.enforce_available_locales = true
+
+    config.to_prepare do
+      Doorkeeper::ApplicationController.layout "application"
+      Doorkeeper::ApplicationsController.layout 'application'
+    end
   end
 end

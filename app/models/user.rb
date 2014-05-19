@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   devise :trackable, :omniauthable, omniauth_providers: [:medispo]
 
   def self.find_for_medispo_oauth(auth, signed_in_resource=nil)
+    raise 'Not authorized' unless auth.extra[:raw_info][:roles].try(:include?, 'medispo_administrator')
+
     user = User.where(provider: auth.provider, uid: auth.uid).first
     if user.nil? then
       user = User.create(provider: auth.provider, uid: auth.uid, email: auth.info.email)

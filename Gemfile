@@ -78,3 +78,5 @@ gem 'simple_form', '~> 3.0.0'
 gem 'show_for', '~> 0.3.0'
 
 gem 'tzinfo-data', '~> 1.2014'
+
+gem 'doorkeeper', '~> 1.2.0'

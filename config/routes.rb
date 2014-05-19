@@ -1,4 +1,13 @@
 Pakotoa::Application.routes.draw do
+  use_doorkeeper
+
+  namespace :api do
+    namespace :v1 do
+      post '/sign' => 'certificate_sign_requests#sign'
+      get '/plop' => 'certificate_sign_requests#plop'
+    end
+  end
+
   resources :authorities do
     member do
       put :commit
