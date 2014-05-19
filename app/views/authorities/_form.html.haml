@@ -1,5 +1,5 @@
 = simple_form_for @authority do |f|
   = f.input :name
   = f.input :basename
-  = f.button :submit, value: t('.save'), class: "btn-primary"
+  = f.submit t('.save'), class: "btn btn-primary"
   = link_to t('.back'), ( @authority.persisted? ? authority_path(@authority) : authorities_path  ), class: "btn btn-link"

@@ -42,10 +42,16 @@ end
 # gem 'unicorn'
 
 # Use thin as the app server
-group :development do
-  gem 'thin'
-  gem 'spring'
+group :test do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'poltergeist'
+  gem 'cucumber-rails', require: false
   gem 'factory_girl_rails'
+  gem 'spring-commands-cucumber'
+  gem 'spring-commands-rspec'
 end
 
 # Use Capistrano for deployment
@@ -58,7 +64,7 @@ end
 gem 'devise', '~> 3.2.4'
 
 # Use cancan to check users permissions
-gem 'cancancan', '~> 1.8.0'
+gem 'cancancan', '~> 1.8'
 
 # Write views in HAML
 gem 'haml-rails', '~> 0.5.3'

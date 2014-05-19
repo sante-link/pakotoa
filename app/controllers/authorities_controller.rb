@@ -1,6 +1,4 @@
 class AuthoritiesController < ApplicationController
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::OutputSafetyHelper
 
   respond_to :html
 
