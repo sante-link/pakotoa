@@ -49,8 +49,8 @@
     #main{:role => "main"}
       .container
         - flash.each do |kind, value|
-          - kind = "success" if kind == :notice
-          - kind = "danger" if kind == :alert
+          - kind = 'success' if kind == 'notice'
+          - kind = 'danger' if kind == 'alert'
           .alert{class: "alert-#{kind}"}
             %button.close{"data-dismiss" => "alert", :type => "button"} &times;
             = value

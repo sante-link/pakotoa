@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.1.0'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -44,6 +44,8 @@ end
 # Use thin as the app server
 group :development do
   gem 'thin'
+  gem 'spring'
+  gem 'factory_girl_rails'
 end
 
 # Use Capistrano for deployment
@@ -53,32 +55,26 @@ end
 # gem 'debugger', group: [:development, :test]
 
 # Use devise for users authentication
-gem 'devise'
+gem 'devise', '~> 3.2.4'
 
 # Use cancan to check users permissions
-gem 'cancan'
+gem 'cancancan', '~> 1.8.0'
 
 # Write views in HAML
-gem 'haml-rails'
+gem 'haml-rails', '~> 0.5.3'
 
 # Use omniauth to authenticate users against out OAuth2 provider
-gem 'omniauth'
+gem 'omniauth', '~> 1.2.1'
 
 # Use our custom Medispo omniauth strategy
 gem 'omniauth-medispo', git: 'ssh://git@dev.medispo.fr/sante-link/medispo/omniauth-medispo.git'
 
-gem 'acts_as_list'
+gem 'acts_as_list', '~> 0.4.0'
 
 gem 'jquery-ui-rails'
 
-gem 'factory_girl_rails'
-
 gem 'simple_form', '~> 3.0.0'
 
-# FIXME: This is a RC release
-gem 'show_for', '~> 0.3.0.rc'
+gem 'show_for', '~> 0.3.0'
 
-group :test do
-  gem 'spork-rails'
-  gem 'spork-testunit'
-end
+gem 'tzinfo-data', '~> 1.2014'
