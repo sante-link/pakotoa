@@ -21,10 +21,10 @@
             - @certificate.errors.full_messages.each do |msg|
               %li= msg
 
-      = hidden_field_tag :method, :csr
+      = f.hidden_field :method, value: :csr
       .form-group
         = f.label :csr
-        = text_area_tag :csr, '', class: "form-control", rows: 10
+        = f.text_area :csr, class: "form-control", rows: 10
       = f.submit t('.save'), class: "btn btn-primary"
       = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
   .tab-pane{ id: "spkac" }

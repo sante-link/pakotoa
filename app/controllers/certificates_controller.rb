@@ -26,8 +26,28 @@ class CertificatesController < ApplicationController
 
   # POST /certificates
   def create
-    case params[:method]
+    case params[:certificate][:method]
       when "csr"
+        req = OpenSSL::X509::Request.new(params[:certificate][:csr])
+        @certificate.subject = req.subject.to_s
+
+        cert = OpenSSL::X509::Certificate.new
+        cert.version = 2
+        cert.serial = 2 # FIXME
+        cert.subject = req.subject
+        cert.issuer = OpenSSL::X509::Name.parse(@certificate_authority.subject)
+        cert.public_key = req.public_key
+        cert.not_before = Time.now
+        cert.not_after = Time.now + 7.days # FIXME
+        ef = OpenSSL::X509::ExtensionFactory.new
+        ef.subject_certificate = cert
+        ef.issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.certificate)
+        cert.add_extension(ef.create_extension("keyUsage","digitalSignature", true))
+        cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
+        cert.sign(OpenSSL::PKey::RSA.new(@certificate_authority.key), OpenSSL::Digest::SHA256.new)
+
+        @certificate.certificate = cert.to_pem
+        @certificate.save
       when "spkac"
         if params[:public_key].nil?
           @certificate.errors.add(:public_key, :not_set)
@@ -67,6 +87,6 @@ class CertificatesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_params
-      params.require(:certificate).permit(:serial, :certificate_authority_id)
+      params.require(:certificate).permit(:method, :csr)
     end
 end
