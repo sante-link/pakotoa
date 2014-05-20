@@ -1,4 +1,4 @@
 class Affiliation < ActiveRecord::Base
   belongs_to :user
-  belongs_to :authority
+  belongs_to :certificate_authority
 end

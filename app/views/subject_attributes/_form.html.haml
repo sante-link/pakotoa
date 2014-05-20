@@ -1,4 +1,4 @@
-= simple_form_for [@authority, @subject_attribute] do |f|
+= simple_form_for [@certificate_authority, @subject_attribute] do |f|
   = f.association :oid, collection: Oid.all.collect { |x| [ x.name, x.id ] }, include_blank: false
   = f.input :description
   = f.input :default
@@ -6,4 +6,4 @@
   = f.input :max
   = f.input :policy, collection: [ 'match', 'optional', 'supplied' ], include_blank: false
   = f.button :submit, value: t('.save'), class: "btn btn-primary"
-  = link_to t('.back'), @subject_attribute.persisted? ? authority_subject_attribute_path(@authority, @subject_attribute) : authority_subject_attributes_path(@authority), class: "btn btn-link"
+  = link_to t('.back'), @subject_attribute.persisted? ? certificate_authority_subject_attribute_path(@certificate_authority, @subject_attribute) : certificate_authority_subject_attributes_path(@certificate_authority), class: "btn btn-link"

@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def authority_title
-    I18n.t("authorities.show.title", name: @authority.name)
+  def certificate_authority_title
+    I18n.t("certificate_authorities.show.title", name: @certificate_authority.name)
   end
 end

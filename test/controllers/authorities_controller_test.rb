@@ -1,8 +1,10 @@
 require 'test_helper'
 
-class AuthoritiesControllerTest < ActionController::TestCase
+class CertificateAuthoritiesControllerTest < ActionController::TestCase
   setup do
-    @authority = FactoryGirl.create(:authority)
+    load "#{Rails.root}/db/seeds.rb"
+
+    @certificate_authority = FactoryGirl.create(:certificate_authority)
     @admin = FactoryGirl.create(:user)
     sign_in(@admin)
   end
@@ -10,7 +12,7 @@ class AuthoritiesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:authorities)
+    assert_not_nil assigns(:certificate_authorities)
   end
 
   test "should get new" do
@@ -18,34 +20,34 @@ class AuthoritiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create authority" do
-    assert_difference('Authority.count') do
-      post :create, authority: { name: "Test Certification Authority", basename: "test" }
+  test "should create certificate authority" do
+    assert_difference('CertificateAuthority.count') do
+      post :create, certificate_authority: { name: "Test Certification Authority", basename: "test" }
     end
 
-    assert_redirected_to authority_path(assigns(:authority))
+    assert_redirected_to certificate_authority_path(assigns(:certificate_authority))
   end
 
-  test "should show authority" do
-    get :show, id: @authority
+  test "should show certificate authority" do
+    get :show, id: @certificate_authority
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @authority
+    get :edit, id: @certificate_authority
     assert_response :success
   end
 
-  test "should update authority" do
-    patch :update, id: @authority, authority: { name: "New Name" }
-    assert_redirected_to authority_path(assigns(:authority))
+  test "should update certificate authority" do
+    patch :update, id: @certificate_authority, certificate_authority: { name: "New Name" }
+    assert_redirected_to certificate_authority_path(assigns(:certificate_authority))
   end
 
-  test "should destroy authority" do
-    assert_difference('Authority.count', -1) do
-      delete :destroy, id: @authority
+  test "should destroy certificate authority" do
+    assert_difference('CertificateAuthority.count', -1) do
+      delete :destroy, id: @certificate_authority
     end
 
-    assert_redirected_to authorities_path
+    assert_redirected_to certificate_authorities_path
   end
 end

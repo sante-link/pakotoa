@@ -12,22 +12,22 @@
       %th.col-lg-1
       %th.col-lg-1
 
-  %tbody{data: {"sort-url" => sort_authority_subject_attributes_url(@authority) }}
+  %tbody{data: {"sort-url" => sort_certificate_authority_subject_attributes_url(@certificate_authority) }}
     - @subject_attributes.each do |attribute|
       /%tr
       = content_tag_for :tr, attribute do
         %td
           %i{class: "fa fa-exchange fa-rotate-90", style: "cursor: move"}
-          = link_to attribute.oid.name, [@authority, attribute]
+          = link_to attribute.oid.name, [@certificate_authority, attribute]
         %td= attribute.description
         %td= attribute.default
         %td= attribute.min
         %td= attribute.max
         %td= attribute.policy
-        %td= link_to 'Edit', edit_authority_subject_attribute_path(@authority, attribute)
-        %td= link_to 'Destroy', [@authority, attribute], :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger btn-xs"
+        %td= link_to 'Edit', edit_certificate_authority_subject_attribute_path(@certificate_authority, attribute)
+        %td= link_to 'Destroy', [@certificate_authority, attribute], :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger btn-xs"
 
-= link_to 'New Attribute', new_authority_subject_attribute_path(@authority), class: "btn btn-default"
+= link_to 'New Attribute', new_certificate_authority_subject_attribute_path(@certificate_authority), class: "btn btn-default"
 
 :coffee
   jQuery ->

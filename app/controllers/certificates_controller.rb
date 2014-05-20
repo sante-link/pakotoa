@@ -1,12 +1,12 @@
 class CertificatesController < ApplicationController
   respond_to :html
 
-  load_and_authorize_resource :authority
-  load_and_authorize_resource :certificate, through: :authority
+  load_and_authorize_resource :certificate_authority
+  load_and_authorize_resource :certificate, through: :certificate_authority
 
-  add_breadcrumb "authorities.index.title", "authorities_path"
-  add_breadcrumb :authority_title, "authority_path(@authority)"
-  add_breadcrumb "certificates.index.title", "authority_certificates_path(@authority)", except: :index
+  add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
+  add_breadcrumb :certificate_authority_title, "certificate_authority_path(@certificate_authority)"
+  add_breadcrumb "certificates.index.title", "certificate_authority_certificates_path(@certificate_authority)", except: :index
 
   # GET /certificates
   def index
@@ -36,7 +36,7 @@ class CertificatesController < ApplicationController
           f = File.new("/tmp/key.spkac", "w")
           f.write("SPKAC=#{params[:public_key].split.join}\n");
           attr_usage = {}
-          @authority.subject_attributes.order("position").each_with_index do |attr,i|
+          @certificate_authority.subject_attributes.order("position").each_with_index do |attr,i|
             attr_usage[attr.oid.name] ||= 0
             value = params["attr_#{i}"] || attr.default
             if ! value.blank? then
@@ -49,24 +49,24 @@ class CertificatesController < ApplicationController
         end
       when "insecure"
     end
-    respond_with(@authority, @certificate)
+    respond_with(@certificate_authority, @certificate)
   end
 
   # PATCH/PUT /certificates/1
   def update
     @certificate.update(certificate_params)
-    respond_with(@authority, @certificate)
+    respond_with(@certificate_authority, @certificate)
   end
 
   # DELETE /certificates/1
   def destroy
     @certificate.destroy
-    respond_with(@authority, @certificate)
+    respond_with(@certificate_authority, @certificate)
   end
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_params
-      params.require(:certificate).permit(:serial, :authority_id)
+      params.require(:certificate).permit(:serial, :certificate_authority_id)
     end
 end

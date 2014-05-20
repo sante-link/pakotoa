@@ -11,9 +11,9 @@
         %code openssl req -newkey rsa:2048 -keyout key.pem -out req.pem
       %p
         To ease-up this process, you are advised to merge
-        =link_to "this OpenSSL configuration snippet", openssl_req_authority_path(@authority, format: :text), class: "alert-link"
+        =link_to "this OpenSSL configuration snippet", openssl_req_certificate_authority_path(@certificate_authority, format: :text), class: "alert-link"
         into your <em>openssl.cnf</em> configuration file.
-    = form_for [@authority, @certificate] do |f|
+    = form_for [@certificate_authority, @certificate] do |f|
       - if @certificate.errors.any?
         #error_explanation
           %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
@@ -26,12 +26,12 @@
         = f.label :csr
         = text_area_tag :csr, '', class: "form-control", rows: 10
       = f.submit t('.save'), class: "btn btn-primary"
-      = link_to t('.back'), @certificate.persisted? ? [@authority, @certificate] : authority_certificates_path(@authority), class: "btn btn-link"
+      = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
   .tab-pane{ id: "spkac" }
     .alert.alert-info
       %p
         This method, <em>Signed Public Key and Challenge</em>, is similar to the CSR since the certificate private key is never known by the server and cannot be compromised.  After completion, the certificate and the private key will be installed in your web user agent and will have to be exported.
-    = form_for [@authority, @certificate] do |f|
+    = form_for [@certificate_authority, @certificate] do |f|
       - if @certificate.errors.any?
         #error_explanation
           %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
@@ -40,7 +40,7 @@
               %li= msg
 
       = hidden_field_tag :method, :spkac
-      - @certificate.authority.subject_attributes.order("position").each_with_index do |attr,i|
+      - @certificate.certificate_authority.subject_attributes.order("position").each_with_index do |attr,i|
         .form-group
           = label_tag "attr_#{i}", attr.description
           - if attr.policy == "match"
@@ -51,14 +51,14 @@
         = f.label :public_key
         %keygen{ name: "public_key", class: "form-control" }
       = f.submit t('.save'), class: "btn btn-primary"
-      = link_to t('.back'), @certificate.persisted? ? [@authority, @certificate] : authority_certificates_path(@authority), class: "btn btn-link"
+      = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
   .tab-pane{ id: "insecure" }
     .alert.alert-warning
       %p
         This method let the server generate both the private key and the certificate (that is, generate a CSR on the server side).
         %br/
         While this is somewhat convenient, at some point the server knows the private key of the user certificate.  This kind of situation should be avoided.
-    = form_for [@authority, @certificate] do |f|
+    = form_for [@certificate_authority, @certificate] do |f|
       - if @certificate.errors.any?
         #error_explanation
           %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
@@ -67,7 +67,7 @@
               %li= msg
 
       = hidden_field_tag :method, :insecure
-      - @certificate.authority.subject_attributes.order("position").each_with_index do |attr,i|
+      - @certificate.certificate_authority.subject_attributes.order("position").each_with_index do |attr,i|
         .form-group
           = label_tag "attr_#{i}", attr.description
           - if attr.policy == "match"
@@ -75,7 +75,7 @@
           - else
             = text_field_tag "attr_#{i}", attr.default, class: "form-control"
       = f.submit t('.save'), class: "btn btn-primary"
-      = link_to t('.back'), @certificate.persisted? ? [@authority, @certificate] : authority_certificates_path(@authority), class: "btn btn-link"
+      = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
 
 :coffeescript
   $ ->

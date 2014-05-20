@@ -1,3 +1,3 @@
 class Certificate < ActiveRecord::Base
-  belongs_to :authority
+  belongs_to :certificate_authority
 end

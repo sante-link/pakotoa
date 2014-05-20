@@ -1,4 +1,4 @@
-class Authority < ActiveRecord::Base
+class CertificateAuthority < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :basename, presence: true, uniqueness: true
 

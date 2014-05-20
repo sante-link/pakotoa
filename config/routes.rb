@@ -8,7 +8,7 @@ Pakotoa::Application.routes.draw do
     end
   end
 
-  resources :authorities do
+  resources :certificate_authorities do
     member do
       put :commit
       get :openssl_ca
@@ -40,7 +40,7 @@ Pakotoa::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root 'authorities#index'
+  root 'certificate_authorities#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

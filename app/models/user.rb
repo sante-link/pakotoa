@@ -17,5 +17,5 @@ class User < ActiveRecord::Base
   end
 
   has_many :affiliations
-  has_many :authorities, through: :affiliations
+  has_many :certificate_authorities, through: :affiliations
 end

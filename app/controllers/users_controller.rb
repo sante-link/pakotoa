@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource :authority
-  #load_and_authorize_resource :user, through: :authority
+  load_and_authorize_resource :certificate_authority
+  #load_and_authorize_resource :user, through: :certificate_authority
   authorize_resource :user
 
-  add_breadcrumb "authorities.index.title", "authorities_path"
+  add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
   add_breadcrumb :authority_title, "authority_path(@authority)"
 
   def index

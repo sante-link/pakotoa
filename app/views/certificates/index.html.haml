@@ -11,10 +11,10 @@
   %tbody
     - @certificates.each do |certificate|
       %tr
-        %td= link_to certificate.serial, [@authority, certificate]
+        %td= link_to certificate.serial, [@certificate_authority, certificate]
         - if can? :edit, certificate
-          %td= link_to t('.edit'), edit_authority_certificate_path(@authority, certificate)
+          %td= link_to t('.edit'), edit_certificate_authority_certificate_path(@certificate_authority, certificate)
         - if can? :destroy, certificate
-          %td= link_to t('.destroy'), [@authority, certificate], :method => :delete, :data => { :confirm => t('.confirm') }, class: "btn btn-danger btn-xs"
+          %td= link_to t('.destroy'), [@certificate_authority, certificate], :method => :delete, :data => { :confirm => t('.confirm') }, class: "btn btn-danger btn-xs"
 
-= link_to t('.new'), new_authority_certificate_path(@authority), class: "btn btn-default"
+= link_to t('.new'), new_certificate_authority_certificate_path(@certificate_authority), class: "btn btn-default"

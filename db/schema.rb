@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519114750) do
+ActiveRecord::Schema.define(version: 20140519175504) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
-    t.integer  "authority_id"
+    t.integer  "certificate_authority_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "affiliations", ["authority_id"], name: "index_affiliations_on_authority_id"
+  add_index "affiliations", ["certificate_authority_id"], name: "index_affiliations_on_certificate_authority_id"
   add_index "affiliations", ["user_id"], name: "index_affiliations_on_user_id"
 
-  create_table "authorities", force: true do |t|
+  create_table "certificate_authorities", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -33,12 +33,12 @@ ActiveRecord::Schema.define(version: 20140519114750) do
 
   create_table "certificates", force: true do |t|
     t.string   "serial"
-    t.integer  "authority_id"
+    t.integer  "certificate_authority_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "certificates", ["authority_id"], name: "index_certificates_on_authority_id"
+  add_index "certificates", ["certificate_authority_id"], name: "index_certificates_on_certificate_authority_id"
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20140519114750) do
 
   create_table "subject_attributes", force: true do |t|
     t.integer  "oid_id"
-    t.integer  "authority_id"
+    t.integer  "certificate_authority_id"
     t.string   "default"
     t.integer  "min"
     t.integer  "max"

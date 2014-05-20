@@ -1,5 +1,5 @@
 en:
-  authorities:
+  certificate_authorities:
     edit:
       title: Edit Certification Authority
     form:
@@ -9,7 +9,7 @@ en:
       confirm: Are you sure?
       destroy: Destroy
       edit: Edit
-      new: New Authority
+      new: New Certificate Authority
       show: Show
       title: Certification Authorities
     new:

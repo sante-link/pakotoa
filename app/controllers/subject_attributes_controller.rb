@@ -1,12 +1,12 @@
 class SubjectAttributesController < ApplicationController
   respond_to :html
 
-  load_and_authorize_resource :authority
-  load_and_authorize_resource :subject_attribute, through: :authority
+  load_and_authorize_resource :certificate_authority
+  load_and_authorize_resource :subject_attribute, through: :certificate_authority
 
-  add_breadcrumb "authorities.index.title", "authorities_path"
-  add_breadcrumb :authority_title, "authority_path(@authority)"
-  add_breadcrumb "subject_attributes.index.title", "authority_subject_attributes_path(@authority)", except: :index
+  add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
+  add_breadcrumb :certificate_authority_title, "certificate_authority_path(@certificate_authority)"
+  add_breadcrumb "subject_attributes.index.title", "certificate_authority_subject_attributes_path(@certificate_authority)", except: :index
 
   # GET /attributes
   def index
@@ -28,19 +28,19 @@ class SubjectAttributesController < ApplicationController
   # POST /attributes
   def create
     @subject_attribute.save
-    respond_with @authority, @subject_attribute
+    respond_with @certificate_authority, @subject_attribute
   end
 
   # PATCH/PUT /attributes/1
   def update
     @subject_attribute.update(subject_attribute_params)
-    respond_with @authority, @subject_attribute
+    respond_with @certificate_authority, @subject_attribute
   end
 
   # DELETE /attributes/1
   def destroy
     @subject_attribute.destroy
-    respond_with @authority, @subject_attribute
+    respond_with @certificate_authority, @subject_attribute
   end
 
   def sort

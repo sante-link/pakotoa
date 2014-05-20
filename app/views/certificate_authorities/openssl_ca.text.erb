@@ -1,8 +1,8 @@
 [ req ]
 default_bits		= 2048
 default_keyfile 	= privkey.pem
-distinguished_name	= <%= @authority.basename %>req_distinguished_name
-attributes		= <%= @authority.basename %>req_attributes
+distinguished_name	= <%= @certificate_authority.basename %>req_distinguished_name
+attributes		= <%= @certificate_authority.basename %>req_attributes
 # x509_extensions	= v3_ca	# The extentions to add to the self signed cert
 
 # Passwords for private keys if not present they will be prompted for
@@ -21,9 +21,9 @@ string_mask = utf8only
 
 req_extensions = v3_req # The extensions to add to a certificate request
 
-[ <%= @authority.basename %>req_distinguished_name ]
+[ <%= @certificate_authority.basename %>req_distinguished_name ]
 <% attr_usage = {} %>
-<% @authority.subject_attributes.order('position').each do |attr| %>
+<% @certificate_authority.subject_attributes.order('position').each do |attr| %>
 <% attr_usage[attr.oid.name] ||= 0 %>
 <%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name, attr.description ] %>
 <% if ! attr.default.blank? then %>
@@ -38,16 +38,16 @@ req_extensions = v3_req # The extensions to add to a certificate request
 <% attr_usage[attr.oid.name] += 1 %>
 
 <% end %>
-[ <%= @authority.basename %>req_attributes ]
+[ <%= @certificate_authority.basename %>req_attributes ]
 # challengePassword		= A challenge password
 # challengePassword_min		= 4
 # challengePassword_max		= 20
 
 # unstructuredName		= An optional company name
 
-[ CA_<%= @authority.basename %> ]
+[ CA_<%= @certificate_authority.basename %> ]
 
-dir		= ./config/ssl/<%= @authority.id %>.<%= @authority.basename %>		# Where everything is kept
+dir		= ./config/ssl/<%= @certificate_authority.id %>.<%= @certificate_authority.basename %>		# Where everything is kept
 certs		= $dir/certs		# Where the issued certs are kept
 crl_dir		= $dir/crl		# Where the issued crl are kept
 database	= $dir/index.txt	# database index file.
@@ -86,11 +86,11 @@ preserve	= no			# keep passed DN ordering
 # A few difference way of specifying how similar the request should look
 # For type CA, the listed attributes must be the same, and the optional
 # and supplied fields are just that :-)
-policy		= policy_<%= @authority.basename %>
+policy		= policy_<%= @certificate_authority.basename %>
 
-[ policy_<%= @authority.basename %> ]
+[ policy_<%= @certificate_authority.basename %> ]
 <% attr_usage = {} %>
-<% @authority.subject_attributes.order('position').each do |attr| %>
+<% @certificate_authority.subject_attributes.order('position').each do |attr| %>
 <% attr_usage[attr.oid.name] ||= 0 %>
 <%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name, attr.policy ] %>
 <% attr_usage[attr.oid.name] += 1 %>
