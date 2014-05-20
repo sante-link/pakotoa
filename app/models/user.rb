@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
   def self.find_for_medispo_oauth(auth, signed_in_resource=nil)
     raise 'Not authorized' unless auth.extra[:raw_info][:roles].try(:include?, 'medispo_administrator')
 
-    user = User.where(provider: auth.provider, uid: auth.uid).first
+    user = User.where(provider: auth.provider, uid: auth.uid.to_s).first
     if user.nil? then
-      user = User.create(provider: auth.provider, uid: auth.uid, email: auth.info.email)
+      user = User.create(provider: auth.provider, uid: auth.uid.to_s, email: auth.info.email)
     end
     user
   end
