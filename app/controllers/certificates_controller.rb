@@ -25,7 +25,6 @@ class CertificatesController < ApplicationController
     case params[:certificate][:method]
       when "csr"
         req = OpenSSL::X509::Request.new(params[:certificate][:csr])
-        @certificate.subject = req.subject.to_s
 
         cert = OpenSSL::X509::Certificate.new
         cert.version = 2
@@ -37,13 +36,12 @@ class CertificatesController < ApplicationController
         cert.not_after = Time.now + 7.days # FIXME
         ef = OpenSSL::X509::ExtensionFactory.new
         ef.subject_certificate = cert
-        ef.issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.certificate)
+        ef.issuer_certificate = @certificate_authority.certificate
         cert.add_extension(ef.create_extension("keyUsage","digitalSignature", true))
         cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
-        cert.sign(OpenSSL::PKey::RSA.new(@certificate_authority.key), OpenSSL::Digest::SHA256.new)
+        @certificate_authority.sign(cert)
 
-        @certificate.certificate = cert.to_pem
-        @certificate.serial = cert.serial.to_s(16)
+        @certificate.certificate = cert
         @certificate.save
       when "spkac"
         if params[:public_key].nil?

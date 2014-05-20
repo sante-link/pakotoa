@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :certificate_authority do
-    subject '/C=FR/O=Pakotoa/OU=Factory/CN=Test Certificate'
+    subject '/C=FR/O=Pakotoa/OU=Factory/CN=Test CA Certificate'
 
     after(:build) do |certificate|
       key = OpenSSL::PKey::RSA.new(1024)
@@ -21,9 +21,8 @@ FactoryGirl.define do
       cert.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
       cert.sign(key, OpenSSL::Digest::SHA256.new)
 
-      certificate.key = key.to_pem
-      certificate.certificate = cert.to_pem
-      certificate.serial = cert.serial.to_s(16)
+      certificate.key = key
+      certificate.certificate = cert
     end
   end
 end

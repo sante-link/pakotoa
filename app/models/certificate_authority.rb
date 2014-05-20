@@ -19,9 +19,26 @@ class CertificateAuthority < Certificate
     return serial
   end
 
-  def self.unescape_utf8_chars(s)
-    raise "Unsafe certificate subject: #{s}" if s =~ /}/
-    eval('%{' + s + '}')
+  def key=(key)
+    if self.password.blank? then
+      write_attribute(:key, key.to_pem)
+    else
+      cipher = OpenSSL::Cipher::Cipher.new('AES-128-CBC')
+      write_attribute(:key, key.export(cipher, self.password))
+    end
+  end
+
+  def key
+    k = read_attribute(:key)
+    if k then
+      return OpenSSL::PKey::RSA.new(read_attribute(:key), self.password)
+    else
+      return nil
+    end
+  end
+
+  def sign(certificate)
+    certificate.sign(self.key, OpenSSL::Digest::SHA256.new)
   end
 
   def self.import(path)

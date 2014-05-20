@@ -36,19 +36,21 @@ class CertificateAuthoritiesController < ApplicationController
   def create
     if @certificate_authority.save then
       key = OpenSSL::PKey::RSA.new(params[:certificate_authority][:key_length].to_i)
+      @certificate_authority.key = key
 
       certificate = OpenSSL::X509::Certificate.new
 
       subject = OpenSSL::X509::Name.parse(@certificate_authority.subject)
       if @certificate_authority.issuer then
-        issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.issuer.certificate)
-        issuer_key = OpenSSL::PKey::RSA.new(@certificate_authority.issuer.key, params[:certificate_authority][:issuer_password])
+        @issuer = @certificate_authority.issuer
+        issuer_certificate = @issuer.certificate
         issuer_subject = OpenSSL::X509::Name.parse(@certificate_authority.issuer.subject)
       else
+        @issuer = @certificate_authority
         issuer_certificate = certificate
-        issuer_key = key
         issuer_subject = subject
       end
+      @issuer.password = params[:certificate_authority][:issuer_password]
 
       certificate.version = 2
       certificate.serial = @certificate_authority.issuer.try(:next_serial!) || Random.rand(2**64)
@@ -64,16 +66,9 @@ class CertificateAuthoritiesController < ApplicationController
       certificate.add_extension(ef.create_extension("keyUsage","keyCertSign, cRLSign", true))
       certificate.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
       certificate.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
-      certificate.sign(issuer_key, OpenSSL::Digest::SHA256.new)
+      @issuer.sign(certificate)
 
-      if params[:certificate_authority][:password].blank? then
-        @certificate_authority.key = key.to_pem
-      else
-        cipher = OpenSSL::Cipher::Cipher.new('AES-128-CBC')
-        @certificate_authority.key = key.export(cipher, params[:certificate_authority][:password])
-      end
-      @certificate_authority.serial = certificate.serial.to_s(16)
-      @certificate_authority.certificate = certificate.to_pem
+      @certificate_authority.certificate = certificate
 
       @certificate_authority.save!
     end

@@ -3,6 +3,17 @@ class Certificate < ActiveRecord::Base
 
   attr_accessor :method, :csr
 
+  before_validation do
+    if certificate_changed? then
+      cert = self.certificate
+
+      self.subject    = Certificate.unescape_utf8_chars(cert.subject.to_s)
+      self.serial     = cert.serial.to_s(16)
+      self.not_before = cert.not_before
+      self.not_after  = cert.not_after
+    end
+  end
+
   before_create do
     res = true
 
@@ -23,5 +34,18 @@ class Certificate < ActiveRecord::Base
     end
 
     res
+  end
+
+  def certificate
+    OpenSSL::X509::Certificate.new(read_attribute(:certificate))
+  end
+
+  def certificate=(certificate)
+    write_attribute(:certificate, certificate.to_pem)
+  end
+
+  def self.unescape_utf8_chars(s)
+    raise "Unsafe certificate subject: #{s}" if s =~ /}/
+    eval('%{' + s + '}')
   end
 end
