@@ -101,24 +101,6 @@ class CertificateAuthoritiesController < ApplicationController
     respond_with(@certificate_authority)
   end
 
-  # PATCH/PUT /certificate_authorities/1/commit
-  def commit
-    root_ca_cert="#{Rails.root}/config/ssl/0.root/cacert.pem"
-    ca_cert="#{@certificate_authority.directory}/cacert.pem"
-
-    check = `openssl verify -CAfile "#{root_ca_cert}" "#{ca_cert}" 2>&1`
-
-    if check == "#{ca_cert}: OK\n" then
-      @certificate_authority.committed = true
-      @certificate_authority.save
-      flash[:notice] = "Certification Authority's certificate verified successfuly."
-    else
-      flash[:alert] = "<strong>Certification Authority's certificate could not be verified.</strong>#{simple_format(check)}".html_safe
-    end
-
-    respond_with(@certificate_authority)
-  end
-
   # DELETE /certificate_authorities/1
   # DELETE /certificate_authorities/1.json
   def destroy
