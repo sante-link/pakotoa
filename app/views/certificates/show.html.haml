@@ -5,6 +5,10 @@
   %br
   %code= @certificate.subject
 %p
+  %b Issuer:
+  %br
+  %code= @certificate.issuer.subject
+%p
   %b Serial:
   %br
   %code= @certificate.serial
