@@ -18,4 +18,28 @@ class CertificateAuthority < Certificate
     update_attributes!(next_serial: (next_serial || 0) + 1)
     return serial
   end
+
+  def self.unescape_utf8_chars(s)
+    raise "Unsafe certificate subject: #{s}" if s =~ /}/
+    eval('%{' + s + '}')
+  end
+
+  def self.import(path)
+    CertificateAuthority.transaction do
+      logger.debug "Importing CA from #{path}"
+
+      cert = OpenSSL::X509::Certificate.new(File.read("#{path}/cacert.pem"))
+      key = OpenSSL::PKey::RSA.new(File.read("#{path}/private/cakey.pem"))
+
+      authority = CertificateAuthority.create!(subject: unescape_utf8_chars(cert.subject.to_s), serial: cert.serial.to_s(16), certificate: cert.to_pem, key: key.to_pem, next_serial: Integer(File.read("#{path}/serial"), 16))
+
+      Dir.glob("#{path}/newcerts/*.pem").each do |filename|
+        logger.debug "+ Adding vertificate #{filename}"
+
+        cert = OpenSSL::X509::Certificate.new(File.read(filename))
+
+        authority.certificates.create(subject: unescape_utf8_chars(cert.subject.to_s), serial: cert.serial.to_s(16), certificate: cert.to_pem)
+      end
+    end
+  end
 end
