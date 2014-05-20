@@ -41,6 +41,27 @@ class CertificateAuthority < Certificate
     certificate.sign(self.key, OpenSSL::Digest::SHA256.new)
   end
 
+  def sign_certificate_request(req)
+    req = OpenSSL::X509::Request.new(req)
+
+    cert = OpenSSL::X509::Certificate.new
+    cert.version = 2
+    cert.serial = self.next_serial!
+    cert.subject = req.subject
+    cert.issuer = self.certificate.subject
+    cert.public_key = req.public_key
+    cert.not_before = Time.now
+    cert.not_after = Time.now + 7.days # FIXME
+    ef = OpenSSL::X509::ExtensionFactory.new
+    ef.subject_certificate = cert
+    ef.issuer_certificate = self.certificate
+    cert.add_extension(ef.create_extension("keyUsage","digitalSignature", true))
+    cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
+    sign(cert)
+
+    self.certificates.create!(certificate: cert)
+  end
+
   def self.import(path)
     CertificateAuthority.transaction do
       logger.debug "Importing CA from #{path}"

@@ -5,9 +5,11 @@ class Api::V1::CertificateSignRequestsController < ApplicationController
   skip_authorization_check
 
   def sign
-    OpenSSL::X509::Request.new(params['csr'])
+    issuer = CertificateAuthority.find_by(subject: params[:issuer])
 
-    render json: {status: 'OK'}
+    certificate = issuer.sign_certificate_request(params[:csr])
+
+    render json: {status: 'OK', certificate: certificate.certificate.to_pem}
   end
 
   def plop

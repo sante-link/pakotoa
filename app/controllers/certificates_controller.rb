@@ -24,25 +24,7 @@ class CertificatesController < ApplicationController
   def create
     case params[:certificate][:method]
       when "csr"
-        req = OpenSSL::X509::Request.new(params[:certificate][:csr])
-
-        cert = OpenSSL::X509::Certificate.new
-        cert.version = 2
-        cert.serial = @certificate_authority.next_serial!
-        cert.subject = req.subject
-        cert.issuer = OpenSSL::X509::Name.parse(@certificate_authority.subject)
-        cert.public_key = req.public_key
-        cert.not_before = Time.now
-        cert.not_after = Time.now + 7.days # FIXME
-        ef = OpenSSL::X509::ExtensionFactory.new
-        ef.subject_certificate = cert
-        ef.issuer_certificate = @certificate_authority.certificate
-        cert.add_extension(ef.create_extension("keyUsage","digitalSignature", true))
-        cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
-        @certificate_authority.sign(cert)
-
-        @certificate.certificate = cert
-        @certificate.save
+        @certificate = @certificate_authority.sign_certificate_request(params[:certificate][:csr])
       when "spkac"
         if params[:public_key].nil?
           @certificate.errors.add(:public_key, :not_set)
