@@ -51,7 +51,7 @@ class CertificateAuthoritiesController < ApplicationController
       end
 
       certificate.version = 2
-      certificate.serial = 1 # FIXME
+      certificate.serial = @certificate_authority.issuer.try(:next_serial!) || Random.rand(2**64)
       certificate.subject = subject
       certificate.issuer = issuer_subject
       certificate.public_key = key.public_key
@@ -79,9 +79,9 @@ class CertificateAuthoritiesController < ApplicationController
     end
 
     respond_with(@certificate_authority)
-  rescue
+  rescue Exception => e
     @certificate_authority.destroy
-    @certificate_authority.errors.add(:issuer_password)
+    @certificate_authority.errors.add(:issuer_password, e.message + "" + e.backtrace.join('<br/>'))
     render 'new'
   end
 

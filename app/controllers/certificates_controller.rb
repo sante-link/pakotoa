@@ -29,7 +29,7 @@ class CertificatesController < ApplicationController
 
         cert = OpenSSL::X509::Certificate.new
         cert.version = 2
-        cert.serial = 2 # FIXME
+        cert.serial = @certificate_authority.next_serial!
         cert.subject = req.subject
         cert.issuer = OpenSSL::X509::Name.parse(@certificate_authority.subject)
         cert.public_key = req.public_key

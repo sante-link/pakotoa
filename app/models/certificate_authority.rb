@@ -8,8 +8,14 @@ class CertificateAuthority < Certificate
 
   attr_accessor :key_length, :password, :issuer_password
 
-  def initialize(params = {})
-    @key_length = 2048
-    super(params)
+  after_initialize do
+    self.key_length ||= 2048
+    self.next_serial ||= 1
+  end
+
+  def next_serial!
+    serial = self.next_serial
+    update_attributes!(next_serial: (next_serial || 0) + 1)
+    return serial
   end
 end
