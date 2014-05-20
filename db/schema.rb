@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519175504) do
+ActiveRecord::Schema.define(version: 20140520100009) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -23,22 +23,20 @@ ActiveRecord::Schema.define(version: 20140519175504) do
   add_index "affiliations", ["certificate_authority_id"], name: "index_affiliations_on_certificate_authority_id"
   add_index "affiliations", ["user_id"], name: "index_affiliations_on_user_id"
 
-  create_table "certificate_authorities", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "committed",  default: false
-    t.string   "basename"
-  end
-
   create_table "certificates", force: true do |t|
     t.string   "serial"
-    t.integer  "certificate_authority_id"
+    t.integer  "issuer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",        default: "Certificate"
+    t.string   "subject"
+    t.text     "certificate"
+    t.datetime "not_before"
+    t.datetime "not_after"
+    t.text     "key"
   end
 
-  add_index "certificates", ["certificate_authority_id"], name: "index_certificates_on_certificate_authority_id"
+  add_index "certificates", ["issuer_id"], name: "index_certificates_on_issuer_id"
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
@@ -101,7 +99,7 @@ ActiveRecord::Schema.define(version: 20140519175504) do
     t.string   "description"
   end
 
-  add_index "subject_attributes", ["authority_id"], name: "index_subject_attributes_on_authority_id"
+  add_index "subject_attributes", ["certificate_authority_id"], name: "index_subject_attributes_on_certificate_authority_id"
   add_index "subject_attributes", ["oid_id"], name: "index_subject_attributes_on_oid_id"
 
   create_table "users", force: true do |t|

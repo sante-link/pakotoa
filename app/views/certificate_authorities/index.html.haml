@@ -10,22 +10,14 @@
 %table.table.table-striped
   %thead
     %tr
-      %th Name
-      - if can? :write, CertificateAuthority
-        %th Committed
+      %th= CertificateAuthority.human_attribute_name :subject
       %th.col-lg-1
       %th.col-lg-1
 
   %tbody
     - @certificate_authorities.each do |certificate_authority|
       %tr
-        %td= link_to certificate_authority.name, certificate_authority
-        - if can? :write, certificate_authority
-          %td
-            - if certificate_authority.committed?
-              %i{class: "fa fa-check-square-o"}
-            - else
-              %i{class: "fa fa-square-o"}
+        %td= link_to certificate_authority.subject, certificate_authority
         %td= link_to t('.edit'), edit_certificate_authority_path(certificate_authority) if can?(:edit, certificate_authority)
         %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs" if can?(:destroy, certificate_authority)
 

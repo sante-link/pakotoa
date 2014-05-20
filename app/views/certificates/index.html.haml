@@ -3,15 +3,16 @@
 %table.table.table-striped
   %thead
     %tr
-      %th Serial
+      %th= Certificate.human_attribute_name :subject
       - if can? :edit, Certificate
         %th.col-lg-1
       - if can? :destroy, Certificate
         %th.col-lg-1
   %tbody
     - @certificates.each do |certificate|
+      - certificate = certificate.becomes(Certificate)
       %tr
-        %td= link_to certificate.serial, [@certificate_authority, certificate]
+        %td= link_to certificate.subject, [@certificate_authority, certificate]
         - if can? :edit, certificate
           %td= link_to t('.edit'), edit_certificate_authority_certificate_path(@certificate_authority, certificate)
         - if can? :destroy, certificate

@@ -40,7 +40,7 @@
               %li= msg
 
       = hidden_field_tag :method, :spkac
-      - @certificate.certificate_authority.subject_attributes.order("position").each_with_index do |attr,i|
+      - @certificate.issuer.subject_attributes.order("position").each_with_index do |attr,i|
         .form-group
           = label_tag "attr_#{i}", attr.description
           - if attr.policy == "match"
@@ -67,7 +67,7 @@
               %li= msg
 
       = hidden_field_tag :method, :insecure
-      - @certificate.certificate_authority.subject_attributes.order("position").each_with_index do |attr,i|
+      - @certificate.issuer.subject_attributes.order("position").each_with_index do |attr,i|
         .form-group
           = label_tag "attr_#{i}", attr.description
           - if attr.policy == "match"

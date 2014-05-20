@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :certificate_authority do
-    sequence(:name) { |n| "Authority ##{n}" }
-    sequence(:basename) { |n| "authority_#{n}" }
+    subject '/C=FR/O=Pakotoa/OU=Factory/CN=Test Certificate'
   end
 end

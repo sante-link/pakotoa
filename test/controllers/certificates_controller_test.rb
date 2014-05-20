@@ -3,7 +3,7 @@ require 'test_helper'
 class CertificatesControllerTest < ActionController::TestCase
   setup do
     @certificate_authority = FactoryGirl.create(:certificate_authority)
-    @certificate = FactoryGirl.create(:certificate, certificate_authority: @certificate_authority)
+    @certificate = FactoryGirl.create(:certificate, issuer: @certificate_authority)
 
     @admin = FactoryGirl.create(:user)
 
@@ -41,7 +41,7 @@ class CertificatesControllerTest < ActionController::TestCase
   end
 
   test "should update certificate" do
-    patch :update, certificate_authority_id: @certificate_authority.id, id: @certificate, certificate: { certificate_authority_id: @certificate.certificate_authority_id, serial: @certificate.serial }
+    patch :update, certificate_authority_id: @certificate_authority.id, id: @certificate, certificate: { issuer_id: @certificate.issuer_id, serial: @certificate.serial }
     assert_redirected_to certificate_authority_certificate_path(@certificate_authority, assigns(:certificate))
   end
 

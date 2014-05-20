@@ -9,7 +9,7 @@ class CertificateAuthoritiesController < ApplicationController
   # GET /certificate_authorities
   # GET /certificate_authorities.json
   def index
-    @certificate_authorities = @certificate_authorities.order("name ASC")
+    @certificate_authorities = @certificate_authorities
   end
 
   # GET /certificate_authorities/1
@@ -38,12 +38,42 @@ class CertificateAuthoritiesController < ApplicationController
   # POST /certificate_authorities
   # POST /certificate_authorities.json
   def create
-    if @certificate_authority.save then
-      @certificate_authority.subject_attributes.create(oid: Oid.find_by_name('countryName'), min: 2, max: 2, policy: 'match', default: 'FR')
-      @certificate_authority.subject_attributes.create(oid: Oid.find_by_name('organizationalUnitName'), policy: 'match', default: @certificate_authority.name)
-      @certificate_authority.subject_attributes.create(oid: Oid.find_by_name('commonName'), policy: 'supplied')
-      @certificate_authority.subject_attributes.create(oid: Oid.find_by_name('emailAddress'), policy: 'supplied')
+    key = OpenSSL::PKey::RSA.new(params[:certificate_authority][:key_length].to_i)
+    certificate = OpenSSL::X509::Certificate.new
+    certificate.version = 2
+    certificate.serial = 1 # FIXME
+    certificate.subject = OpenSSL::X509::Name.parse(@certificate_authority.subject)
+    if @certificate_authority.issuer then
+      certificate.issuer = OpenSSL::X509::Name.parse(@certificate_authority.issuer.subject)
+    else
+      certificate.issuer = certificate.subject
     end
+    certificate.public_key = key.public_key
+    certificate.not_before = Time.now
+    certificate.not_after = Time.now + 2.years
+    ef = OpenSSL::X509::ExtensionFactory.new
+    ef.subject_certificate = certificate
+    if @certificate_authority.issuer then
+      ef.issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.issuer.certificate)
+    else
+      ef.issuer_certificate = certificate
+    end
+    certificate.add_extension(ef.create_extension("basicConstraints", "CA:TRUE", true))
+    certificate.add_extension(ef.create_extension("keyUsage","keyCertSign, cRLSign", true))
+    certificate.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
+    certificate.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
+    if @certificate_authority.issuer then
+      issuer_key = OpenSSL::PKey::RSA.new(@certificate_authority.issuer.key)
+      certificate.sign(issuer_key, OpenSSL::Digest::SHA256.new)
+    else
+      certificate.sign(key, OpenSSL::Digest::SHA256.new)
+    end
+
+    @certificate_authority.key = key.to_pem
+    @certificate_authority.certificate = certificate.to_pem
+
+    @certificate_authority.save
+
     respond_with(@certificate_authority)
   end
 
@@ -82,6 +112,6 @@ class CertificateAuthoritiesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_authority_params
-      params.require(:certificate_authority).permit(:name, :basename)
+      params.require(:certificate_authority).permit(:subject, :key_length, :issuer_id)
     end
 end

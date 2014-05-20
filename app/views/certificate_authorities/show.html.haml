@@ -1,6 +1,6 @@
-- content_for(:title) { t(".title", name: @certificate_authority.name) }
+- content_for(:title) { t(".title", name: @certificate_authority.subject) }
 
-- if !@certificate_authority.committed
+- if false && !@certificate_authority.committed
   .panel.panel-primary
     .panel-heading
       .panel-title
@@ -48,5 +48,5 @@
 
 = link_to t('.edit'), edit_certificate_authority_path(@certificate_authority), class: "btn btn-default"  if can? :edit, @certificate_authority
 
-- if @certificate_authority.committed?
+- if false && @certificate_authority.committed?
   = link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-warning"

@@ -22,7 +22,7 @@ class CertificateAuthoritiesControllerTest < ActionController::TestCase
 
   test "should create certificate authority" do
     assert_difference('CertificateAuthority.count') do
-      post :create, certificate_authority: { name: "Test Certification Authority", basename: "test" }
+      post :create, certificate_authority: { subject: '/C=FR/OU=Pakotoa/CN=Test certificate', key_length: 1024 }
     end
 
     assert_redirected_to certificate_authority_path(assigns(:certificate_authority))
