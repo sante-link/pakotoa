@@ -25,6 +25,9 @@
           %a.navbar-brand{href: '/'}
             %span.name= t("application.name")
         .collapse.navbar-collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to t('.applications'), oauth_applications_path
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li.dropdown
