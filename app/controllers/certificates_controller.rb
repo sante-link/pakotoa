@@ -20,10 +20,6 @@ class CertificatesController < ApplicationController
   def new
   end
 
-  # GET /certificates/1/edit
-  def edit
-  end
-
   # POST /certificates
   def create
     case params[:certificate][:method]
@@ -70,12 +66,6 @@ class CertificatesController < ApplicationController
         end
       when "insecure"
     end
-    respond_with(@certificate_authority, @certificate)
-  end
-
-  # PATCH/PUT /certificates/1
-  def update
-    @certificate.update(certificate_params)
     respond_with(@certificate_authority, @certificate)
   end
 

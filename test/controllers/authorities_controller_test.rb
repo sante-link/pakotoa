@@ -33,16 +33,6 @@ class CertificateAuthoritiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @certificate_authority
-    assert_response :success
-  end
-
-  test "should update certificate authority" do
-    patch :update, id: @certificate_authority, certificate_authority: { name: "New Name" }
-    assert_redirected_to certificate_authority_path(assigns(:certificate_authority))
-  end
-
   test "should destroy certificate authority" do
     assert_difference('CertificateAuthority.count', -1) do
       delete :destroy, id: @certificate_authority
