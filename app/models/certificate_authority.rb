@@ -42,4 +42,22 @@ class CertificateAuthority < Certificate
       end
     end
   end
+
+  # The import method will not detect which certificate signed which.  Use
+  # reassociate to fix these relationships.
+  def self.reassociate
+    CertificateAuthority.transaction do
+      CertificateAuthority.all.each do |ca|
+        cert = OpenSSL::X509::Certificate.new(ca.certificate)
+
+        issuer = CertificateAuthority.find_by(subject: unescape_utf8_chars(cert.issuer.to_s))
+
+        raise "CertificateAuthority #{cert.subject} was issued by an unknown issuer #{cert.issuer}" if issuer.nil?
+
+        next if issuer == ca # issue == nil for self-signed certificates
+
+        ca.update_attributes!(issuer: issuer)
+      end
+    end
+  end
 end
