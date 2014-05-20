@@ -31,10 +31,6 @@ class CertificateAuthoritiesController < ApplicationController
   def new
   end
 
-  # GET /certificate_authorities/1/edit
-  def edit
-  end
-
   # POST /certificate_authorities
   # POST /certificate_authorities.json
   def create
@@ -85,14 +81,7 @@ class CertificateAuthoritiesController < ApplicationController
   rescue
     @certificate_authority.destroy
     @certificate_authority.errors.add(:issuer_password)
-    render 'edit'
-  end
-
-  # PATCH/PUT /certificate_authorities/1
-  # PATCH/PUT /certificate_authorities/1.json
-  def update
-    @certificate_authority.update(params[:certificate_authority])
-    respond_with(@certificate_authority)
+    render 'new'
   end
 
   # PATCH/PUT /certificate_authorities/1/commit

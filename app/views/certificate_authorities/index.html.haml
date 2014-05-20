@@ -12,13 +12,11 @@
     %tr
       %th= CertificateAuthority.human_attribute_name :subject
       %th.col-lg-1
-      %th.col-lg-1
 
   %tbody
     - @certificate_authorities.each do |certificate_authority|
       %tr
         %td= link_to certificate_authority.subject, certificate_authority
-        %td= link_to t('.edit'), edit_certificate_authority_path(certificate_authority) if can?(:edit, certificate_authority)
         %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs" if can?(:destroy, certificate_authority)
 
 = link_to t('.new'), new_certificate_authority_path, class: "btn btn-default" if can?(:create, CertificateAuthority)
