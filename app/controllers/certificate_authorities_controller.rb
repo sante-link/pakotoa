@@ -80,6 +80,23 @@ class CertificateAuthoritiesController < ApplicationController
     render 'new'
   end
 
+  def edit
+  end
+
+  def update
+    current_password = params[:certificate_authority].delete(:current_password)
+    @certificate_authority.assign_attributes(params[:certificate_authority])
+
+    if @certificate_authority.valid? then
+      @certificate_authority.password = current_password
+      key = @certificate_authority.key
+      @certificate_authority.password = params[:certificate_authority][:password]
+      @certificate_authority.key = key
+      @certificate_authority.save
+    end
+    respond_with(@certificate_authority)
+  end
+
   # PATCH/PUT /certificate_authorities/1/commit
   def commit
     root_ca_cert="#{Rails.root}/config/ssl/0.root/cacert.pem"
@@ -108,6 +125,6 @@ class CertificateAuthoritiesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_authority_params
-      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password)
+      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password, :current_password)
     end
 end
