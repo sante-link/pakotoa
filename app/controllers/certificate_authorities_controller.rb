@@ -38,41 +38,43 @@ class CertificateAuthoritiesController < ApplicationController
   # POST /certificate_authorities
   # POST /certificate_authorities.json
   def create
-    key = OpenSSL::PKey::RSA.new(params[:certificate_authority][:key_length].to_i)
-    certificate = OpenSSL::X509::Certificate.new
-    certificate.version = 2
-    certificate.serial = 1 # FIXME
-    certificate.subject = OpenSSL::X509::Name.parse(@certificate_authority.subject)
-    if @certificate_authority.issuer then
-      certificate.issuer = OpenSSL::X509::Name.parse(@certificate_authority.issuer.subject)
-    else
-      certificate.issuer = certificate.subject
-    end
-    certificate.public_key = key.public_key
-    certificate.not_before = Time.now
-    certificate.not_after = Time.now + 2.years
-    ef = OpenSSL::X509::ExtensionFactory.new
-    ef.subject_certificate = certificate
-    if @certificate_authority.issuer then
-      ef.issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.issuer.certificate)
-    else
-      ef.issuer_certificate = certificate
-    end
-    certificate.add_extension(ef.create_extension("basicConstraints", "CA:TRUE", true))
-    certificate.add_extension(ef.create_extension("keyUsage","keyCertSign, cRLSign", true))
-    certificate.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
-    certificate.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
-    if @certificate_authority.issuer then
-      issuer_key = OpenSSL::PKey::RSA.new(@certificate_authority.issuer.key)
+    if @certificate_authority.save then
+      key = OpenSSL::PKey::RSA.new(params[:certificate_authority][:key_length].to_i)
+
+      certificate = OpenSSL::X509::Certificate.new
+
+      subject = OpenSSL::X509::Name.parse(@certificate_authority.subject)
+      if @certificate_authority.issuer then
+        issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.issuer.certificate)
+        issuer_key = OpenSSL::PKey::RSA.new(@certificate_authority.issuer.key)
+        issuer_subject = OpenSSL::X509::Name.parse(@certificate_authority.issuer.subject)
+      else
+        issuer_certificate = certificate
+        issuer_key = key
+        issuer_subject = subject
+      end
+
+      certificate.version = 2
+      certificate.serial = 1 # FIXME
+      certificate.subject = subject
+      certificate.issuer = issuer_subject
+      certificate.public_key = key.public_key
+      certificate.not_before = Time.now
+      certificate.not_after = Time.now + 2.years # FIXME
+      ef = OpenSSL::X509::ExtensionFactory.new
+      ef.subject_certificate = certificate
+      ef.issuer_certificate = issuer_certificate
+      certificate.add_extension(ef.create_extension("basicConstraints", "CA:TRUE", true))
+      certificate.add_extension(ef.create_extension("keyUsage","keyCertSign, cRLSign", true))
+      certificate.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
+      certificate.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
       certificate.sign(issuer_key, OpenSSL::Digest::SHA256.new)
-    else
-      certificate.sign(key, OpenSSL::Digest::SHA256.new)
+
+      @certificate_authority.key = key.to_pem
+      @certificate_authority.certificate = certificate.to_pem
+
+      @certificate_authority.save!
     end
-
-    @certificate_authority.key = key.to_pem
-    @certificate_authority.certificate = certificate.to_pem
-
-    @certificate_authority.save
 
     respond_with(@certificate_authority)
   end
