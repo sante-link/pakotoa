@@ -32,11 +32,9 @@ class Ability
       if user.id == 1 then
         can :manage, :all
       else
-        can [:read, :openssl_req], CertificateAuthority, user.certificate_authorities.where(committed: true) do |certificate_authority|
-          certificate_authority.users.include?(user)
-        end
+        can :read, CertificateAuthority, affiliations: { user_id: user.id }
         can [:read, :grant, :revoke], User
-        can [:create, :read], Certificate
+        #can [:create, :read], Certificate
       end
     end
   end

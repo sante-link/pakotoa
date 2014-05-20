@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   authorize_resource :user
 
   add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
-  add_breadcrumb :authority_title, "authority_path(@authority)"
+  add_breadcrumb :certificate_authority_title, "certificate_authority_path(@certificate_authority)"
 
   def index
     @users = User.all
@@ -12,11 +12,11 @@ class UsersController < ApplicationController
 
   def grant
     @user = User.find(params[:id])
-    @authority.users << @user unless @authority.users.include?(@user)
+    @certificate_authority.users << @user unless @certificate_authority.users.include?(@user)
   end
 
   def revoke
     @user = User.find(params[:id])
-    @authority.users.delete(@user)
+    @certificate_authority.users.delete(@user)
   end
 end

@@ -1,6 +1,6 @@
 - content_for(:title) { t(".title") }
 
-- if !can?(:manage, :all) && current_user.authorities.blank?
+- if !can?(:manage, :all) && current_user.certificate_authorities.count == 0
   .panel.panel-danger
     .panel-heading
       .panel-title No certificate authority available
