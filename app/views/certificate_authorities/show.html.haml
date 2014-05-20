@@ -7,17 +7,31 @@
       = link_to content_tag(:i, '', class: "fa fa-refresh") + " Update the Certificates Revokation List", "", class: "btn btn-danger"
       = link_to "Ignore", "", class: "btn btn-default"
 
-.panel.panel-default
-  .panel-heading
-    .panel-title
-      = t(".managers")
-      = link_to content_tag(:i, "", class: "fa fa-edit") + " " + t(".users"), certificate_authority_users_path(@certificate_authority), class: "btn btn-link btn-xs pull-right"
-      .badge= @certificate_authority.users.count
-  .panel-body
-    - @certificate_authority.users.each do |user|
-      - if user == current_user
-        .label.label-primary= user.email
-      - else
-        .label.label-default= user.email
+.row
+  .col-lg-8
+    %p
+      %b Subject:
+      %br
+      %code= @certificate_authority.subject
+    %p
+      %b Serial:
+      %br
+      %code= @certificate_authority.serial
+    %p
+      %b Certificate
+      %pre= @certificate_authority.certificate
+  .col-lg-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          = t(".managers")
+          = link_to content_tag(:i, "", class: "fa fa-edit") + " " + t(".users"), certificate_authority_users_path(@certificate_authority), class: "btn btn-link btn-xs pull-right"
+          .badge= @certificate_authority.users.count
+      .panel-body
+        - @certificate_authority.users.each do |user|
+          - if user == current_user
+            .label.label-primary= user.email
+          - else
+            .label.label-default= user.email
 
-= link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-warning"
+    = link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-warning btn-block"

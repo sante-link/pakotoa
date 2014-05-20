@@ -47,6 +47,7 @@ class CertificatesController < ApplicationController
         cert.sign(OpenSSL::PKey::RSA.new(@certificate_authority.key), OpenSSL::Digest::SHA256.new)
 
         @certificate.certificate = cert.to_pem
+        @certificate.serial = cert.serial.to_s(16)
         @certificate.save
       when "spkac"
         if params[:public_key].nil?

@@ -72,6 +72,7 @@ class CertificateAuthoritiesController < ApplicationController
         cipher = OpenSSL::Cipher::Cipher.new('AES-128-CBC')
         @certificate_authority.key = key.export(cipher, params[:certificate_authority][:password])
       end
+      @certificate_authority.serial = certificate.serial.to_s(16)
       @certificate_authority.certificate = certificate.to_pem
 
       @certificate_authority.save!
