@@ -22,9 +22,13 @@ class CertificatesControllerTest < ActionController::TestCase
   end
 
   test "should create certificate" do
-    skip
     assert_difference('Certificate.count') do
-      post :create, certificate_authority_id: @certificate_authority.id, certificate: { serial: "A85B60641B41E609" }
+      key = OpenSSL::PKey::RSA.new(1024)
+      req = OpenSSL::X509::Request.new
+      req.subject = OpenSSL::X509::Name.parse('/C=FR/O=Pakotoa/CN=TEST/emailAddress=test@example.com')
+      req.public_key = key.public_key
+      req.sign(key, OpenSSL::Digest::SHA256.new)
+      post :create, certificate_authority_id: @certificate_authority.id, certificate: { method: 'csr', csr: req.to_pem }
     end
 
     assert_redirected_to certificate_authority_certificate_path(@certificate_authority, assigns(:certificate))
