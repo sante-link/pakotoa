@@ -11,7 +11,9 @@ class User < ActiveRecord::Base
 
     user = User.where(provider: auth.provider, uid: auth.uid.to_s).first
     if user.nil? then
-      user = User.create(provider: auth.provider, uid: auth.uid.to_s, email: auth.info.email)
+      user = User.create(provider: auth.provider, uid: auth.uid.to_s, email: auth.info.email, time_zone: auth.info.time_zone)
+    else
+      user.update_attributes(time_zone: auth.info.time_zone)
     end
     user
   end
