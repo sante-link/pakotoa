@@ -4,6 +4,8 @@ class CertificatesController < ApplicationController
   load_and_authorize_resource :certificate_authority
   load_and_authorize_resource :certificate, through: :certificate_authority
 
+  skip_load_resource :certificate, only: :create
+
   add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
   add_breadcrumb :certificate_authority_title, "certificate_authority_path(@certificate_authority)"
   add_breadcrumb "certificates.index.title", "certificate_authority_certificates_path(@certificate_authority)", except: :index

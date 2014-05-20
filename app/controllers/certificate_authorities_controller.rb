@@ -4,6 +4,8 @@ class CertificateAuthoritiesController < ApplicationController
 
   load_and_authorize_resource :certificate_authority
 
+  skip_load_resource :certificate_authority, only: :update
+
   add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path", except: :index
 
   # GET /certificate_authorities
@@ -84,6 +86,8 @@ class CertificateAuthoritiesController < ApplicationController
   end
 
   def update
+    @certificate_authority = CertificateAuthority.find(params[:id])
+
     current_password = params[:certificate_authority].delete(:current_password)
     @certificate_authority.assign_attributes(params[:certificate_authority])
 
