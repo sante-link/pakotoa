@@ -14,7 +14,7 @@ class CertificateAuthority < Certificate
   end
 
   def next_serial!
-    serial = self.next_serial
+    serial = self.next_serial.try(:to_i)
     update_attributes!(next_serial: (next_serial || 0) + 1)
     return serial
   end
