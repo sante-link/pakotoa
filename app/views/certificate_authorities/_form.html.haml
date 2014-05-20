@@ -1,6 +1,9 @@
 = simple_form_for @certificate_authority do |f|
   = f.input :subject
   = f.input :key_length
+  = f.input :password
+  = f.input :password_confirmation
   = f.input :issuer_id, collection: CertificateAuthority.all.map{ |ca| [ca.subject, ca.id] }
+  = f.input :issuer_password
   = f.submit t('.save'), class: "btn btn-primary"
   = link_to t('.back'), ( @certificate_authority.persisted? ? certificate_authority_path(@certificate_authority) : certificate_authorities_path  ), class: "btn btn-link"

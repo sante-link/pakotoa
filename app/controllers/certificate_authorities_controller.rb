@@ -46,7 +46,7 @@ class CertificateAuthoritiesController < ApplicationController
       subject = OpenSSL::X509::Name.parse(@certificate_authority.subject)
       if @certificate_authority.issuer then
         issuer_certificate = OpenSSL::X509::Certificate.new(@certificate_authority.issuer.certificate)
-        issuer_key = OpenSSL::PKey::RSA.new(@certificate_authority.issuer.key)
+        issuer_key = OpenSSL::PKey::RSA.new(@certificate_authority.issuer.key, params[:certificate_authority][:issuer_password])
         issuer_subject = OpenSSL::X509::Name.parse(@certificate_authority.issuer.subject)
       else
         issuer_certificate = certificate
@@ -70,13 +70,22 @@ class CertificateAuthoritiesController < ApplicationController
       certificate.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
       certificate.sign(issuer_key, OpenSSL::Digest::SHA256.new)
 
-      @certificate_authority.key = key.to_pem
+      if params[:certificate_authority][:password].blank? then
+        @certificate_authority.key = key.to_pem
+      else
+        cipher = OpenSSL::Cipher::Cipher.new('AES-128-CBC')
+        @certificate_authority.key = key.export(cipher, params[:certificate_authority][:password])
+      end
       @certificate_authority.certificate = certificate.to_pem
 
       @certificate_authority.save!
     end
 
     respond_with(@certificate_authority)
+  rescue
+    @certificate_authority.destroy
+    @certificate_authority.errors.add(:issuer_password)
+    render 'edit'
   end
 
   # PATCH/PUT /certificate_authorities/1
@@ -114,6 +123,6 @@ class CertificateAuthoritiesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_authority_params
-      params.require(:certificate_authority).permit(:subject, :key_length, :issuer_id)
+      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password)
     end
 end

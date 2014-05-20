@@ -4,7 +4,9 @@ class CertificateAuthority < Certificate
   has_many :certificates, dependent: :destroy, foreign_key: "issuer_id"
   has_many :subject_attributes, dependent: :destroy
 
-  attr_accessor :key_length
+  validates :password, confirmation: true
+
+  attr_accessor :key_length, :password, :issuer_password
 
   def initialize(params = {})
     @key_length = 2048
