@@ -77,4 +77,11 @@ Pakotoa::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: '[Pakotoa Production] ',
+      sender_address: 'Médispo error notification <no-reply@medispo.fr>',
+      exception_recipients: ['Romain Tartière <r.tartiere@medispo.fr>'],
+    }
 end

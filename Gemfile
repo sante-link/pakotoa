@@ -86,3 +86,5 @@ gem 'show_for', '~> 0.3.0'
 gem 'tzinfo-data', '~> 1.2014'
 
 gem 'doorkeeper', '~> 1.2.0'
+
+gem 'exception_notification', '~> 4.0.0'
