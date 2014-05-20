@@ -22,5 +22,4 @@ en:
       edit: Edit
       manage_certificates: Manage Certificates
       managers: Managers
-      title: "%{name}"
       users: Manage Users

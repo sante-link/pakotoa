@@ -1,4 +1,4 @@
-- content_for(:title) { t(".title", name: @certificate_authority.subject) }
+- content_for(:title) { abbr_subject(@certificate_authority.subject) }
 
 - if false
   .alert.alert-danger

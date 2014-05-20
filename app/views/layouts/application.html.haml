@@ -44,8 +44,8 @@
           %ul.breadcrumb
             - if @breadcrumb
               - @breadcrumb.each do |part|
-                %li= link_to part[0], part[1]
-            %li= content_for(:title)
+                %li= link_to abbr_subject(part[0]), part[1]
+            %li= abbr_subject(content_for(:title))
     #main{:role => "main"}
       .container
         - flash.each do |kind, value|

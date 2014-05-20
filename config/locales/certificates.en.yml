@@ -11,5 +11,3 @@ en:
       title: Certificates
     new:
       title: Create Certificate
-    show:
-      title: Certificate %{serial}

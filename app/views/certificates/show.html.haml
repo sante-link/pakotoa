@@ -1,4 +1,4 @@
-- content_for(:title) { t(".title", serial: @certificate.serial) }
+- content_for(:title) { abbr_subject(@certificate.subject) }
 
 %p
   %b Subject:
