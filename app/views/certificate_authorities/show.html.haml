@@ -22,6 +22,12 @@
       %br
       %code= @certificate_authority.serial
     %p
+      %b Validity:
+      %br
+      = l @certificate_authority.not_before
+      to
+      = l @certificate_authority.not_after
+    %p
       %b Certificate
       %pre= @certificate_authority.certificate
   .col-lg-4

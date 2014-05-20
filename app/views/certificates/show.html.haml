@@ -13,5 +13,11 @@
   %br
   %code= @certificate.serial
 %p
+  %b Validity:
+  %br
+  = l @certificate.not_before
+  to
+  = l @certificate.not_after
+%p
   %b Certificate
   %pre= @certificate.certificate
