@@ -65,6 +65,12 @@ Pakotoa::Application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  # Ignore invalid SSL certificate when attempting to talk using TLS to localhost.
+  config.action_mailer.smtp_settings = { enable_starttls_auto: false }
+
+  # Set proper protocol and host when generating url.
+  config.action_mailer.default_url_options = { protocol: 'https', host: 'pakotoa.medispo.fr' }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
   config.i18n.fallbacks = true
