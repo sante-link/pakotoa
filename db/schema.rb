@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520132714) do
+ActiveRecord::Schema.define(version: 20140520151458) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20140520132714) do
     t.datetime "not_before"
     t.datetime "not_after"
     t.text     "key"
-    t.integer  "next_serial"
+    t.decimal  "next_serial"
   end
 
   add_index "certificates", ["issuer_id"], name: "index_certificates_on_issuer_id"
