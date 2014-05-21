@@ -12,6 +12,7 @@ class CertificatesController < ApplicationController
 
   # GET /certificates
   def index
+    @certificates = @certificates.order('created_at DESC')
   end
 
   # GET /certificates/1

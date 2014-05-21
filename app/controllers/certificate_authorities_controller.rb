@@ -11,7 +11,7 @@ class CertificateAuthoritiesController < ApplicationController
   # GET /certificate_authorities
   # GET /certificate_authorities.json
   def index
-    @certificate_authorities = @certificate_authorities
+    @certificate_authorities = @certificate_authorities.order('created_at DESC')
   end
 
   # GET /certificate_authorities/1
