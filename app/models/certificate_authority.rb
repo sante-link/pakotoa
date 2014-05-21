@@ -64,7 +64,7 @@ class CertificateAuthority < Certificate
     # matching the DN fields should be enougth.
     if self.certificate then
       issuer_matches = re.match(self.certificate.subject.to_s)
-      raise "Certification Authority \"#{self.subject}\" does not respect it's own policy!" if issuer_matches.nil?
+      raise "certification Authority \"#{self.subject}\" does not respect it's own policy!" if issuer_matches.nil?
       return issuer_matches.captures == subject_matches.captures
     end
 
@@ -75,7 +75,7 @@ class CertificateAuthority < Certificate
     if match_policy(certificate.subject) then
       certificate.sign(self.key, OpenSSL::Digest::SHA256.new)
     else
-      raise "Does not respect CA policy"
+      raise "does not respect CA policy"
     end
   end
 
