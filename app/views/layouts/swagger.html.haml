@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title
+      - if content_for?(:title)
+        = content_for(:title) + " —"
+      Pakotoa
+    = stylesheet_link_tag 'swagger-ui'
+    = javascript_include_tag 'swagger-ui'
+    = csrf_meta_tags
+  %body
+    = yield

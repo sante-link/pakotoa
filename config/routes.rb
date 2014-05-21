@@ -1,4 +1,6 @@
 Pakotoa::Application.routes.draw do
+  resources :docs
+
   use_doorkeeper
 
   resources :certificate_authorities do

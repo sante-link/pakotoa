@@ -256,6 +256,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    swagger-ui_rails (0.1.7)
     thin (1.6.2)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -320,6 +321,7 @@ DEPENDENCIES
   simple_form (~> 3.0.0)
   spring-commands-cucumber
   spring-commands-rspec
+  swagger-ui_rails
   thin
   turbolinks
   tzinfo-data (~> 1.2014)

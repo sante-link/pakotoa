@@ -91,3 +91,4 @@ gem 'grape-swagger'
 #gem 'grape-doorkeeper', github: 'fuCtor/grape-doorkeeper'
 gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper', branch: 'doorkeeper_for_except_fix'
 gem 'thin', group: :development
+gem 'swagger-ui_rails'
