@@ -20,11 +20,26 @@ ActiveRecord::Schema.define(version: 20140521113354) do
     t.datetime "updated_at"
   end
 
-  add_index "affiliations", ["certificate_authority_id"], name: "index_affiliations_on_certificate_authority_id"
-  add_index "affiliations", ["user_id"], name: "index_affiliations_on_user_id"
+  add_index "affiliations", ["certificate_authority_id"], name: "index_affiliations_on_certificate_authority_id", using: :btree
+  add_index "affiliations", ["user_id"], name: "index_affiliations_on_user_id", using: :btree
 
-# Could not dump table "certificates" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "certificates", force: true do |t|
+    t.string   "serial"
+    t.integer  "issuer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type",        default: "Certificate"
+    t.string   "subject"
+    t.text     "certificate"
+    t.datetime "not_before"
+    t.datetime "not_after"
+    t.text     "key"
+    t.decimal  "next_serial"
+    t.integer  "policy_id"
+    t.string   "export_root"
+  end
+
+  add_index "certificates", ["issuer_id"], name: "index_certificates_on_issuer_id", using: :btree
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
@@ -37,7 +52,7 @@ ActiveRecord::Schema.define(version: 20140521113354) do
     t.string   "scopes"
   end
 
-  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
 
   create_table "oauth_access_tokens", force: true do |t|
     t.integer  "resource_owner_id"
@@ -50,9 +65,9 @@ ActiveRecord::Schema.define(version: 20140521113354) do
     t.string   "scopes"
   end
 
-  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
-  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
-  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: true do |t|
     t.string   "name",         null: false
@@ -63,7 +78,7 @@ ActiveRecord::Schema.define(version: 20140521113354) do
     t.datetime "updated_at"
   end
 
-  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "oids", force: true do |t|
     t.string   "name"
@@ -91,8 +106,8 @@ ActiveRecord::Schema.define(version: 20140521113354) do
     t.string   "description"
   end
 
-  add_index "subject_attributes", ["oid_id"], name: "index_subject_attributes_on_oid_id"
-  add_index "subject_attributes", ["policy_id"], name: "index_subject_attributes_on_policy_id"
+  add_index "subject_attributes", ["oid_id"], name: "index_subject_attributes_on_oid_id", using: :btree
+  add_index "subject_attributes", ["policy_id"], name: "index_subject_attributes_on_policy_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -108,6 +123,6 @@ ActiveRecord::Schema.define(version: 20140521113354) do
     t.string   "time_zone"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end
