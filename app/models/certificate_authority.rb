@@ -37,8 +37,42 @@ class CertificateAuthority < Certificate
     end
   end
 
+  # Checks that the given OpenSSL::X509::Name match the certificate authority
+  # policy.
+  def match_policy(subject)
+    return true if policy.nil?
+
+    match_re_parts = []
+    policy.subject_attributes.order(:position).each do |attr|
+      case attr.strategy
+      when 'match' then
+        match_re_parts << "#{attr.oid.short_name}=([^/]*)"
+      when 'supplied' then
+        match_re_parts << "#{attr.oid.short_name}=[^/]*"
+      when 'optional' then
+        match_re_parts << "#{attr.oid.short_name}=(?:[^/]*)"
+      end
+    end
+    re = Regexp.new(match_re_parts.join('/(?:.*/)?'))
+
+    issuer_matches = re.match(self.certificate.subject.to_s)
+    raise "Certification Authority \"#{self.subject}\" does not respect it's own policy!" if issuer_matches.nil?
+
+    subject_matches = re.match(subject.to_s)
+    return false if subject_matches.nil?
+
+    puts issuer_matches.captures.inspect
+    puts subject_matches.captures.inspect
+
+    return issuer_matches.captures == subject_matches.captures
+  end
+
   def sign(certificate)
-    certificate.sign(self.key, OpenSSL::Digest::SHA256.new)
+    if match_policy(certificate.subject) then
+      certificate.sign(self.key, OpenSSL::Digest::SHA256.new)
+    else
+      raise "Does not respect CA policy"
+    end
   end
 
   def sign_certificate_request(req)
@@ -59,7 +93,11 @@ class CertificateAuthority < Certificate
     cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
     sign(cert)
 
-    self.certificates.create!(certificate: cert)
+    self.certificates.create(certificate: cert)
+  rescue Exception => e
+    res = self.certificates.build
+    res.errors.add(:csr, e.message)
+    res
   end
 
   def self.import(path)
