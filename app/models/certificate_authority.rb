@@ -75,7 +75,7 @@ class CertificateAuthority < Certificate
     end
   end
 
-  def sign_certificate_request(req)
+  def sign_certificate_request(req, export_name = nil)
     req = OpenSSL::X509::Request.new(req)
 
     cert = OpenSSL::X509::Certificate.new
@@ -93,7 +93,7 @@ class CertificateAuthority < Certificate
     cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
     sign(cert)
 
-    self.certificates.create(certificate: cert)
+    self.certificates.create(certificate: cert, export_name: export_name)
   rescue Exception => e
     res = self.certificates.build
     res.errors.add(:csr, e.message)

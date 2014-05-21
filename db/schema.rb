@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521083136) do
+ActiveRecord::Schema.define(version: 20140521113354) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"

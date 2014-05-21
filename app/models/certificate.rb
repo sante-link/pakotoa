@@ -1,7 +1,7 @@
 class Certificate < ActiveRecord::Base
   belongs_to :issuer, class_name: 'CertificateAuthority'
 
-  attr_accessor :method, :csr
+  attr_accessor :method, :csr, :export_name
 
   before_validation do
     if certificate_changed? then
@@ -34,6 +34,17 @@ class Certificate < ActiveRecord::Base
     end
 
     res
+  end
+
+  after_create do
+    if issuer && !export_name.blank? && !issuer.export_root.blank? then
+      filename = File.join(issuer.export_root, export_name)
+      Rails.logger.info("Exporting signed certificate to #{filename}")
+      FileUtils.mkdir_p(File.dirname(filename))
+      open(filename, 'w') do |io|
+        io.write(certificate.to_pem)
+      end
+    end
   end
 
   def certificate

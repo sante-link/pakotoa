@@ -6,5 +6,6 @@
   = f.input :policy_id, collection: Policy.order(:name).map { |policy| [policy.name, policy.id] }
   = f.input :issuer_id, collection: CertificateAuthority.all.map{ |ca| [ca.subject, ca.id] }
   = f.input :issuer_password
+  = f.input :export_root
   = f.submit t('.save'), class: "btn btn-primary"
   = link_to t('.back'), ( @certificate_authority.persisted? ? certificate_authority_path(@certificate_authority) : certificate_authorities_path  ), class: "btn btn-link"
