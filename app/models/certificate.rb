@@ -57,8 +57,21 @@ class Certificate < ActiveRecord::Base
     write_attribute(:certificate, certificate.to_pem)
   end
 
+  # OpenSSL subject is returned as a partially encoded UTF-8 string:
+  #
+  #     "/C=FR/O=Sant\\xC3\\xA9Link/O=..."
+  #
+  # eval is a straightforward solution but for the sake of paranoïa, convert
+  # each encoded byte to an UTF-8 char ("\xC3\xA9" -> "Ã©"), then encode the
+  # whole string in a non-UTF-8 one ("Ã©" -> "\xC3\xA9"), the force the
+  # encoding to UTF-8 ("\xC3\xA9" -> "é").  Win!
+  #
+  # The ISO-8859-1 encoding may however not work for all situations.  Revert to
+  # the legacy code if this is a concern.
   def self.unescape_utf8_chars(s)
-    raise "Unsafe certificate subject: #{s}" if s =~ /}/
-    eval('%{' + s + '}')
+    return s.gsub(/\\x(..)/) { Integer($1, 16).chr('UTF-8') }.encode('ISO-8859-1').force_encoding('UTF-8')
+
+    # raise "Unsafe certificate subject: #{s}" if s =~ /}/
+    # eval('%{' + s + '}')
   end
 end
