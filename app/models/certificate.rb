@@ -48,7 +48,9 @@ class Certificate < ActiveRecord::Base
   end
 
   def certificate
-    OpenSSL::X509::Certificate.new(read_attribute(:certificate))
+    pem = read_attribute(:certificate)
+    return nil if pem.nil?
+    OpenSSL::X509::Certificate.new(pem)
   end
 
   def certificate=(certificate)

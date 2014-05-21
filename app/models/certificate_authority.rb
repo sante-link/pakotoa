@@ -55,16 +55,20 @@ class CertificateAuthority < Certificate
     end
     re = Regexp.new(match_re_parts.join('/(?:.*/)?'))
 
-    issuer_matches = re.match(self.certificate.subject.to_s)
-    raise "Certification Authority \"#{self.subject}\" does not respect it's own policy!" if issuer_matches.nil?
-
     subject_matches = re.match(subject.to_s)
     return false if subject_matches.nil?
 
-    puts issuer_matches.captures.inspect
-    puts subject_matches.captures.inspect
+    # When creating a self-signed CA, we don't have yet a certificate with a
+    # subject to check against, however the issuer subject being supposed to be
+    # the certificate's subject, the previous verification if the policy
+    # matching the DN fields should be enougth.
+    if self.certificate then
+      issuer_matches = re.match(self.certificate.subject.to_s)
+      raise "Certification Authority \"#{self.subject}\" does not respect it's own policy!" if issuer_matches.nil?
+      return issuer_matches.captures == subject_matches.captures
+    end
 
-    return issuer_matches.captures == subject_matches.captures
+    return true
   end
 
   def sign(certificate)
