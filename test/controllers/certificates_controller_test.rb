@@ -5,7 +5,7 @@ class CertificatesControllerTest < ActionController::TestCase
     @certificate_authority = FactoryGirl.create(:certificate_authority)
     @certificate = FactoryGirl.create(:certificate, issuer: @certificate_authority)
 
-    @admin = FactoryGirl.create(:user)
+    @admin = FactoryGirl.create(:user, id: 1)
 
     sign_in(@admin)
   end

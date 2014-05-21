@@ -1,13 +1,17 @@
 FactoryGirl.define do
   factory :certificate_authority do
-    subject '/C=FR/O=Pakotoa/OU=Factory/CN=Test CA Certificate'
+    serial
+
+    subject do |n|
+      "/C=FR/O=Pakotoa/OU=Factory/CN=Test CA Certificate #{n}"
+    end
 
     after(:build) do |certificate|
       key = OpenSSL::PKey::RSA.new(1024)
 
       cert = OpenSSL::X509::Certificate.new
       cert.version = 2
-      cert.serial = 2
+      cert.serial = Integer(certificate.serial, 16)
       cert.subject = OpenSSL::X509::Name.parse(certificate.subject)
       cert.issuer = cert.subject
       cert.not_before = Time.now

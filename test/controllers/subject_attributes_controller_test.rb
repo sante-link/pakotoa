@@ -9,7 +9,7 @@ class SubjectAttributesControllerTest < ActionController::TestCase
     @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('commonName'), policy: @policy, strategy: "supplied")
     @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('emailAddress'), policy: @policy, strategy: "optional")
 
-    @admin = FactoryGirl.create(:user)
+    @admin = FactoryGirl.create(:user, id: 1)
 
     sign_in(@admin)
   end

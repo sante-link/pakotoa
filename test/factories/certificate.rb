@@ -1,13 +1,16 @@
 FactoryGirl.define do
+  sequence(:serial) { |x| x.to_s(16) }
+
   factory :certificate do
-    subject '/C=FR/O=Pakotoa/OU=Factory/CN=Test Certificate'
+    serial
+    sequence(:subject) { |n| "/C=FR/O=Pakotoa/OU=Factory/CN=Test Certificate #{n}" }
 
     after(:build) do |certificate|
       key = OpenSSL::PKey::RSA.new(1024)
 
       cert = OpenSSL::X509::Certificate.new
       cert.version = 2
-      cert.serial = 2
+      cert.serial = Integer(certificate.serial, 16)
       cert.subject = OpenSSL::X509::Name.parse(certificate.subject)
       cert.issuer = certificate.issuer.certificate.subject
       cert.public_key = key.public_key
