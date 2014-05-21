@@ -29,5 +29,7 @@ module Pakotoa
 
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+
+    config.assets.precompile += ['swagger-ui.js', 'swagger-ui.css']
   end
 end
