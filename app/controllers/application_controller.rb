@@ -41,6 +41,10 @@ class ApplicationController < ActionController::Base
     abbr_subject(@certificate_authority.subject)
   end
 
+  def policy_title
+    @policy.name
+  end
+
   def apply_user_preferences
     if user_signed_in? then
       Time.zone = current_user.time_zone

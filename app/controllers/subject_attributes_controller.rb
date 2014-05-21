@@ -1,12 +1,11 @@
 class SubjectAttributesController < ApplicationController
   respond_to :html
 
-  load_and_authorize_resource :certificate_authority
-  load_and_authorize_resource :subject_attribute, through: :certificate_authority
+  load_and_authorize_resource :policy
+  load_and_authorize_resource :subject_attribute, through: :policy
 
-  add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
-  add_breadcrumb :certificate_authority_title, "certificate_authority_path(@certificate_authority)"
-  add_breadcrumb "subject_attributes.index.title", "certificate_authority_subject_attributes_path(@certificate_authority)", except: :index
+  add_breadcrumb "policies.index.title", "policies_path"
+  add_breadcrumb :policy_title, "policy_path(@policy)", except: :index
 
   # GET /attributes
   def index
@@ -28,19 +27,19 @@ class SubjectAttributesController < ApplicationController
   # POST /attributes
   def create
     @subject_attribute.save
-    respond_with @certificate_authority, @subject_attribute
+    respond_with @policy, @subject_attribute
   end
 
   # PATCH/PUT /attributes/1
   def update
     @subject_attribute.update(subject_attribute_params)
-    respond_with @certificate_authority, @subject_attribute
+    respond_with @policy, @subject_attribute
   end
 
   # DELETE /attributes/1
   def destroy
     @subject_attribute.destroy
-    respond_with @certificate_authority, @subject_attribute
+    respond_with @policy, @subject_attribute
   end
 
   def sort
@@ -54,6 +53,6 @@ class SubjectAttributesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_attribute_params
       return params[:subject_attribute] if Array === params[:subject_attribute]
-      params.require(:subject_attribute).permit(:oid_id, :description, :default, :min, :max, :policy)
+      params.require(:subject_attribute).permit(:oid_id, :description, :default, :min, :max, :strategy)
     end
 end

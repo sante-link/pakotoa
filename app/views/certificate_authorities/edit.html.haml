@@ -4,5 +4,6 @@
   = f.input :current_password
   = f.input :password
   = f.input :password_confirmation
+  = f.input :policy_id, collection: Policy.order(:name).map { |policy| [policy.name, policy.id] }
   = f.submit class: 'btn btn-primary'
   = link_to t('.back'), ( @certificate_authority.persisted? ? certificate_authority_path(@certificate_authority) : certificate_authorities_path  ), class: "btn btn-link"

@@ -13,16 +13,18 @@ Pakotoa::Application.routes.draw do
       get :openssl_ca
       get :openssl_req
     end
-    resources :subject_attributes do
-      collection do
-        post :sort
-      end
-    end
     resources :certificates
     resources :users do
       member do
         post :grant
         post :revoke
+      end
+    end
+  end
+  resources :policies do
+    resources :subject_attributes do
+      collection do
+        post :sort
       end
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520185741) do
+ActiveRecord::Schema.define(version: 20140521083136) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -23,21 +23,8 @@ ActiveRecord::Schema.define(version: 20140520185741) do
   add_index "affiliations", ["certificate_authority_id"], name: "index_affiliations_on_certificate_authority_id"
   add_index "affiliations", ["user_id"], name: "index_affiliations_on_user_id"
 
-  create_table "certificates", force: true do |t|
-    t.string   "serial"
-    t.integer  "issuer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type",        default: "Certificate"
-    t.string   "subject"
-    t.text     "certificate"
-    t.datetime "not_before"
-    t.datetime "not_after"
-    t.text     "key"
-    t.decimal  "next_serial"
-  end
-
-  add_index "certificates", ["issuer_id"], name: "index_certificates_on_issuer_id"
+# Could not dump table "certificates" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
@@ -87,21 +74,25 @@ ActiveRecord::Schema.define(version: 20140520185741) do
     t.string   "default_description"
   end
 
+  create_table "policies", force: true do |t|
+    t.string "name"
+  end
+
   create_table "subject_attributes", force: true do |t|
     t.integer  "oid_id"
-    t.integer  "certificate_authority_id"
+    t.integer  "policy_id"
     t.string   "default"
     t.integer  "min"
     t.integer  "max"
-    t.string   "policy"
+    t.string   "strategy"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
   end
 
-  add_index "subject_attributes", ["certificate_authority_id"], name: "index_subject_attributes_on_certificate_authority_id"
   add_index "subject_attributes", ["oid_id"], name: "index_subject_attributes_on_oid_id"
+  add_index "subject_attributes", ["policy_id"], name: "index_subject_attributes_on_policy_id"
 
   create_table "users", force: true do |t|
     t.string   "email",              default: "", null: false

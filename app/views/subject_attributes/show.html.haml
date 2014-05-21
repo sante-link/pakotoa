@@ -6,6 +6,6 @@
   = sa.attribute :default
   = sa.attribute :min
   = sa.attribute :max
-  = sa.attribute :policy
+  = sa.attribute :strategy
 
-= link_to 'Edit', edit_certificate_authority_subject_attribute_path(@certificate_authority, @subject_attribute), class: "btn btn-default"
+= link_to 'Edit', edit_policy_subject_attribute_path(@policy, @subject_attribute), class: "btn btn-default"

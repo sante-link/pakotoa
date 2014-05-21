@@ -4,10 +4,10 @@ class SubjectAttributesControllerTest < ActionController::TestCase
   setup do
     load "#{Rails.root}/db/seeds.rb"
 
-    @certificate_authority = FactoryGirl.create(:certificate_authority)
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('countryName'), certificate_authority: @certificate_authority, min: 2, max: 2, default: "FR", policy: "match")
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('commonName'), certificate_authority: @certificate_authority, policy: "supplied")
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('emailAddress'), certificate_authority: @certificate_authority, policy: "optional")
+    @policy = FactoryGirl.create(:policy)
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('countryName'), policy: @policy, min: 2, max: 2, default: "FR", strategy: "match")
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('commonName'), policy: @policy, strategy: "supplied")
+    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('emailAddress'), policy: @policy, strategy: "optional")
 
     @admin = FactoryGirl.create(:user)
 
@@ -15,44 +15,44 @@ class SubjectAttributesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, certificate_authority_id: @certificate_authority
+    get :index, policy_id: @policy
     assert_response :success
     assert_not_nil assigns(:subject_attributes)
   end
 
   test "should get new" do
-    get :new, certificate_authority_id: @certificate_authority
+    get :new, policy_id: @policy
     assert_response :success
   end
 
   test "should create subject_attribute" do
     assert_difference('SubjectAttribute.count') do
-      post :create, certificate_authority_id: @certificate_authority, subject_attribute: { certificate_authority_id: @subject_attribute.certificate_authority_id, default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, policy: @subject_attribute.policy, position: @subject_attribute.position }
+      post :create, policy_id: @policy, subject_attribute: { default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, strategy: @subject_attribute.strategy, position: @subject_attribute.position }
     end
 
-    assert_redirected_to certificate_authority_subject_attribute_path(@certificate_authority, assigns(:subject_attribute))
+    assert_redirected_to policy_subject_attribute_path(@policy, assigns(:subject_attribute))
   end
 
   test "should show subject_attribute" do
-    get :show, certificate_authority_id: @certificate_authority, id: @subject_attribute
+    get :show, policy_id: @policy, id: @subject_attribute
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, certificate_authority_id: @certificate_authority, id: @subject_attribute
+    get :edit, policy_id: @policy, id: @subject_attribute
     assert_response :success
   end
 
   test "should update subject_attribute" do
-    patch :update, certificate_authority_id: @certificate_authority, id: @subject_attribute, subject_attribute: { certificate_authority_id: @subject_attribute.certificate_authority_id, default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, policy: @subject_attribute.policy, position: @subject_attribute.position }
-    assert_redirected_to certificate_authority_subject_attribute_path(@certificate_authority, assigns(:subject_attribute))
+    patch :update, policy_id: @policy, id: @subject_attribute, subject_attribute: { default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, strategy: @subject_attribute.strategy, position: @subject_attribute.position }
+    assert_redirected_to policy_subject_attribute_path(@policy, assigns(:subject_attribute))
   end
 
   test "should destroy subject_attribute" do
     assert_difference('SubjectAttribute.count', -1) do
-      delete :destroy, certificate_authority_id: @certificate_authority, id: @subject_attribute
+      delete :destroy, policy_id: @policy, id: @subject_attribute
     end
 
-    assert_redirected_to certificate_authority_subject_attributes_path(@certificate_authority)
+    assert_redirected_to policy_subject_attributes_path(@policy)
   end
 end

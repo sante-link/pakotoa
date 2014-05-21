@@ -30,6 +30,13 @@
     %p
       %b Certificate
       %pre= @certificate_authority.certificate
+    %p
+      %b Policy
+      %br
+      - if @certificate_authority.policy then
+        = link_to @certificate_authority.policy.name, policy_path(@certificate_authority.policy)
+      - else
+        None
   .col-lg-4
     .panel.panel-default
       .panel-heading
