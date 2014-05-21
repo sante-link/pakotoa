@@ -1,8 +1,6 @@
 Pakotoa::Application.routes.draw do
   use_doorkeeper
 
-  mount Pakotoa::API => '/'
-
   resources :certificate_authorities do
     member do
       get :openssl_ca
@@ -37,6 +35,8 @@ Pakotoa::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root 'certificate_authorities#index'
+
+  mount Pakotoa::API => '/api'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
