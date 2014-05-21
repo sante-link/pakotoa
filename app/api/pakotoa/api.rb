@@ -25,6 +25,7 @@ module Pakotoa
     end
     post :sign do
       issuer = CertificateAuthority.find_by(subject: params[:issuer])
+      raise StandardError.new("Certificate Authority not found") if issuer.nil?
       certificate = issuer.sign_certificate_request(params[:csr], params[:export_name])
       raise StandardError.new("Certificate not persisted: #{certificate.errors.full_messages.join("\n")}") unless certificate.persisted?
       { certificate: certificate.certificate.to_pem }
