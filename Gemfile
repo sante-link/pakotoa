@@ -87,4 +87,7 @@ gem 'doorkeeper', '~> 1.2.0'
 gem 'exception_notification', '~> 4.0.0'
 
 gem 'grape'
-gem 'grape-doorkeeper', github: 'fuCtor/grape-doorkeeper'
+gem 'grape-swagger'
+#gem 'grape-doorkeeper', github: 'fuCtor/grape-doorkeeper'
+gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper', branch: 'doorkeeper_for_except_fix'
+gem 'thin', group: :development

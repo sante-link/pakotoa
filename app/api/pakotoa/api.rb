@@ -15,7 +15,7 @@ module Pakotoa
       end
     end
 
-    doorkeeper_for :all
+    doorkeeper_for :all, except: [ :'api-docs', :'api-docs/:name' ]
 
     desc 'Creates a Certificate from the given Certificate Sign Request'
     params do
@@ -30,5 +30,7 @@ module Pakotoa
       raise StandardError.new("Certificate not persisted: #{certificate.errors.full_messages.join("\n")}") unless certificate.persisted?
       { certificate: certificate.certificate.to_pem }
     end
+
+    add_swagger_documentation base_path: 'api', mount_path: 'api-docs', api_version: 'v1', hide_documentation_path: true
   end
 end
