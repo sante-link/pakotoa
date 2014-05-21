@@ -72,7 +72,7 @@ class CertificateAuthoritiesController < ApplicationController
 
       @certificate_authority.certificate = certificate
 
-      @certificate_authority.save!
+      @certificate_authority.save
     end
 
     respond_with(@certificate_authority)
