@@ -54,7 +54,7 @@ class CertificateAuthority < Certificate
         match_re_parts << "#{attr.oid.short_name}=(?:[^/]*)"
       end
     end
-    re = Regexp.new(match_re_parts.join('/(?:.*/)?'))
+    re = Regexp.new(match_re_parts.join('/(?:.*/)*'))
 
     subject_matches = re.match(subject.to_s)
     return false if subject_matches.nil?
