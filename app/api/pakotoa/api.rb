@@ -38,7 +38,7 @@ module Pakotoa
         optional :serial, type: String, desc: 'The serial number of the certificate to revoke (as hex string)'
         optional :suject, type: String, desc: 'The subject of the certificate to revoke'
       end
-      patch :revoke, protected: false do
+      patch :revoke do
         issuer = CertificateAuthority.find_by(subject: params[:issuer])
         raise StandardError.new("Certificate Authority not found") if issuer.nil?
 
