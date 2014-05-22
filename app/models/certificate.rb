@@ -28,7 +28,7 @@ class Certificate < ActiveRecord::Base
 
     # Also check that the certificate subject will not clash with another
     # certificate
-    if Certificate.where(issuer_id: issuer_id, subject: subject).any? then
+    if Certificate.where(issuer_id: issuer_id, subject: subject, revoked_at: nil).any? then
       errors.add(:subject, 'clash with another certificate')
       res = false
     end
