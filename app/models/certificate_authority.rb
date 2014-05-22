@@ -104,6 +104,23 @@ class CertificateAuthority < Certificate
     res
   end
 
+  def crl
+    crl = OpenSSL::X509::CRL.new
+    crl.version = 0
+    crl.issuer = certificate.subject
+    crl.last_update = Time.now.utc
+    crl.next_update = Time.now.utc + 1.week # FIXME
+    certificates.where('revoked_at IS NOT NULL').each do |cert|
+      rev = OpenSSL::X509::Revoked.new
+      rev.serial = cert.certificate.serial
+      rev.time = cert.revoked_at
+
+      crl.add_revoked(rev)
+    end
+    crl.sign(key, OpenSSL::Digest::SHA256.new)
+    crl
+  end
+
   def self.import(path)
     CertificateAuthority.transaction do
       logger.debug "Importing CA from #{path}"
