@@ -38,7 +38,7 @@ Pakotoa::Application.routes.draw do
   # root 'welcome#index'
   root 'certificate_authorities#index'
 
-  mount Pakotoa::API => '/api'
+  mount Pakotoa::API => '/'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

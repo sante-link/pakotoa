@@ -1,5 +1,6 @@
 module Pakotoa
   class API < Grape::API
+    prefix 'api'
     version 'v1', vendor: 'Médispo', cascade: false
 
     format :json
@@ -57,6 +58,6 @@ module Pakotoa
       end
     end
 
-    add_swagger_documentation base_path: 'api', mount_path: 'api-docs', api_version: 'v1', hide_documentation_path: true
+    add_swagger_documentation mount_path: 'api-docs', api_version: 'v1', hide_documentation_path: true
   end
 end
