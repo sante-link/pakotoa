@@ -1,5 +1,5 @@
 Pakotoa::Application.routes.draw do
-  resources :docs
+  get 'api-docs' => 'docs#index'
 
   use_doorkeeper
 
@@ -38,7 +38,7 @@ Pakotoa::Application.routes.draw do
   # root 'welcome#index'
   root 'certificate_authorities#index'
 
-  mount Pakotoa::API => '/'
+  mount Pakotoa::V10 => '/'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,5 +1,5 @@
 = content_for(:extra_headers) do
   = javascript_include_tag params[:controller]
   = stylesheet_link_tag params[:controller]
-= render 'swagger_ui/swagger_ui', discovery_url: '/api/v1/api-docs.json'
+= render 'swagger_ui/swagger_ui', discovery_url: '/api/api-docs.json'
 
