@@ -4,10 +4,14 @@ en:
       back: Back
       save: Save
     index:
-      confirm: Are you sure?
+      confirm: &confirm Are you sure?
+      revoke: &revoke Revoke
       edit: Edit
       destroy: Destroy
       new: Create Certificate
       title: Certificates
     new:
       title: Create Certificate
+    show:
+      confirm: *confirm
+      revoke: *revoke

@@ -98,3 +98,6 @@ gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper', branch: 'doorkeep
 gem 'thin', group: :development
 
 gem 'chronic', '~> 0.10.2'
+
+gem 'bootstrap-sass', '~> 3.1.1'
+gem 'font-awesome-rails', '~> 4.0.0'

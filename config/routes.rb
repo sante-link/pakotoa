@@ -8,7 +8,11 @@ Pakotoa::Application.routes.draw do
       get :openssl_ca
       get :openssl_req
     end
-    resources :certificates
+    resources :certificates do
+      member do
+        patch :revoke
+      end
+    end
     resources :users do
       member do
         post :grant

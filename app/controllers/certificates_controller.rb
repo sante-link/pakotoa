@@ -52,6 +52,11 @@ class CertificatesController < ApplicationController
     respond_with(@certificate_authority, @certificate)
   end
 
+  def revoke
+    @certificate.update_attributes(revoked_at: Time.now.utc)
+    respond_with(@certificate_authority, @certificate)
+  end
+
   # DELETE /certificates/1
   def destroy
     @certificate.destroy

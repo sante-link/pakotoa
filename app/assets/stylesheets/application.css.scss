@@ -12,6 +12,10 @@
  *= require_tree .
  */
 
+@import "bootstrap";
+@import "bootstrap/theme";
+@import "font-awesome";
+
 .page-title {
   margin: -20px 0 20px;
   background-color: #fafafa;

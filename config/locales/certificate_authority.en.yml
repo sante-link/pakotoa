@@ -19,7 +19,7 @@ en:
       back: Back
       commit: Commit
       creating_ca_title: Creating a Certification Authority
-      edit: Edit
+      edit: Edit Certification Authority
       manage_certificates: Manage Certificates
       managers: Managers
       users: Manage Users

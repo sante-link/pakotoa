@@ -37,5 +37,6 @@ class Ability
         #can [:create, :read], Certificate
       end
     end
+    cannot :destroy, Certificate
   end
 end
