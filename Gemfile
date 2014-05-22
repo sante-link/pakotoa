@@ -96,3 +96,5 @@ gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper', branch: 'doorkeep
 
 # Webrick if buggy.
 gem 'thin', group: :development
+
+gem 'chronic', '~> 0.10.2'

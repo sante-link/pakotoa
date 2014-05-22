@@ -4,6 +4,8 @@
   = f.input :password
   = f.input :password_confirmation
   = f.input :policy_id, collection: Policy.order(:name).map { |policy| [policy.name, policy.id] }
+  = f.input :valid_until, placeholder: '20 years from now'
+  = f.input :certify_for, placeholder: '2 years from now'
   = f.input :issuer_id, collection: CertificateAuthority.all.map{ |ca| [ca.subject, ca.id] }
   = f.input :issuer_password
   = f.input :export_root

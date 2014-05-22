@@ -63,6 +63,7 @@ GEM
     capybara-screenshot (0.3.19)
       capybara (>= 1.0, < 3)
       launchy
+    chronic (0.10.2)
     cliver (0.3.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -295,6 +296,7 @@ DEPENDENCIES
   cancancan (~> 1.8)
   capybara
   capybara-screenshot
+  chronic (~> 0.10.2)
   coffee-rails (~> 4.0.0)
   cucumber-rails
   database_cleaner

@@ -6,11 +6,12 @@ class CertificateAuthority < Certificate
 
   validates :password, confirmation: true
 
-  attr_accessor :key_length, :password, :issuer_password
+  attr_accessor :key_length, :password, :issuer_password, :valid_until
 
   after_initialize do
     self.key_length ||= 2048
     self.next_serial ||= 1
+    self.valid_until ||= '20 years from now'
   end
 
   def next_serial!
@@ -89,7 +90,7 @@ class CertificateAuthority < Certificate
     cert.issuer = self.certificate.subject
     cert.public_key = req.public_key
     cert.not_before = Time.now
-    cert.not_after = Time.now + 7.days # FIXME
+    cert.not_after = Chronic.parse(certify_for)
     ef = OpenSSL::X509::ExtensionFactory.new
     ef.subject_certificate = cert
     ef.issuer_certificate = self.certificate

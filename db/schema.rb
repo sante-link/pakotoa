@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522000256) do
+ActiveRecord::Schema.define(version: 20140522125137) do
 
   create_table "affiliations", force: true do |t|
     t.integer  "user_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140522000256) do
     t.integer  "policy_id"
     t.string   "export_root"
     t.datetime "revoked_at"
+    t.string   "certify_for", default: "2 years from now"
   end
 
   add_index "certificates", ["issuer_id"], name: "index_certificates_on_issuer_id", using: :btree
