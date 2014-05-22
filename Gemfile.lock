@@ -302,9 +302,9 @@ DEPENDENCIES
   doorkeeper (~> 1.2.0)
   exception_notification (~> 4.0.0)
   factory_girl_rails
-  grape
+  grape (~> 0.7.0)
   grape-doorkeeper!
-  grape-swagger
+  grape-swagger (~> 0.7.2)
   haml-rails (~> 0.5.3)
   jbuilder (~> 1.2)
   jquery-rails
@@ -321,7 +321,7 @@ DEPENDENCIES
   simple_form (~> 3.0.0)
   spring-commands-cucumber
   spring-commands-rspec
-  swagger-ui_rails
+  swagger-ui_rails (~> 0.1.7)
   thin
   turbolinks
   tzinfo-data (~> 1.2014)

@@ -86,9 +86,13 @@ gem 'doorkeeper', '~> 1.2.0'
 
 gem 'exception_notification', '~> 4.0.0'
 
-gem 'grape'
-gem 'grape-swagger'
+gem 'grape', '~> 0.7.0'
+gem 'grape-swagger', '~> 0.7.2'
+gem 'swagger-ui_rails', '~> 0.1.7'
+
+# FIXME Revert to upstream when our patch is merged
 #gem 'grape-doorkeeper', github: 'fuCtor/grape-doorkeeper'
 gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper', branch: 'doorkeeper_for_except_fix'
+
+# Webrick if buggy.
 gem 'thin', group: :development
-gem 'swagger-ui_rails'
