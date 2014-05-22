@@ -92,10 +92,12 @@ class CertificateAuthoritiesController < ApplicationController
     @certificate_authority.assign_attributes(params[:certificate_authority])
 
     if @certificate_authority.valid? then
+      if @certificate_authority.password != current_password then
       @certificate_authority.password = current_password
       key = @certificate_authority.key
       @certificate_authority.password = params[:certificate_authority][:password]
       @certificate_authority.key = key
+      end
       @certificate_authority.save
     end
     respond_with(@certificate_authority)
