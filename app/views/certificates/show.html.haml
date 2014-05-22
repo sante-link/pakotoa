@@ -1,5 +1,12 @@
 - content_for(:title) { abbr_subject(@certificate.subject) }
 
+- if @certificate.revoked_at
+  .alert.alert-danger
+    %h4 Certificate revoked
+    %p
+      This certificate was revoked on
+      = l @certificate.revoked_at
+
 %p
   %b Subject:
   %br
