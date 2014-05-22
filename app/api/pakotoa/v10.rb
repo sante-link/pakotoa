@@ -23,7 +23,7 @@ module Pakotoa
       { version: '1.0' }
     end
 
-    resource :certificate_authoritiess do
+    resource :certificate_authorities do
       desc 'Creates a Certificate from the given Certificate Sign Request'
       params do
         requires :csr, type: String, desc: 'The Certificate Sign Request (CSR)'
