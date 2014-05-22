@@ -49,9 +49,9 @@ module Pakotoa
         error!('Certificate Authority not found', 400) if issuer.nil?
 
         if params[:serial] then
-          certificate = issuer.certificates.find_by(serial: params[:serial])
+          certificate = issuer.certificates.find_by(serial: params[:serial], revoked_at: nil)
         elsif params[:subject] then
-          certificate = issuer.certificates.find_by(subject: params[:subject])
+          certificate = issuer.certificates.find_by(subject: params[:subject], revoked_at: nil)
         else
           error!('serial or subject must be set', 400)
         end
