@@ -25,7 +25,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -88,6 +88,7 @@ gem 'exception_notification', '~> 4.0.0'
 
 gem 'grape', '~> 0.7.0'
 gem 'grape-swagger', '~> 0.7.2'
+#gem 'grape-swagger', path: '/var/www/gems/grape-swagger'
 gem 'swagger-ui_rails', '~> 0.1.7'
 
 # FIXME Revert to upstream when our patch is merged
@@ -100,4 +101,4 @@ gem 'thin', group: :development
 gem 'chronic', '~> 0.10.2'
 
 gem 'bootstrap-sass', '~> 3.1.1'
-gem 'font-awesome-rails', '~> 4.0.0'
+gem 'font-awesome-rails', '~> 4.1'
