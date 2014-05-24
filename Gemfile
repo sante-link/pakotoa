@@ -93,7 +93,7 @@ gem 'swagger-ui_rails', '~> 0.1.7'
 
 # FIXME Revert to upstream when our patch is merged
 #gem 'grape-doorkeeper', github: 'fuCtor/grape-doorkeeper'
-gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper', branch: 'doorkeeper_for_except_fix'
+gem 'grape-doorkeeper', github: 'sante-link/grape-doorkeeper'
 
 # Webrick if buggy.
 gem 'thin', group: :development
