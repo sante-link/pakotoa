@@ -23,7 +23,7 @@
         %td
           %code= certificate_authority.serial
         %td
-          .badge.pull-right= certificate_authority.certificates.count
+          .badge.pull-right= Certificate.signed_by(certificate_authority.subject).count
         - if can?(:destroy, certificate_authority)
           %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs"
 

@@ -47,6 +47,11 @@ class Certificate < ActiveRecord::Base
     end
   end
 
+  scope :signed_by, lambda { |issuer|
+    ca = CertificateAuthority.find_by(subject: issuer)
+    where('issuer_id = ? OR (issuer_id IS NULL AND subject = ?)', ca.id, issuer)
+  }
+
   def certificate
     pem = read_attribute(:certificate)
     return nil if pem.nil?

@@ -4,7 +4,7 @@ class CertificatesController < ApplicationController
   load_and_authorize_resource :certificate_authority
   load_and_authorize_resource :certificate, through: :certificate_authority
 
-  skip_load_resource :certificate, only: :create
+  skip_load_resource :certificate, only: [:index, :create]
 
   add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
   add_breadcrumb :certificate_authority_title, "certificate_authority_path(@certificate_authority)"
@@ -12,7 +12,7 @@ class CertificatesController < ApplicationController
 
   # GET /certificates
   def index
-    @certificates = @certificates.order('created_at DESC')
+    @certificates = Certificate.signed_by(@certificate_authority.subject).order('created_at DESC')
   end
 
   # GET /certificates/1
