@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/sante-link/grape-doorkeeper.git
-  revision: 5758a752ca6232a8ee70d89f78ab07540252038f
+  remote: git://github.com/fuCtor/grape-doorkeeper.git
+  revision: 3ef73ef1e1af7aaec73ea32a8f8df5b4882586f7
   specs:
     grape-doorkeeper (0.0.1)
       doorkeeper
