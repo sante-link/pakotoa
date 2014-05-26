@@ -101,3 +101,5 @@ gem 'chronic', '~> 0.10.2'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'font-awesome-rails', '~> 4.1'
+
+gem 'responders'

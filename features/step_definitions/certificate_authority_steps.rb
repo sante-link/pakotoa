@@ -5,7 +5,7 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)"$/) do |subject|
   fill_in 'Subject', with: subject
   click_button 'Save'
 
-  expect(page).to have_content(/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/)
+  expect(page).to have_content('Certificate authority was successfully created.')
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)" avec la phrase de passe "([^"]*)"$/) do |subject, password|
@@ -17,7 +17,7 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)" avec la phrase de pa
   fill_in 'Password confirmation', with: password
   click_button 'Save'
 
-  expect(page).to have_content(/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/)
+  expect(page).to have_content('Certificate authority was successfully created.')
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)" avec la phrase de passe "([^"]*)" en utilisant la phrase de passe "([^"]*)"$/) do |subject, ca_subject, password, ca_password|
@@ -31,7 +31,7 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)
   fill_in 'Issuer password', with: ca_password
   click_button 'Save'
 
-  expect(page).to have_content(/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/)
+  expect(page).to have_content('Certificate authority was successfully created.')
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)" en utilisant la phrase de passe "([^"]*)"$/) do |subject, ca_subject, ca_password|
@@ -43,7 +43,7 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)
   fill_in 'Issuer password', with: ca_password
   click_button 'Save'
 
-  expect(page).to have_content(/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/)
+  expect(page).to have_content('Certificate authority was successfully created.')
 end
 
 Alors(/^l'autorité de certification "([^"]*)" peut signer une demande de signature de certificat pour "([^"]*)"$/) do |ca_subject, subject|
@@ -62,5 +62,5 @@ Alors(/^l'autorité de certification "([^"]*)" peut signer une demande de signat
 
   click_button 'Save'
 
-  expect(page).to have_content(/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/)
+  expect(page).to have_content('Certificate was successfully created.')
 end
