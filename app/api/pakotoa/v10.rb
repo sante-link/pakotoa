@@ -45,7 +45,7 @@ module Pakotoa
     resource :certificate_authorities do
       desc 'Creates a Certificate from the given Certificate Sign Request', {
         http_codes: [
-          [200, 'success'],
+          [201, 'success'],
           [400, 'certificate authority not found'],
           [400, 'cannot create certificate'],
           [401, 'not authorized'],
@@ -126,7 +126,7 @@ module Pakotoa
         error!('certificate authority not found', 400) if issuer.nil?
 
         if params[:serial] then
-          certificate = issuer.certificates.find(serial: params[:serial])
+          certificate = issuer.certificates.find_by(serial: params[:serial])
         elsif params[:subject] then
           certificate = issuer.certificates.where('subject = ? AND (revoked_at IS NULL OR not_after > ?)', params[:subject], Time.now).first
         else
