@@ -38,12 +38,4 @@ class CertificatesControllerTest < ActionController::TestCase
     get :show, certificate_authority_id: @certificate_authority.id, id: @certificate
     assert_response :success
   end
-
-  test "should destroy certificate" do
-    assert_difference('Certificate.count', -1) do
-      delete :destroy, certificate_authority_id: @certificate_authority.id, id: @certificate
-    end
-
-    assert_redirected_to certificate_authority_certificates_path(@certificate_authority)
-  end
 end

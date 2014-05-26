@@ -32,12 +32,4 @@ class CertificateAuthoritiesControllerTest < ActionController::TestCase
     get :show, id: @certificate_authority
     assert_response :success
   end
-
-  test "should destroy certificate authority" do
-    assert_difference('CertificateAuthority.count', -1) do
-      delete :destroy, id: @certificate_authority
-    end
-
-    assert_redirected_to certificate_authorities_path
-  end
 end
