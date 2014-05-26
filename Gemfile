@@ -40,7 +40,7 @@ end
 
 # Use thin as the app server
 group :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'capybara-screenshot'
