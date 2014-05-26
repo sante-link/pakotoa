@@ -4,7 +4,6 @@ describe CertificateAuthoritiesController, :type => :controller do
   before do
     admin = create(:user)
     sign_in(admin)
-    load "#{Rails.root}/db/seeds.rb"
   end
 
   describe 'policy' do
