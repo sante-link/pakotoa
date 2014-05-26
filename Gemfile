@@ -49,6 +49,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'spring-commands-cucumber'
   gem 'spring-commands-rspec'
+  gem 'simplecov', require: false
 end
 
 # Use Capistrano for deployment
