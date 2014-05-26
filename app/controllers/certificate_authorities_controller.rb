@@ -47,13 +47,13 @@ class CertificateAuthoritiesController < ApplicationController
         @issuer = @certificate_authority.issuer
         issuer_certificate = @issuer.certificate
         issuer_subject = OpenSSL::X509::Name.parse(@certificate_authority.issuer.subject)
+        @issuer.password = params[:certificate_authority][:issuer_password]
       else
         @issuer = @certificate_authority
         issuer_certificate = certificate
         issuer_subject = subject
         @certificate_authority.next_serial = Random.rand(2**64)
       end
-      @issuer.password = params[:certificate_authority][:issuer_password]
 
       certificate.version = 2
       certificate.serial = @issuer.next_serial!
