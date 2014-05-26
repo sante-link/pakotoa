@@ -51,11 +51,12 @@ class CertificateAuthoritiesController < ApplicationController
         @issuer = @certificate_authority
         issuer_certificate = certificate
         issuer_subject = subject
+        @certificate_authority.next_serial = Random.rand(2**64)
       end
       @issuer.password = params[:certificate_authority][:issuer_password]
 
       certificate.version = 2
-      certificate.serial = @certificate_authority.issuer.try(:next_serial!) || Random.rand(2**64)
+      certificate.serial = @issuer.next_serial!
       certificate.subject = subject
       certificate.issuer = issuer_subject
       certificate.public_key = key.public_key
