@@ -45,10 +45,10 @@ module Pakotoa
     resource :certificate_authorities do
       desc 'Creates a Certificate from the given Certificate Sign Request', {
         http_codes: [
-          [200, 'Success'],
-          [400, 'Certificate Authority not found'],
-          [400, 'Cannot create certificate'],
-          [401, 'Not authorized'],
+          [200, 'success'],
+          [400, 'certificate authority not found'],
+          [400, 'cannot create certificate'],
+          [401, 'not authorized'],
         ],
         notes: <<-NOTES
         A previous OAuth2 authentication is required.
@@ -88,7 +88,7 @@ module Pakotoa
       end
       post :sign do
         issuer = CertificateAuthority.find_by(subject: params[:issuer])
-        error!('Certificate Authority not found', 400) if issuer.nil?
+        error!('certificate authority not found', 400) if issuer.nil?
         certificate = issuer.sign_certificate_request(params[:csr], params[:export_name])
         error!("certificate not persisted: #{certificate.errors.full_messages.join("\n")}", 400) unless certificate.persisted?
         { certificate: certificate.certificate.to_pem }
@@ -96,11 +96,11 @@ module Pakotoa
 
       desc 'Revokes a Certificate', {
         http_codes: [
-          [200, 'Success'],
-          [400, 'Certificate Authority not found'],
+          [200, 'success'],
+          [400, 'certificate authority not found'],
           [400, 'serial or subject must be set'],
           [400, 'certificate not found'],
-          [401, 'Not authorized'],
+          [401, 'not authorized'],
         ],
         notes: <<-NOTES
         A previous OAuth2 authentication is required.
@@ -123,7 +123,7 @@ module Pakotoa
       end
       patch :revoke do
         issuer = CertificateAuthority.find_by(subject: params[:issuer])
-        error!('Certificate Authority not found', 400) if issuer.nil?
+        error!('certificate authority not found', 400) if issuer.nil?
 
         if params[:serial] then
           certificate = issuer.certificates.find(serial: params[:serial])
@@ -141,8 +141,8 @@ module Pakotoa
 
       desc "Returns the CRL of the provided Certificate Authority", {
         http_codes: [
-          [200, 'Success'],
-          [400, 'Certificate Authority not found'],
+          [200, 'success'],
+          [400, 'certificate authority not found'],
         ],
         notes: <<-NOTES
           The Certificate Revokation List (CRL) is returned pem-encoded.
@@ -171,7 +171,7 @@ module Pakotoa
       end
       get :crl, protected: false do
         ca = CertificateAuthority.find_by(subject: params[:issuer])
-        error!('Certificate Authority not found', 400) if ca.nil?
+        error!('certificate authority not found', 400) if ca.nil?
         { crl: ca.crl.to_pem }
       end
     end
