@@ -28,6 +28,11 @@ class PoliciesController < ApplicationController
     @policy.update_attributes(policy_params)
     respond_with @policy
   end
+
+  def destroy
+    @policy.destroy
+    respond_with @policy
+  end
 private
   def policy_params
     params.require('policy').permit('name')
