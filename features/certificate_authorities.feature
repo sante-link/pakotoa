@@ -3,7 +3,7 @@
 Fonctionnalité: Autorités de certifications
 
   @wip
-  Scénario: Création d'une autorité de certification racine
-    Étant donné un utilisateur
-    Lorsqu'il créé une autorité de certification "ca"
-    Alors l'autorité de certification "ca" peut de signer des demandes de signatures de certificats
+  Scénario: Création d'une autorité de certification simple
+    Étant donné un administrateur
+    Lorsqu'il créé une autorité de certification "/C=FR/O=Pakotoa/CN=Test CA/emailAddress=pakotoa@example.com"
+    Alors l'autorité de certification "/C=FR/O=Pakotoa/CN=Test CA/emailAddress=pakotoa@example.com" peut signer une demande de signature de certificat pour "/C=FR/O=Pakotoa/CN=Test Certificate"

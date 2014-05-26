@@ -42,7 +42,7 @@ end
 group :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'database_cleaner'
-  gem 'capybara'
+  gem 'capybara', github: 'jnicklas/capybara'
   gem 'capybara-screenshot'
   gem 'poltergeist'
   gem 'cucumber-rails', require: false
