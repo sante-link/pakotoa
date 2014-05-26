@@ -37,7 +37,7 @@ class CertificateAuthoritiesController < ApplicationController
   # POST /certificate_authorities.json
   def create
     if @certificate_authority.save then
-      key = OpenSSL::PKey::RSA.new(params[:certificate_authority][:key_length].to_i)
+      key = OpenSSL::PKey::RSA.new(@certificate_authority.key_length.to_i)
       @certificate_authority.key = key
 
       certificate = OpenSSL::X509::Certificate.new
