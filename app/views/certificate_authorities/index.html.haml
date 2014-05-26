@@ -11,15 +11,20 @@
   %thead
     %tr
       %th= CertificateAuthority.human_attribute_name :subject
+      %th= CertificateAuthority.human_attribute_name :serial
       %th
-      %th.col-lg-1
+      - if can?(:destroy, CertificateAuthority)
+        %th.col-lg-1
 
   %tbody
     - @certificate_authorities.each do |certificate_authority|
       %tr
         %td= link_to certificate_authority.subject, certificate_authority
         %td
-          .badge= certificate_authority.certificates.count
-        %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs" if can?(:destroy, certificate_authority)
+          %code= certificate_authority.serial
+        %td
+          .badge.pull-right= certificate_authority.certificates.count
+        - if can?(:destroy, certificate_authority)
+          %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs"
 
 = link_to t('.new'), new_certificate_authority_path, class: "btn btn-default" if can?(:create, CertificateAuthority)
