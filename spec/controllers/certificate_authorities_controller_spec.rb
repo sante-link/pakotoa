@@ -20,7 +20,6 @@ describe CertificateAuthoritiesController, :type => :controller do
     it 'signs certificates if the policy is matched' do
       expect {
         post :create, certificate_authority: { subject: '/C=FR/O=Pakotoa/OU=Unit/CN=Test CA/emailAddress=pakotoa@example.com', issuer_id: ca.id }
-        expect(assigns(:certificate_authority).errors.full_messages).to eq([])
       }.to change(CertificateAuthority,:count).by(1)
     end
 
