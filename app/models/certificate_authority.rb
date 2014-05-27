@@ -47,14 +47,14 @@ class CertificateAuthority < Certificate
     policy.subject_attributes.order(:position).each do |attr|
       case attr.strategy
       when 'match' then
-        match_re_parts << "#{attr.oid.short_name}=([^/]*)"
+        match_re_parts << "/#{attr.oid.short_name}=([^/]*)"
       when 'supplied' then
-        match_re_parts << "#{attr.oid.short_name}=[^/]*"
+        match_re_parts << "/#{attr.oid.short_name}=[^/]*"
       when 'optional' then
-        match_re_parts << "#{attr.oid.short_name}=(?:[^/]*)"
+        match_re_parts << "(?:/#{attr.oid.short_name}=[^/]*)?"
       end
     end
-    re = Regexp.new(match_re_parts.join('/(?:.*/)*'))
+    re = Regexp.new(match_re_parts.join)
 
     subject_matches = re.match(subject.to_s)
     return false if subject_matches.nil?

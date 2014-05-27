@@ -11,8 +11,9 @@ describe CertificateAuthoritiesController, :type => :controller do
       policy = create(:policy)
       create(:subject_attribute, policy: policy, position: 1, oid: Oid.find_by(short_name: 'C'), default: 'FR', min: 2, max: 2, strategy: 'match')
       create(:subject_attribute, policy: policy, position: 2, oid: Oid.find_by(short_name: 'O'), default: 'Pakotoa', strategy: 'match')
-      create(:subject_attribute, policy: policy, position: 3, oid: Oid.find_by(short_name: 'CN'), strategy: 'supplied')
-      create(:subject_attribute, policy: policy, position: 4, oid: Oid.find_by(short_name: 'emailAddress'), strategy: 'supplied')
+      create(:subject_attribute, policy: policy, position: 3, oid: Oid.find_by(short_name: 'OU'), strategy: 'optional')
+      create(:subject_attribute, policy: policy, position: 4, oid: Oid.find_by(short_name: 'CN'), strategy: 'supplied')
+      create(:subject_attribute, policy: policy, position: 5, oid: Oid.find_by(short_name: 'emailAddress'), strategy: 'supplied')
       policy
     end
     let!(:ca) { create(:certificate_authority, policy: policy, subject: '/C=FR/O=Pakotoa/CN=Test Root CA/emailAddress=pakotoa@example.com') }
