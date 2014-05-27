@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CertificateAuthoritiesController, :type => :controller do
   before do
-    admin = create(:user)
+    admin = create(:user, id: 1)
     sign_in(admin)
   end
 
