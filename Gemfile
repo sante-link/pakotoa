@@ -50,6 +50,7 @@ group :test do
   gem 'spring-commands-cucumber'
   gem 'spring-commands-rspec'
   gem 'simplecov', require: false
+  gem 'timecop'
 end
 
 # Use Capistrano for deployment

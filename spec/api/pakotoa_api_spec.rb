@@ -50,6 +50,7 @@ describe Pakotoa::V10 do
     end
 
     describe 'certificates signature' do
+      after(:each) { Timecop.return }
       it 'signs valid certificates requests' do
         post 'api/certificate_authorities/sign', { access_token: token.token, csr: csr, issuer: ca.subject }, @headers
         expect(response.status).to eq(201)
@@ -63,6 +64,17 @@ describe Pakotoa::V10 do
         create(:certificate, subject: '/C=FR/O=Test/OU=Pakotoa/CN=nil/emailAddress=nil@example.com', issuer: ca)
         post 'api/certificate_authorities/sign', { access_token: token.token, csr: csr, issuer: ca.subject }, @headers
         expect(response.status).to eq(400)
+      end
+      it 'accepts same subject if the other certificate is revoked' do
+        create(:certificate, subject: '/C=FR/O=Test/OU=Pakotoa/CN=nil/emailAddress=nil@example.com', issuer: ca, revoked_at: Time.now)
+        post 'api/certificate_authorities/sign', { access_token: token.token, csr: csr, issuer: ca.subject }, @headers
+        expect(response.status).to eq(201)
+      end
+      it 'accepts same subject if the other certificate has expired' do
+        create(:certificate, subject: '/C=FR/O=Test/OU=Pakotoa/CN=nil/emailAddress=nil@example.com', issuer: ca)
+        Timecop.travel(3.years.from_now)
+        post 'api/certificate_authorities/sign', { access_token: token.token, csr: csr, issuer: ca.subject }, @headers
+        expect(response.status).to eq(201)
       end
     end
 
