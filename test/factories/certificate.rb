@@ -15,7 +15,7 @@ FactoryGirl.define do
       cert.issuer = certificate.issuer.certificate.subject
       cert.public_key = key.public_key
       cert.not_before = Time.now
-      cert.not_after = Time.now + 1.hour
+      cert.not_after = Time.now + 10.minutes
       ef = OpenSSL::X509::ExtensionFactory.new
       ef.subject_certificate = cert
       ef.issuer_certificate = certificate.issuer.certificate
