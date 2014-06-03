@@ -38,5 +38,8 @@ class Ability
       end
     end
     cannot :destroy, Certificate
+    cannot :revoke, Certificate do |cert|
+      cert.not_after.past?
+    end
   end
 end
