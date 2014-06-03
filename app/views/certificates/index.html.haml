@@ -21,7 +21,7 @@
           %code= certificate.serial
         - if can?(:revoke, certificate)
           %td
-            - if certificate.revoked_at.nil?
+            - if certificate.revoked_at.nil? && certificate.not_after.future?
               - if !certificate.is_a? CertificateAuthority
                 = link_to t('.revoke'), revoke_certificate_authority_certificate_path(@certificate_authority, certificate), method: :patch, :data => { :confirm => t('.confirm') }, class: "btn btn-warning btn-xs pull-right"
         - if can? :destroy, certificate
