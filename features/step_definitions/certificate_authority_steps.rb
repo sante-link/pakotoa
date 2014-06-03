@@ -3,6 +3,8 @@
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)"$/) do |subject|
+  visit root_path
+
   click_link 'New Certificate Authority'
   fill_in 'Subject', with: subject
   click_button 'Save'
@@ -11,6 +13,8 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)"$/) do |subject|
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)" avec la phrase de passe "([^"]*)"$/) do |subject, password|
+  visit root_path
+
   click_link 'New Certificate Authority'
   fill_in 'Subject', with: subject
   fill_in 'Password', with: password
@@ -21,6 +25,8 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)" avec la phrase de pa
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)" avec la phrase de passe "([^"]*)" en utilisant la phrase de passe "([^"]*)"$/) do |subject, ca_subject, password, ca_password|
+  visit root_path
+
   click_link 'New Certificate Authority'
   fill_in 'Subject', with: subject
   fill_in 'Password', with: password
@@ -33,6 +39,8 @@ Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)
 end
 
 Lorsqu(/^il créé une autorité de certification "([^"]*)" signée par "([^"]*)" en utilisant la phrase de passe "([^"]*)"$/) do |subject, ca_subject, ca_password|
+  visit root_path
+
   click_link 'New Certificate Authority'
   fill_in 'Subject', with: subject
   select ca_subject, from: 'Issuer'
