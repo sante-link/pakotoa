@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CertificateAuthoritiesController, :type => :controller do
   before do

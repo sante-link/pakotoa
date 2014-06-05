@@ -40,9 +40,9 @@ end
 
 # Use thin as the app server
 group :test do
-  gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'rspec-rails', '~> 3.0.0'
   gem 'database_cleaner'
-  gem 'capybara', github: 'jnicklas/capybara'
+  gem 'capybara'
   gem 'capybara-screenshot'
   gem 'poltergeist'
   gem 'cucumber-rails', require: false
@@ -63,7 +63,8 @@ end
 gem 'devise', '~> 3.2.4'
 
 # Use cancan to check users permissions
-gem 'cancancan', '~> 1.8'
+# 1.8.1 has a regression with nested resources.
+gem 'cancancan', '1.8.0'
 
 # Write views in HAML
 gem 'haml-rails', '~> 0.5.3'
@@ -84,7 +85,7 @@ gem 'show_for', '~> 0.3.0'
 
 gem 'tzinfo-data', '~> 1.2014'
 
-gem 'doorkeeper', '~> 1.2.0'
+gem 'doorkeeper', '~> 1.2'
 
 gem 'exception_notification', '~> 4.0.0'
 
@@ -103,4 +104,4 @@ gem 'chronic', '~> 0.10.2'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'font-awesome-rails', '~> 4.1'
 
-gem 'responders'
+gem 'responders', '~> 1.0'
