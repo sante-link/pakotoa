@@ -1,0 +1,6 @@
+en:
+  policies:
+    index:
+      title: Policies
+      destroy: Destroy
+      confirm: Are you sure?

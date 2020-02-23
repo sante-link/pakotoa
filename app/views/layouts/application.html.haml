@@ -1,0 +1,90 @@
+!!!
+-#
+  #<!DOCTYPE html>
+  #<html>
+  #  <head>
+  #    <title>Pakotoa</title>
+  #    <%= csrf_meta_tags %>
+  #    <%= csp_meta_tag %>
+  #
+  #    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  #    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  #  </head>
+  #
+  #  <body>
+  #    <%= yield %>
+  #  </body>
+  #</html>
+%html
+  %head
+    %title
+      - if content_for?(:title)
+        = content_for(:title) + " —"
+      Pakotoa
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' 
+    = csrf_meta_tags
+    = csp_meta_tag
+  %body
+    %nav.navbar.navbar-inverse.navbar-static-top{ role: "navigation" }
+      .container
+        .navbar-header
+          %button.navbar-toggle{data: {toggle: "collapse", target: ".navbar-responsive-collapse"}}
+            %span.sr-only= t("toggle_navigation")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{href: '/'}
+            %span.name= t("application.name")
+        .collapse.navbar-collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            %li
+              FIXME
+              /= link_to t('.applications'), oauth_applications_path
+            %li
+              = link_to t('.policies'), policies_path
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              %li.dropdown
+                %a.dropdown-toggle{data:{toggle: "dropdown"}, href: '#'}
+                  %i{class: "fa fa-user fa-lg"}
+                  = current_user.email
+                  %strong.caret
+                %ul.dropdown-menu
+                  %li= link_to(t("devise.shared.links.sign_out"), destroy_user_session_path)
+            - else
+              %li.dropdown
+                FIXME
+                /= link_to "Sign in with GitHub", user_omniauth_authorize_path(:github)
+    - if content_for?(:title)
+      .page-title
+        .container
+          %h1.pull-left= content_for(:title)
+          %ul.breadcrumb
+            - if @breadcrumb
+              - @breadcrumb.each do |part|
+                %li= link_to abbr_subject(part[0]), part[1]
+            %li= abbr_subject(content_for(:title))
+    #main{:role => "main"}
+      .container
+        - flash.each do |kind, value|
+          - kind = 'success' if kind == 'notice'
+          - kind = 'danger' if kind == 'alert'
+          .alert{class: "alert-#{kind}"}
+            %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+            = value
+      .container
+        = yield
+
+    %footer
+      .container
+        .row
+          .col-sm-6
+            = link_to "Conditions d'utilisation", "#"
+            &bullet;
+            = link_to "Confidentialité", "#"
+            &bullet;
+            = link_to "Sécurité", "#"
+          .col-sm-6.text-right
+            .disabled= t("application.copyright")

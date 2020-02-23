@@ -1,0 +1,30 @@
+- content_for(:title) { t(".title") }
+
+- if !can?(:manage, :all) && current_user.certificate_authorities.count == 0
+  .panel.panel-danger
+    .panel-heading
+      .panel-title No certificate authority available
+    .panel-body
+      Please contact us if you thing that something should be visible.
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= CertificateAuthority.human_attribute_name :subject
+      %th= CertificateAuthority.human_attribute_name :serial
+      %th.text-right= CertificateAuthority.human_attribute_name :certificates_count
+      - if can?(:destroy, CertificateAuthority)
+        %th.col-lg-1
+
+  %tbody
+    - @certificate_authorities.each do |certificate_authority|
+      %tr
+        %td= link_to certificate_authority.subject, certificate_authority
+        %td
+          %code= certificate_authority.serial
+        %td
+          .badge.pull-right= Certificate.signed_by(certificate_authority.subject).count
+        - if can?(:destroy, certificate_authority)
+          %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs"
+
+= link_to t('.new'), new_certificate_authority_path, class: "btn btn-default" if can?(:create, CertificateAuthority)

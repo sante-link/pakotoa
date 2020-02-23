@@ -1,0 +1,36 @@
+- content_for(:title) { abbr_subject(@certificate.subject) }
+
+.row
+  .col-lg-8
+    - if @certificate.revoked_at
+      .alert.alert-danger
+        %h4 Certificate revoked
+        %p
+          This certificate was revoked on
+          = l @certificate.revoked_at
+
+    %p
+      %b Subject:
+      %br
+      %code= @certificate.subject
+    %p
+      %b Issuer:
+      %br
+      %code= @certificate.issuer.subject
+    %p
+      %b Serial:
+      %br
+      %code= @certificate.serial
+    %p
+      %b Validity:
+      %br
+      = l @certificate.not_before
+      to
+      = l @certificate.not_after
+    %p
+      %b Certificate
+      %pre= @certificate.certificate
+
+  .col-lg-4
+    - if @certificate.revoked_at.nil?
+      = link_to t('.revoke'), revoke_certificate_authority_certificate_path(@certificate_authority, @certificate), method: :patch, :data => { :confirm => t('.confirm') }, class: "btn btn-warning btn-block"

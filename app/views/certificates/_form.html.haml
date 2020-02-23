@@ -1,0 +1,97 @@
+%ul.nav.nav-tabs
+  %li.active= link_to "CSR", "#csr", data: { toggle: "nav" }
+  %li= link_to "SPKAC", "#spkac", data: { toggle: "nav" }
+  %li= link_to "Insecure", "#insecure", data: { toggle: "nav" }
+
+.tab-content{ style: "padding: 15px; border: 1px solid #ddd; border-top: 0" }
+  .tab-pane.active{ id: "csr" }
+    .alert.alert-info
+      %p
+        This method allows you to directly submit a <em>Certificate Signing Request</em> generated using
+        %code openssl req -newkey rsa:2048 -keyout key.pem -out req.pem
+      %p
+        To ease-up this process, you are advised to merge
+        =link_to "this OpenSSL configuration snippet", openssl_req_certificate_authority_path(@certificate_authority, format: :text), class: "alert-link"
+        into your <em>openssl.cnf</em> configuration file.
+    = form_for [@certificate_authority, @certificate] do |f|
+      - if @certificate.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+          %ul
+            - @certificate.errors.full_messages.each do |msg|
+              %li= msg
+
+      = f.hidden_field :method, value: :csr
+      .form-group
+        = f.label :csr
+        = f.text_area :csr, class: "form-control", rows: 10
+      = f.submit t('.save'), class: "btn btn-primary"
+      = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
+  .tab-pane{ id: "spkac" }
+    .alert.alert-info
+      %p
+        This method, <em>Signed Public Key and Challenge</em>, is similar to the CSR since the certificate private key is never known by the server and cannot be compromised.  After completion, the certificate and the private key will be installed in your web user agent and will have to be exported.
+    - if !@certificate.issuer.policy
+      .alert.alert-danger
+        %p
+          This method is not available when no policy is enforced on the certificate authority.
+    - else
+      = form_for [@certificate_authority, @certificate] do |f|
+        - if @certificate.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+            %ul
+              - @certificate.errors.full_messages.each do |msg|
+                %li= msg
+
+        = hidden_field_tag :method, :spkac
+        - @certificate.issuer.policy.subject_attributes.order("position").each_with_index do |attr,i|
+          .form-group
+            = label_tag "attr_#{i}", attr.description
+            - if attr.policy == "match"
+              = text_field_tag "attr_#{i}", attr.default, class: "form-control", disabled: "disabled"
+            - else
+              = text_field_tag "attr_#{i}", attr.default, class: "form-control"
+        .form-group
+          = f.label :public_key
+          %keygen{ name: "public_key", class: "form-control" }
+        = f.submit t('.save'), class: "btn btn-primary"
+        = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
+  .tab-pane{ id: "insecure" }
+    .alert.alert-warning
+      %p
+        This method let the server generate both the private key and the certificate (that is, generate a CSR on the server side).
+        %br/
+        While this is somewhat convenient, at some point the server knows the private key of the user certificate.  This kind of situation should be avoided.
+    - if !@certificate.issuer.policy
+      .alert.alert-danger
+        %p
+          This method is not available when no policy is enforced on the certificate authority.
+    - else
+      = form_for [@certificate_authority, @certificate] do |f|
+        - if @certificate.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+            %ul
+              - @certificate.errors.full_messages.each do |msg|
+                %li= msg
+
+        = hidden_field_tag :method, :insecure
+        - @certificate.issuer.policy.subject_attributes.order("position").each_with_index do |attr,i|
+          .form-group
+            = label_tag "attr_#{i}", attr.description
+            - if attr.policy == "match"
+              = text_field_tag "attr_#{i}", attr.default, class: "form-control", disabled: "disabled"
+            - else
+              = text_field_tag "attr_#{i}", attr.default, class: "form-control"
+        = f.submit t('.save'), class: "btn btn-primary"
+        = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
+
+:coffeescript
+  $ ->
+    $(".nav-tabs a").on "shown.bs.tab", (e) ->
+      $("textarea:visible:enabled, input:visible:enabled").first().focus()
+    $(".nav-tabs a").click (e) ->
+      e.preventDefault()
+      $(this).tab('show')
+

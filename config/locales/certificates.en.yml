@@ -1,0 +1,17 @@
+en:
+  certificates:
+    form:
+      back: Back
+      save: Save
+    index:
+      confirm: &confirm Are you sure?
+      revoke: &revoke Revoke
+      edit: Edit
+      destroy: Destroy
+      new: Create Certificate
+      title: Certificates
+    new:
+      title: Create Certificate
+    show:
+      confirm: *confirm
+      revoke: *revoke

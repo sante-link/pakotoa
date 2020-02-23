@@ -1,0 +1,25 @@
+en:
+  certificate_authorities:
+    edit:
+      title: Edit Certification Authority
+    form:
+      back: Back
+      save: Save
+    index:
+      confirm: Are you sure?
+      destroy: Destroy
+      edit: Edit
+      new: New Certificate Authority
+      show: Show
+      title: Certification Authorities
+    new:
+      title: Create Certification Authority
+    show:
+      attributes: Manage Subject Attributes
+      back: Back
+      commit: Commit
+      creating_ca_title: Creating a Certification Authority
+      edit: Edit Certification Authority
+      manage_certificates: Manage Certificates
+      managers: Managers
+      users: Manage Users

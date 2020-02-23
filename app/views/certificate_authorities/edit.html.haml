@@ -1,0 +1,11 @@
+= content_for(:title, abbr_subject(@certificate_authority.subject))
+
+= simple_form_for @certificate_authority do |f|
+  = f.input :current_password
+  = f.input :password
+  = f.input :password_confirmation
+  = f.input :policy_id, collection: Policy.order(:name).map { |policy| [policy.name, policy.id] }
+  = f.input :certify_for, placeholder: '2 years from now'
+  = f.input :export_root
+  = f.submit class: 'btn btn-primary'
+  = link_to t('.back'), ( @certificate_authority.persisted? ? certificate_authority_path(@certificate_authority) : certificate_authorities_path  ), class: "btn btn-link"

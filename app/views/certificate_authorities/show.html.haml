@@ -1,0 +1,55 @@
+- content_for(:title) { abbr_subject(@certificate_authority.subject) }
+
+- if false
+  .alert.alert-danger
+    %p The Certification Authority's Certificates Revokation List (CLR) needs updating.
+    %p
+      = link_to content_tag(:i, '', class: "fa fa-refresh") + " Update the Certificates Revokation List", "", class: "btn btn-danger"
+      = link_to "Ignore", "", class: "btn btn-default"
+
+.row
+  .col-lg-8
+    %p
+      %b Subject:
+      %br
+      %code= @certificate_authority.subject
+    %p
+      %b Issuer:
+      %br
+      %code= @certificate_authority.issuer.try(:subject) || @certificate_authority.subject
+    %p
+      %b Serial:
+      %br
+      %code= @certificate_authority.serial
+    %p
+      %b Validity:
+      %br
+      = l @certificate_authority.not_before
+      to
+      = l @certificate_authority.not_after
+    %p
+      %b Certificate
+      %pre= @certificate_authority.certificate
+    %p
+      %b Policy
+      %br
+      - if @certificate_authority.policy then
+        = link_to @certificate_authority.policy.name, policy_path(@certificate_authority.policy)
+      - else
+        None
+  .col-lg-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          = t(".managers")
+          = link_to content_tag(:i, "", class: "fa fa-edit") + " " + t(".users"), certificate_authority_users_path(@certificate_authority), class: "btn btn-link btn-xs pull-right"
+          .badge= @certificate_authority.users.count
+      .panel-body
+        - @certificate_authority.users.each do |user|
+          - if user == current_user
+            .label.label-primary= user.email
+          - else
+            .label.label-default= user.email
+
+    = link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-primary btn-block"
+    = link_to t('.edit'), edit_certificate_authority_path(@certificate_authority), class: 'btn btn-default btn-block'

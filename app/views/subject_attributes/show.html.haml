@@ -1,0 +1,11 @@
+- content_for(:title) { t(".title", attribute_name: @subject_attribute.oid.name) }
+
+= show_for @subject_attribute do |sa|
+  = sa.association :oid
+  = sa.attribute :description
+  = sa.attribute :default
+  = sa.attribute :min
+  = sa.attribute :max
+  = sa.attribute :strategy
+
+= link_to 'Edit', edit_policy_subject_attribute_path(@policy, @subject_attribute), class: "btn btn-default"
