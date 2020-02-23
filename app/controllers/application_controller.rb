@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
   end
 
   around_action :apply_user_preferences
+
+  rescue_from CanCan::AccessDenied do |exception|
+    #render text: "<h1 class=\"alert alert-danger\">Permission Denided</h1>", layout: "application"
+    redirect_to new_user_session_path
+  end
+
   def add_breadcrumb(title, url)
     @breadcrumb ||= []
     if Symbol === title then
@@ -30,18 +36,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-helper_method :user_signed_in?
-def user_signed_in?
-  true
-end
-
-helper_method :current_user
-def current_user
-  User.new(id: 1, email: 'romain@examplecom', time_zone: 'Pacific/Tahiti')
-end
-
   def certificate_authority_title
-    abbr_subject(@certificate_authority.subject)
+    helpers.abbr_subject(@certificate_authority.subject)
   end
 
   def policy_title

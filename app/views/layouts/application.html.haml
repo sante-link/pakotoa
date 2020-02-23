@@ -40,9 +40,6 @@
         .collapse.navbar-collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav
             %li
-              FIXME
-              /= link_to t('.applications'), oauth_applications_path
-            %li
               = link_to t('.policies'), policies_path
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
@@ -55,8 +52,7 @@
                   %li= link_to(t("devise.shared.links.sign_out"), destroy_user_session_path)
             - else
               %li.dropdown
-                FIXME
-                /= link_to "Sign in with GitHub", user_omniauth_authorize_path(:github)
+                = link_to "Sign in", new_user_session_path
     - if content_for?(:title)
       .page-title
         .container

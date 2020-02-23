@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   resources :certificate_authorities do
     member do
       get :openssl_ca
@@ -24,12 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-
-  devise_scope :user do
-    get 'sign_in', to: "devise/sessions#new", as: :new_user_session
-    get 'sign_out', to: "devise/sessions#destroy", as: :destroy_user_session
-  end
+  devise_for :users
 
   root 'certificate_authorities#index'
 end
