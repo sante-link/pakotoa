@@ -22,7 +22,7 @@ string_mask = utf8only
 
 [ req_distinguished_name ]
 <% attr_usage = {} %>
-<% @certificate_authority.subject_attributes.order('position').each do |attr| %>
+<% @certificate_authority.policy.subject_attributes.order('position').each do |attr| %>
 <% attr_usage[attr.oid.name] ||= 0 %>
 <%= "%d.%-30s = %s" % [ attr_usage[attr.oid.name], attr.oid.name, attr.description ] %>
 <% if ! attr.default.blank? then %>
