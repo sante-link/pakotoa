@@ -53,6 +53,7 @@ group :development, :test do
   gem "rubocop-rspec"
   gem "rubocop-rails"
   gem "rubocop-rails_config"
+  gem "haml_lint", require: false
 end
 
 group :development do
