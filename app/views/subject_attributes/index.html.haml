@@ -14,7 +14,7 @@
 
   %tbody.sortable{data: {"sort-url" => sort_policy_subject_attributes_url(@policy) }}
     - @subject_attributes.each do |attribute|
-      %tr
+      %tr{ id: "subject_attribute_#{attribute.id}"}
         %td
           %i{class: "fa fa-exchange fa-rotate-90", style: "cursor: move"}
           = link_to attribute.oid.name, [@policy, attribute]

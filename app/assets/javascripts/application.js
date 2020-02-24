@@ -6,8 +6,9 @@
 //= require bootstrap
 
 document.addEventListener("turbolinks:load", () => {
-  console.log($("table tbody.sortable").length)
-  $("table tbody.sortable").sortable({
+  const selector = "table tbody.sortable"
+  console.log($(selector).length)
+  $(selector).sortable({
     axis: 'y',
     handle: 'i',
     helper: (e, tr) => {
@@ -20,8 +21,8 @@ document.addEventListener("turbolinks:load", () => {
       return helper
     },
     update: () => {
-      console.log($(this).sortable('serialize'))
-      $.post($(this).data('sort-url'), $(this).sortable('serialize'))
+      console.log($(selector).sortable('serialize'))
+      $.post($(selector).data('sort-url'), $(selector).sortable('serialize'))
     }
   }).disableSelection()
 })
