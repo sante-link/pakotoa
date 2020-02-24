@@ -31,6 +31,7 @@ class Ability
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
     if user then
+      # FIXME: Hardcoded identifier
       if user.id == 1 then
         can :manage, :all
       else
