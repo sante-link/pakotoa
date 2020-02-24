@@ -18,7 +18,7 @@ class CertificateAuthority < Certificate
 
   def next_serial!
     serial = self.next_serial.try(:to_i)
-    update_attributes!(next_serial: (next_serial || 0) + 1)
+    update!(next_serial: (next_serial || 0) + 1)
     serial
   end
 
@@ -156,7 +156,7 @@ class CertificateAuthority < Certificate
 
         next if issuer == ca # issue == nil for self-signed certificates
 
-        ca.update_attributes!(issuer: issuer)
+        ca.update!(issuer: issuer)
       end
     end
   end

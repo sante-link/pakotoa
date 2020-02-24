@@ -55,7 +55,7 @@ class CertificatesController < ApplicationController
   end
 
   def revoke
-    @certificate.update_attributes(revoked_at: Time.now.utc)
+    @certificate.update(revoked_at: Time.now.utc)
     respond_with(@certificate_authority, @certificate)
   end
 
