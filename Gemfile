@@ -41,9 +41,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'coffee-rails'
 gem 'doorkeeper'
-gem 'rspec'
 gem 'chronic'
-gem 'timecop'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -66,6 +64,11 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'capybara-screenshot'
   gem 'selenium-webdriver'
+  # Rspec (use only "rspec-rails" once RSpec 4 is out.)
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
+  end
+  gem 'timecop'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
