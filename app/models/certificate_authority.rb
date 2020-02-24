@@ -26,7 +26,7 @@ class CertificateAuthority < Certificate
     if self.password.blank? then
       write_attribute(:key, key.to_pem)
     else
-      cipher = OpenSSL::Cipher::Cipher.new("AES-128-CBC")
+      cipher = OpenSSL::Cipher.new("AES-128-CBC")
       write_attribute(:key, key.export(cipher, self.password))
     end
   end
