@@ -1,3 +1,4 @@
+-# haml-lint:disable InstanceVariables, InlineStyles
 %ul.nav.nav-tabs
   %li.active= link_to "CSR", "#csr", data: { toggle: "nav" }
   %li= link_to "SPKAC", "#spkac", data: { toggle: "nav" }
@@ -11,12 +12,12 @@
         %code openssl req -newkey rsa:2048 -keyout key.pem -out req.pem
       %p
         To ease-up this process, you are advised to merge
-        =link_to "this OpenSSL configuration snippet", openssl_req_certificate_authority_path(@certificate_authority, format: :text), class: "alert-link"
+        = link_to "this OpenSSL configuration snippet", openssl_req_certificate_authority_path(@certificate_authority, format: :text), class: "alert-link"
         into your <em>openssl.cnf</em> configuration file.
     = form_for [@certificate_authority, @certificate] do |f|
       - if @certificate.errors.any?
-        #error_explanation
-          %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+        .error_explanation
+          %h2 #{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:
           %ul
             - @certificate.errors.full_messages.each do |msg|
               %li= msg
@@ -25,8 +26,8 @@
       .form-group
         = f.label :csr
         = f.text_area :csr, class: "form-control", rows: 10
-      = f.submit t('.save'), class: "btn btn-primary"
-      = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
+      = f.submit t(".save"), class: "btn btn-primary"
+      = link_to t(".back"), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
   .tab-pane{ id: "spkac" }
     .alert.alert-info
       %p
@@ -38,14 +39,14 @@
     - else
       = form_for [@certificate_authority, @certificate] do |f|
         - if @certificate.errors.any?
-          #error_explanation
-            %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+          .error_explanation
+            %h2 #{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:
             %ul
               - @certificate.errors.full_messages.each do |msg|
                 %li= msg
 
         = hidden_field_tag :method, :spkac
-        - @certificate.issuer.policy.subject_attributes.order("position").each_with_index do |attr,i|
+        - @certificate.issuer.policy.subject_attributes.order("position").each_with_index do |attr, i|
           .form-group
             = label_tag "attr_#{i}", attr.description
             - if attr.policy == "match"
@@ -54,9 +55,9 @@
               = text_field_tag "attr_#{i}", attr.default, class: "form-control"
         .form-group
           = f.label :public_key
-          %keygen{ name: "public_key", class: "form-control" }
-        = f.submit t('.save'), class: "btn btn-primary"
-        = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
+          %keygen.form-control{ name: "public_key" }
+        = f.submit t(".save"), class: "btn btn-primary"
+        = link_to t(".back"), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
   .tab-pane{ id: "insecure" }
     .alert.alert-warning
       %p
@@ -70,22 +71,22 @@
     - else
       = form_for [@certificate_authority, @certificate] do |f|
         - if @certificate.errors.any?
-          #error_explanation
-            %h2= "#{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:"
+          .error_explanation
+            %h2 #{pluralize(@certificate.errors.count, "error")} prohibited this certificate from being saved:
             %ul
               - @certificate.errors.full_messages.each do |msg|
                 %li= msg
 
         = hidden_field_tag :method, :insecure
-        - @certificate.issuer.policy.subject_attributes.order("position").each_with_index do |attr,i|
+        - @certificate.issuer.policy.subject_attributes.order("position").each_with_index do |attr, i|
           .form-group
             = label_tag "attr_#{i}", attr.description
             - if attr.policy == "match"
               = text_field_tag "attr_#{i}", attr.default, class: "form-control", disabled: "disabled"
             - else
               = text_field_tag "attr_#{i}", attr.default, class: "form-control"
-        = f.submit t('.save'), class: "btn btn-primary"
-        = link_to t('.back'), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
+        = f.submit t(".save"), class: "btn btn-primary"
+        = link_to t(".back"), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
 
 :coffeescript
   $ ->
@@ -95,3 +96,4 @@
       e.preventDefault()
       $(this).tab('show')
 
+-# haml-lint:enable InstanceVariables, InlineStyles

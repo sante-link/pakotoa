@@ -4,7 +4,7 @@
   .alert.alert-danger
     %p The Certification Authority's Certificates Revokation List (CLR) needs updating.
     %p
-      = link_to content_tag(:i, '', class: "fa fa-refresh") + " Update the Certificates Revokation List", "", class: "btn btn-danger"
+      = link_to content_tag(:i, "", class: "fa fa-refresh") + " Update the Certificates Revokation List", "", class: "btn btn-danger"
       = link_to "Ignore", "", class: "btn btn-default"
 
 .row
@@ -52,4 +52,4 @@
             .label.label-default= user.email
 
     = link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-primary btn-block"
-    = link_to t('.edit'), edit_certificate_authority_path(@certificate_authority), class: 'btn btn-default btn-block'
+    = link_to t(".edit"), edit_certificate_authority_path(@certificate_authority), class: "btn btn-default btn-block"

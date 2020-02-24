@@ -33,4 +33,4 @@
 
   .col-lg-4
     - if @certificate.revoked_at.nil?
-      = link_to t('.revoke'), revoke_certificate_authority_certificate_path(@certificate_authority, @certificate), method: :patch, :data => { :confirm => t('.confirm') }, class: "btn btn-warning btn-block"
+      = link_to t(".revoke"), revoke_certificate_authority_certificate_path(@certificate_authority, @certificate), method: :patch, data: { confirm: t(".confirm") }, class: "btn btn-warning btn-block"

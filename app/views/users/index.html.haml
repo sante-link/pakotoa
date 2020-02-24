@@ -1,4 +1,4 @@
-- content_for(:title) { t('.title') }
+- content_for(:title) { t(".title") }
 
 %table.table.table-striped
   %thead
@@ -12,11 +12,11 @@
         %td
           - if current_user.id == 1 || user != current_user
             - has_access = @certificate_authority.users.include?(user)
-            .btn-group{data: { toggle: "buttons" } }
-              %label.btn.btn-default.btn-sm{ class: ('active' if has_access), data: { "post-uri" => grant_certificate_authority_user_path(@certificate_authority, user) } }
-                %input{ type: 'radio', name: 'access_grant'} Yes
-              %label.btn.btn-default.btn-sm{ class: ('active' if !has_access), data: { "post-uri" => revoke_certificate_authority_user_path(@certificate_authority, user) } }
-                %input{ type: 'radio', name: 'access_grant' } No
+            .btn-group{ data: { toggle: "buttons" } }
+              %label.btn.btn-default.btn-sm{ class: ("active" if has_access), data: { "post-uri" => grant_certificate_authority_user_path(@certificate_authority, user) } }
+                %input{ type: "radio", name: "access_grant" } Yes
+              %label.btn.btn-default.btn-sm{ class: ("active" if !has_access), data: { "post-uri" => revoke_certificate_authority_user_path(@certificate_authority, user) } }
+                %input{ type: "radio", name: "access_grant" } No
 
 :coffee
   $ ->
