@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :subject_attribute do
-    policy "optionnal"
+    policy { 'optionnal' }
   end
 end
