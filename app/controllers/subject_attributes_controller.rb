@@ -48,7 +48,6 @@ class SubjectAttributesController < ApplicationController
     params[:subject_attribute].each_with_index do |id, index|
       SubjectAttribute.update(id, position: index + 1)
     end
-    render nothing: true
   end
 
   private
