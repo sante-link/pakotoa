@@ -40,6 +40,8 @@
         .collapse.navbar-collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav
             %li
+              = link_to t('.applications'), oauth_applications_path
+            %li
               = link_to t('.policies'), policies_path
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
