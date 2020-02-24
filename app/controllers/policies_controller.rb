@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class PoliciesController < ApplicationController
   load_and_authorize_resource :policy
 
-  #respond_to :html
+  # respond_to :html
 
   def index
     respond_with @policies
@@ -33,8 +35,9 @@ class PoliciesController < ApplicationController
     @policy.destroy
     respond_with @policy
   end
+
 private
   def policy_params
-    params.require('policy').permit('name')
+    params.require("policy").permit("name")
   end
 end

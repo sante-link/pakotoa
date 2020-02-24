@@ -1,6 +1,7 @@
-class CertificateAuthoritiesController < ApplicationController
+# frozen_string_literal: true
 
-  #respond_to :html
+class CertificateAuthoritiesController < ApplicationController
+  # respond_to :html
 
   load_and_authorize_resource :certificate_authority
 
@@ -11,7 +12,7 @@ class CertificateAuthoritiesController < ApplicationController
   # GET /certificate_authorities
   # GET /certificate_authorities.json
   def index
-    @certificate_authorities = @certificate_authorities.order('created_at DESC')
+    @certificate_authorities = @certificate_authorities.order("created_at DESC")
   end
 
   # GET /certificate_authorities/1
@@ -66,9 +67,9 @@ class CertificateAuthoritiesController < ApplicationController
       ef.subject_certificate = certificate
       ef.issuer_certificate = issuer_certificate
       certificate.add_extension(ef.create_extension("basicConstraints", "CA:TRUE", true))
-      certificate.add_extension(ef.create_extension("keyUsage","keyCertSign, cRLSign", true))
-      certificate.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
-      certificate.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
+      certificate.add_extension(ef.create_extension("keyUsage", "keyCertSign, cRLSign", true))
+      certificate.add_extension(ef.create_extension("subjectKeyIdentifier", "hash", false))
+      certificate.add_extension(ef.create_extension("authorityKeyIdentifier", "keyid:always", false))
       @issuer.sign(certificate)
 
       @certificate_authority.certificate = certificate
@@ -79,8 +80,8 @@ class CertificateAuthoritiesController < ApplicationController
     respond_with(@certificate_authority)
   rescue Exception => e
     @certificate_authority.destroy
-    @certificate_authority.errors.add(:issuer_password, e.message + "" + e.backtrace.join('<br/>'))
-    render 'new'
+    @certificate_authority.errors.add(:issuer_password, e.message + "" + e.backtrace.join("<br/>"))
+    render "new"
   end
 
   def edit

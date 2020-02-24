@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "application_responder"
 
 class ApplicationController < ActionController::Base
@@ -15,7 +17,7 @@ class ApplicationController < ActionController::Base
   around_action :apply_user_preferences
 
   rescue_from CanCan::AccessDenied do |exception|
-    #render text: "<h1 class=\"alert alert-danger\">Permission Denided</h1>", layout: "application"
+    # render text: "<h1 class=\"alert alert-danger\">Permission Denided</h1>", layout: "application"
     redirect_to new_user_session_path
   end
 
@@ -47,11 +49,11 @@ class ApplicationController < ActionController::Base
   def apply_user_preferences
     if user_signed_in? then
       Time.zone = current_user.time_zone
-     # I18n.locale = current_user.locale
+      # I18n.locale = current_user.locale
     end
     yield
   ensure
     Time.zone = Time.zone_default
-    #I18n.locale = I18n.default_locale
+    # I18n.locale = I18n.default_locale
   end
 end

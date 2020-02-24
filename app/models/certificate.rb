@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Certificate < ActiveRecord::Base
-  belongs_to :issuer, class_name: 'CertificateAuthority', optional: true
+  belongs_to :issuer, class_name: "CertificateAuthority", optional: true
 
   attr_accessor :method, :csr, :export_name
 
@@ -22,14 +24,14 @@ class Certificate < ActiveRecord::Base
     # issuer name and serial number identify a unique certificate).
 
     if Certificate.where(issuer_id: issuer_id, serial: serial).any? then
-      errors.add(:serial, 'already taken')
+      errors.add(:serial, "already taken")
       res = false
     end
 
     # Also check that the certificate subject will not clash with another
     # certificate
-    if Certificate.where('issuer_id = ? AND subject = ? AND revoked_at IS NULL AND not_after > ?', issuer_id, subject, Time.now).any? then
-      errors.add(:subject, 'clash with another valid certificate')
+    if Certificate.where("issuer_id = ? AND subject = ? AND revoked_at IS NULL AND not_after > ?", issuer_id, subject, Time.now).any? then
+      errors.add(:subject, "clash with another valid certificate")
       res = false
     end
 
@@ -41,7 +43,7 @@ class Certificate < ActiveRecord::Base
       filename = File.join(issuer.export_root, export_name)
       Rails.logger.info("Exporting signed certificate to #{filename}")
       FileUtils.mkdir_p(File.dirname(filename))
-      open(filename, 'w') do |io|
+      open(filename, "w") do |io|
         io.write(certificate.to_pem)
       end
     end
@@ -49,7 +51,7 @@ class Certificate < ActiveRecord::Base
 
   scope :signed_by, lambda { |issuer|
     ca = CertificateAuthority.find_by(subject: issuer)
-    where('issuer_id = ? OR (issuer_id IS NULL AND subject = ?)', ca.id, issuer)
+    where("issuer_id = ? OR (issuer_id IS NULL AND subject = ?)", ca.id, issuer)
   }
 
   def certificate
@@ -74,7 +76,7 @@ class Certificate < ActiveRecord::Base
   # The ISO-8859-1 encoding may however not work for all situations.  Revert to
   # the legacy code if this is a concern.
   def self.unescape_utf8_chars(s)
-    return s.gsub(/\\x(..)/) { Integer($1, 16).chr('UTF-8') }.encode('ISO-8859-1').force_encoding('UTF-8')
+    s.gsub(/\\x(..)/) { Integer($1, 16).chr("UTF-8") }.encode("ISO-8859-1").force_encoding("UTF-8")
 
     # raise "Unsafe certificate subject: #{s}" if s =~ /}/
     # eval('%{' + s + '}')

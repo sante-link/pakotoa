@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   load_and_authorize_resource :certificate_authority
-  #load_and_authorize_resource :user, through: :certificate_authority
+  # load_and_authorize_resource :user, through: :certificate_authority
   authorize_resource :user
 
   add_breadcrumb "certificate_authorities.index.title", "certificate_authorities_path"
