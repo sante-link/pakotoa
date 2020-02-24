@@ -50,7 +50,7 @@ class Certificate < ActiveRecord::Base
   end
 
   scope :signed_by, lambda { |issuer|
-    ca = CertificateAuthority.find_by(subject: issuer)
+    ca = CertificateAuthority.unscoped.find_by(subject: issuer)
     where("issuer_id = ? OR (issuer_id IS NULL AND subject = ?)", ca.id, issuer)
   }
 
