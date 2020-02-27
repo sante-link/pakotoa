@@ -1,4 +1,4 @@
-class FixNotBeforeNotAfterForCertificates < ActiveRecord::Migration
+class FixNotBeforeNotAfterForCertificates < ActiveRecord::Migration[4.2]
   def self.up
     Certificate.all.each do |certificate|
       cert = OpenSSL::X509::Certificate.new(certificate.certificate)

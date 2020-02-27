@@ -1,4 +1,4 @@
-class CreateObjectIds < ActiveRecord::Migration
+class CreateObjectIds < ActiveRecord::Migration[4.2]
   def change
     create_table :object_ids do |t|
       t.string :name

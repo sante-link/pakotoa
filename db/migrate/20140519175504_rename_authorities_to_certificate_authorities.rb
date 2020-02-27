@@ -1,4 +1,4 @@
-class RenameAuthoritiesToCertificateAuthorities < ActiveRecord::Migration
+class RenameAuthoritiesToCertificateAuthorities < ActiveRecord::Migration[4.2]
   def change
     rename_table :authorities, :certificate_authorities
     rename_column :affiliations, :authority_id, :certificate_authority_id

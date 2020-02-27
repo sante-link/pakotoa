@@ -1,4 +1,4 @@
-class ReworkDataModel < ActiveRecord::Migration
+class ReworkDataModel < ActiveRecord::Migration[4.2]
   def change
     drop_table :certificate_authorities
 

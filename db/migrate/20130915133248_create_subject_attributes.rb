@@ -1,4 +1,4 @@
-class CreateSubjectAttributes < ActiveRecord::Migration
+class CreateSubjectAttributes < ActiveRecord::Migration[4.2]
   def change
     create_table :subject_attributes do |t|
       t.references :object_id, index: true
