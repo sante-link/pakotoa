@@ -12,35 +12,42 @@
       %th
       %th
 
-  %tbody{data: {"sort-url" => sort_policy_subject_attributes_url(@policy) }}
+  %tbody.sortable{ data: { "sort-url" => sort_policy_subject_attributes_url(@policy) } }
     - @subject_attributes.each do |attribute|
-      /%tr
-      = content_tag_for :tr, attribute do
+      %tr{ id: "subject_attribute_#{attribute.id}" }
         %td
-          %i{class: "fa fa-exchange fa-rotate-90", style: "cursor: move"}
+          -# haml-lint:disable InlineStyles
+          %i.fa.fa-exchange.fa-rotate-90{ style: "cursor: move" }
+          -# haml-lint:enable InlineStyles
           = link_to attribute.oid.name, [@policy, attribute]
         %td= attribute.description
         %td= attribute.default
         %td= attribute.min
         %td= attribute.max
         %td= attribute.strategy
-        %td= link_to 'Edit', edit_policy_subject_attribute_path(@policy, attribute), class: 'btn btn-xs btn-link'
-        %td= link_to 'Destroy', [@policy, attribute], :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger btn-xs"
+        %td= link_to "Edit", edit_policy_subject_attribute_path(@policy, attribute), class: "btn btn-xs btn-link"
+        %td= link_to "Destroy", [@policy, attribute], method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs"
 
-= link_to 'New Attribute', new_policy_subject_attribute_path(@policy), class: "btn btn-default"
+= link_to "New Attribute", new_policy_subject_attribute_path(@policy), class: "btn btn-default"
 
-:coffee
-  jQuery ->
-    $("table tbody").sortable({
-        axis: 'y'
-        handle: 'i'
-        helper: (e, tr) ->
-          originals = tr.children()
-          helper = tr.clone()
-          helper.children().each (index) ->
-            # Set helper cell sizes to match the original sizes
-            $(this).width(originals.eq(index).width())
-          return helper
-        update: ->
-          $.post($(this).data('sort-url'), $(this).sortable('serialize'))
+:javascript
+  document.addEventListener("turbolinks:load", () => {
+    const selector = "table tbody.sortable"
+    console.log($(selector).length)
+    $(selector).sortable({
+      axis: 'y',
+      handle: 'i',
+      helper: (e, tr) => {
+        var originals = tr.children()
+        var helper = tr.clone()
+        helper.children().each( (index) => {
+          // Set helper cell sizes to match the original sizes
+          $(this).width(originals.eq(index).width())
+        })
+        return helper
+      },
+      update: () => {
+        $.post($(selector).data('sort-url'), $(selector).sortable('serialize'))
+      }
     }).disableSelection()
+  })

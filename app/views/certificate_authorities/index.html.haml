@@ -25,6 +25,6 @@
         %td
           .badge.pull-right= Certificate.signed_by(certificate_authority.subject).count
         - if can?(:destroy, certificate_authority)
-          %td= link_to t('.destroy'), certificate_authority, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs"
+          %td= link_to t(".destroy"), certificate_authority, method: :delete, data: { confirm: t(".confirm") }, class: "btn btn-danger btn-xs"
 
-= link_to t('.new'), new_certificate_authority_path, class: "btn btn-default" if can?(:create, CertificateAuthority)
+= link_to t(".new"), new_certificate_authority_path, class: "btn btn-default" if can?(:create, CertificateAuthority)

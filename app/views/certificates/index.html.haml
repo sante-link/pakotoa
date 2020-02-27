@@ -23,8 +23,8 @@
           %td
             - if certificate.revoked_at.nil? && certificate.not_after.future?
               - if !certificate.is_a? CertificateAuthority
-                = link_to t('.revoke'), revoke_certificate_authority_certificate_path(@certificate_authority, certificate), method: :patch, :data => { :confirm => t('.confirm') }, class: "btn btn-warning btn-xs pull-right"
+                = link_to t(".revoke"), revoke_certificate_authority_certificate_path(@certificate_authority, certificate), method: :patch, data: { confirm: t(".confirm") }, class: "btn btn-warning btn-xs pull-right"
         - if can? :destroy, certificate
-          %td= link_to t('.destroy'), [@certificate_authority, certificate], :method => :delete, :data => { :confirm => t('.confirm') }, class: "btn btn-danger btn-xs"
+          %td= link_to t(".destroy"), [@certificate_authority, certificate], method: :delete, data: { confirm: t(".confirm") }, class: "btn btn-danger btn-xs"
 
-= link_to t('.new'), new_certificate_authority_certificate_path(@certificate_authority), class: "btn btn-default"
+= link_to t(".new"), new_certificate_authority_certificate_path(@certificate_authority), class: "btn btn-default"

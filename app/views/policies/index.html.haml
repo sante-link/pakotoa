@@ -1,4 +1,4 @@
-= content_for(:title, t('.title'))
+= content_for(:title, t(".title"))
 
 %table.table.table-striped
   %thead
@@ -11,7 +11,7 @@
     - @policies.each do |policy|
       %tr
         %td= link_to policy.name, policy
-        %td= link_to t('.edit'), edit_policy_path(policy), class: "btn btn-link btn-xs" if can?(:edit, policy)
-        %td= link_to t('.destroy'), policy, method: :delete, data: { confirm: t('.confirm') }, class: "btn btn-danger btn-xs" if can?(:destroy, policy)
+        %td= link_to t(".edit"), edit_policy_path(policy), class: "btn btn-link btn-xs" if can?(:edit, policy)
+        %td= link_to t(".destroy"), policy, method: :delete, data: { confirm: t(".confirm") }, class: "btn btn-danger btn-xs" if can?(:destroy, policy)
 
-= link_to t('.new'), new_policy_path, class: "btn btn-default" if can?(:create, Policy)
+= link_to t(".new"), new_policy_path, class: "btn btn-default" if can?(:create, Policy)

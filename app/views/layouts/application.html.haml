@@ -6,38 +6,40 @@
         = content_for(:title) + " —"
       Pakotoa
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
-    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = stylesheet_link_tag "application", media: "all", 'data-turbolinks-track': "reload"
+    = javascript_pack_tag "application", 'data-turbolinks-track': "reload"
+    = javascript_include_tag "application", 'data-turbolinks-track': "reload"
     = csrf_meta_tags
+    = csp_meta_tag
   %body
     %nav.navbar.navbar-inverse.navbar-static-top{ role: "navigation" }
       .container
         .navbar-header
-          %button.navbar-toggle{data: {toggle: "collapse", target: ".navbar-responsive-collapse"}}
+          %button.navbar-toggle{ data: { toggle: "collapse", target: ".navbar-responsive-collapse" } }
             %span.sr-only= t("toggle_navigation")
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: '/'}
+          %a.navbar-brand{ href: "/" }
             %span.name= t("application.name")
         .collapse.navbar-collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav
             %li
-              = link_to t('.applications'), oauth_applications_path
+              = link_to t(".applications"), oauth_applications_path
             %li
-              = link_to t('.policies'), policies_path
+              = link_to t(".policies"), policies_path
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li.dropdown
-                %a.dropdown-toggle{data:{toggle: "dropdown"}, href: '#'}
-                  %i{class: "fa fa-user fa-lg"}
+                %a.dropdown-toggle{ data: { toggle: "dropdown" }, href: "#" }
+                  %i.fa.fa-user.fa-lg
                   = current_user.email
                   %strong.caret
                 %ul.dropdown-menu
                   %li= link_to(t("devise.shared.links.sign_out"), destroy_user_session_path)
             - else
               %li.dropdown
-                = link_to "Sign in with Médispo", user_omniauth_authorize_path(:medispo)
+                = link_to "Sign in", new_user_session_path
     - if content_for?(:title)
       .page-title
         .container
@@ -47,13 +49,13 @@
               - @breadcrumb.each do |part|
                 %li= link_to abbr_subject(part[0]), part[1]
             %li= abbr_subject(content_for(:title))
-    #main{:role => "main"}
+    #main{ role: "main" }
       .container
         - flash.each do |kind, value|
-          - kind = 'success' if kind == 'notice'
-          - kind = 'danger' if kind == 'alert'
-          .alert{class: "alert-#{kind}"}
-            %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+          - kind = "success" if kind == "notice"
+          - kind = "danger" if kind == "alert"
+          .alert{ class: "alert-#{kind}" }
+            %button.close{ "data-dismiss" => "alert", type: "button" } &times;
             = value
       .container
         = yield
