@@ -1,12 +1,13 @@
-require 'app_responder'
+require "application_responder"
 
 class ApplicationController < ActionController::Base
+  self.responder = ApplicationResponder
+  respond_to :html
+
   include ApplicationHelper
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
-  self.responder = AppResponder
 
   # Automagically call foo_params() to sanitize params[:foo]
   # Required for load_and_authorize_resource properly creating and updating models.
