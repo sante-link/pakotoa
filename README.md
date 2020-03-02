@@ -18,7 +18,6 @@ further guidance:
 ```
 config/api_keys.yml
 config/database.yml
-config/secrets.yml
 ```
 
 * Database creation

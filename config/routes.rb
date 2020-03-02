@@ -1,4 +1,4 @@
-Pakotoa::Application.routes.draw do
+Rails.application.routes.draw do
   get 'api-docs' => 'docs#index'
 
   use_doorkeeper
