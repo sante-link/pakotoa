@@ -43,7 +43,7 @@ gem 'haml-rails'
 gem 'omniauth'
 
 # Use our custom Medispo omniauth strategy
-gem 'omniauth-medispo', git: 'ssh://git@dev.medispo.fr/sante-link/medispo/omniauth-medispo.git'
+# gem 'omniauth-medispo', git: 'ssh://git@dev.medispo.fr/sante-link/medispo/omniauth-medispo.git'
 
 gem 'acts_as_list'
 
@@ -71,7 +71,7 @@ gem 'chronic'
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
-gem 'responders', '~> 1.0'
+gem 'responders'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
