@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :certificate_authority do
     serial
@@ -21,9 +23,9 @@ FactoryBot.define do
       ef.subject_certificate = cert
       ef.issuer_certificate = cert
       cert.add_extension(ef.create_extension("basicConstraints", "CA:TRUE", true))
-      cert.add_extension(ef.create_extension("keyUsage","keyCertSign, cRLSign", true))
-      cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
-      cert.add_extension(ef.create_extension("authorityKeyIdentifier","keyid:always",false))
+      cert.add_extension(ef.create_extension("keyUsage", "keyCertSign, cRLSign", true))
+      cert.add_extension(ef.create_extension("subjectKeyIdentifier", "hash", false))
+      cert.add_extension(ef.create_extension("authorityKeyIdentifier", "keyid:always", false))
       cert.sign(key, OpenSSL::Digest::SHA256.new)
 
       certificate.key = key

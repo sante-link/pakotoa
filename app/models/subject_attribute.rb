@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubjectAttribute < ActiveRecord::Base
   acts_as_list
 
@@ -7,7 +9,7 @@ class SubjectAttribute < ActiveRecord::Base
     validates_length_of :default, minimum: min, allow_blank: true if min
     validates_length_of :default, maximum: max, allow_blank: true if max
   end
-  validates :strategy, inclusion: [ 'match', 'optional', 'supplied' ], presence: true
+  validates :strategy, inclusion: [ "match", "optional", "supplied" ], presence: true
   validates_associated :oid, :policy
 
   belongs_to :oid

@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 Étantdonné(/^un administrateur$/) do
   admin = create(:user)
 
-  visit '/users/sign_in'
+  visit "/users/sign_in"
 
-  fill_in 'Email', with: admin.email
-  fill_in 'Password', with: admin.password
+  fill_in "Email", with: admin.email
+  fill_in "Password", with: admin.password
 
-  click_on 'Log in'
+  click_on "Log in"
 end
 
 Lorsqu(/^il visite la page des certificats de l'autorité de certification "([^"]*)"$/) do |subject|
@@ -15,6 +17,5 @@ Lorsqu(/^il visite la page des certificats de l'autorité de certification "([^"
 end
 
 Alors(/^il voit (\d+) liens "(.*?)"$/) do |n, text|
-  expect(page).to have_xpath('//a', text: text, count: n)
+  expect(page).to have_xpath("//a", text: text, count: n)
 end
-

@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class CertificateAuthoritiesControllerTest < ActionController::TestCase
   setup do
@@ -21,8 +23,8 @@ class CertificateAuthoritiesControllerTest < ActionController::TestCase
   end
 
   test "should create certificate authority" do
-    assert_difference('CertificateAuthority.count') do
-      post :create, certificate_authority: { subject: '/C=FR/O=Pakotoa/CN=Test certificate', key_length: 1024 }
+    assert_difference("CertificateAuthority.count") do
+      post :create, certificate_authority: { subject: "/C=FR/O=Pakotoa/CN=Test certificate", key_length: 1024 }
     end
 
     assert_redirected_to certificate_authority_path(assigns(:certificate_authority))

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def abbr_subject(subject)
     if subject =~ /CN=(.*)\// then
@@ -9,13 +11,13 @@ module ApplicationHelper
 
   def certificate_icon(certificate, options = {})
     if certificate.revoked_at.nil? && certificate.not_after.future? then
-      fa_icon('certificate', options)
+      fa_icon("certificate", options)
     else
-      options.merge!(class: 'text-danger')
+      options[:class] = "text-danger"
       if certificate.revoked_at then
-        fa_icon('ban', options)
+        fa_icon("ban", options)
       else
-        fa_icon('clock-o', options)
+        fa_icon("clock-o", options)
       end
     end
   end

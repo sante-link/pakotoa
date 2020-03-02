@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PoliciesController < ApplicationController
   load_and_authorize_resource :policy
 
@@ -31,8 +33,9 @@ class PoliciesController < ApplicationController
     @policy.destroy
     respond_with @policy
   end
+
 private
   def policy_params
-    params.require('policy').permit('name')
+    params.require("policy").permit("name")
   end
 end

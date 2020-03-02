@@ -1,13 +1,15 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class SubjectAttributesControllerTest < ActionController::TestCase
   setup do
     load "#{Rails.root}/db/seeds.rb"
 
     @policy = FactoryBot.create(:policy)
-    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name('countryName'), policy: @policy, min: 2, max: 2, default: "FR", strategy: "match")
-    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name('commonName'), policy: @policy, strategy: "supplied")
-    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name('emailAddress'), policy: @policy, strategy: "optional")
+    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name("countryName"), policy: @policy, min: 2, max: 2, default: "FR", strategy: "match")
+    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name("commonName"), policy: @policy, strategy: "supplied")
+    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name("emailAddress"), policy: @policy, strategy: "optional")
 
     @admin = FactoryBot.create(:user, id: 1)
 
@@ -26,7 +28,7 @@ class SubjectAttributesControllerTest < ActionController::TestCase
   end
 
   test "should create subject_attribute" do
-    assert_difference('SubjectAttribute.count') do
+    assert_difference("SubjectAttribute.count") do
       post :create, policy_id: @policy, subject_attribute: { default: @subject_attribute.default, max: @subject_attribute.max, min: @subject_attribute.min, oid_id: @subject_attribute.oid_id, strategy: @subject_attribute.strategy, position: @subject_attribute.position }
     end
 
@@ -49,7 +51,7 @@ class SubjectAttributesControllerTest < ActionController::TestCase
   end
 
   test "should destroy subject_attribute" do
-    assert_difference('SubjectAttribute.count', -1) do
+    assert_difference("SubjectAttribute.count", -1) do
       delete :destroy, policy_id: @policy, id: @subject_attribute
     end
 

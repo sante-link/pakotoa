@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class CertificatesControllerTest < ActionController::TestCase
   setup do
@@ -22,13 +24,13 @@ class CertificatesControllerTest < ActionController::TestCase
   end
 
   test "should create certificate" do
-    assert_difference('Certificate.count') do
+    assert_difference("Certificate.count") do
       key = OpenSSL::PKey::RSA.new(1024)
       req = OpenSSL::X509::Request.new
-      req.subject = OpenSSL::X509::Name.parse('/C=FR/O=Pakotoa/CN=TEST/emailAddress=test@example.com')
+      req.subject = OpenSSL::X509::Name.parse("/C=FR/O=Pakotoa/CN=TEST/emailAddress=test@example.com")
       req.public_key = key.public_key
       req.sign(key, OpenSSL::Digest::SHA256.new)
-      post :create, certificate_authority_id: @certificate_authority.id, certificate: { method: 'csr', csr: req.to_pem }
+      post :create, certificate_authority_id: @certificate_authority.id, certificate: { method: "csr", csr: req.to_pem }
     end
 
     assert_redirected_to certificate_authority_certificate_path(@certificate_authority, assigns(:certificate))

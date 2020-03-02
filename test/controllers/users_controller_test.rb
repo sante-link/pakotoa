@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class UsersControllerTest < ActionController::TestCase
   setup do
@@ -21,5 +23,4 @@ class UsersControllerTest < ActionController::TestCase
     get :revoke, certificate_authority_id: @certificate_authority.id, id: @user.id
     assert_response :success
   end
-
 end

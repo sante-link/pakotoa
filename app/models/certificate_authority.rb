@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificateAuthority < Certificate
   has_many :affiliations, dependent: :destroy
   has_many :users, through: :affiliations
@@ -11,20 +13,20 @@ class CertificateAuthority < Certificate
   after_initialize do
     self.key_length ||= 2048
     self.next_serial ||= 1
-    self.valid_until ||= '20 years from now'
+    self.valid_until ||= "20 years from now"
   end
 
   def next_serial!
     serial = self.next_serial.try(:to_i)
     update_attributes!(next_serial: (next_serial || 0) + 1)
-    return serial
+    serial
   end
 
   def key=(key)
     if self.password.blank? then
       write_attribute(:key, key.to_pem)
     else
-      cipher = OpenSSL::Cipher::Cipher.new('AES-128-CBC')
+      cipher = OpenSSL::Cipher::Cipher.new("AES-128-CBC")
       write_attribute(:key, key.export(cipher, self.password))
     end
   end
@@ -32,9 +34,9 @@ class CertificateAuthority < Certificate
   def key
     k = read_attribute(:key)
     if k then
-      return OpenSSL::PKey::RSA.new(read_attribute(:key), self.password)
+      OpenSSL::PKey::RSA.new(read_attribute(:key), self.password)
     else
-      return nil
+      nil
     end
   end
 
@@ -46,11 +48,11 @@ class CertificateAuthority < Certificate
     match_re_parts = []
     policy.subject_attributes.order(:position).each do |attr|
       case attr.strategy
-      when 'match' then
+      when "match" then
         match_re_parts << "/#{attr.oid.short_name}=([^/]*)"
-      when 'supplied' then
+      when "supplied" then
         match_re_parts << "/#{attr.oid.short_name}=[^/]*"
-      when 'optional' then
+      when "optional" then
         match_re_parts << "(?:/#{attr.oid.short_name}=[^/]*)?"
       end
     end
@@ -69,7 +71,7 @@ class CertificateAuthority < Certificate
       return issuer_matches.captures == subject_matches.captures
     end
 
-    return true
+    true
   end
 
   def sign(certificate)
@@ -94,8 +96,8 @@ class CertificateAuthority < Certificate
     ef = OpenSSL::X509::ExtensionFactory.new
     ef.subject_certificate = cert
     ef.issuer_certificate = self.certificate
-    cert.add_extension(ef.create_extension("keyUsage","digitalSignature", true))
-    cert.add_extension(ef.create_extension("subjectKeyIdentifier","hash",false))
+    cert.add_extension(ef.create_extension("keyUsage", "digitalSignature", true))
+    cert.add_extension(ef.create_extension("subjectKeyIdentifier", "hash", false))
     sign(cert)
 
     self.certificates.create(certificate: cert, export_name: export_name)
@@ -111,7 +113,7 @@ class CertificateAuthority < Certificate
     crl.issuer = certificate.subject
     crl.last_update = Time.now.utc
     crl.next_update = Time.now.utc + 1.week # FIXME
-    certificates.where('revoked_at IS NOT NULL AND not_after > ?', Time.now).each do |cert|
+    certificates.where("revoked_at IS NOT NULL AND not_after > ?", Time.now).each do |cert|
       rev = OpenSSL::X509::Revoked.new
       rev.serial = cert.certificate.serial
       rev.time = cert.revoked_at
