@@ -30,8 +30,12 @@ describe CertificatesController, :type => :controller do
     describe 'matching' do
       let(:csr_subject) { '/C=FR/O=Pakotoa/CN=Test Certificate/emailAddress=pakotoa@example.com' }
       it 'signes CSR when policy is matched' do
+        payload = {
+          certificate_authority_id: ca,
+          certificate: { method: 'csr', csr: csr }
+        }
         expect {
-          post :create, certificate_authority_id: ca, certificate: { method: 'csr', csr: csr }
+          post :create, params: payload
         }.to change(Certificate, :count).by(1)
       end
     end
@@ -39,8 +43,12 @@ describe CertificatesController, :type => :controller do
     describe 'mismatching' do
       let(:csr_subject) { '/C=FR/O=Pakotoa/OU=Extra/OU=More/CN=Test Certificate/emailAddress=pakotoa@example.com' }
       it 'fail if the policy is not matched' do
+        payload = {
+          certificate_authority_id: ca,
+          certificate: { method: 'csr', csr: csr }
+        }
         expect {
-          post :create, certificate_authority_id: ca, certificate: { method: 'csr', csr: csr }
+          post :create, params: payload
         }.to_not change(Certificate,:count)
       end
     end
