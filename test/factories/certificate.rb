@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence(:serial) { |x| x.to_s(16) }
 
   factory :certificate do

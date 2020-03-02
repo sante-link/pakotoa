@@ -4,12 +4,12 @@ class SubjectAttributesControllerTest < ActionController::TestCase
   setup do
     load "#{Rails.root}/db/seeds.rb"
 
-    @policy = FactoryGirl.create(:policy)
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('countryName'), policy: @policy, min: 2, max: 2, default: "FR", strategy: "match")
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('commonName'), policy: @policy, strategy: "supplied")
-    @subject_attribute = FactoryGirl.create(:subject_attribute, oid: Oid.find_by_name('emailAddress'), policy: @policy, strategy: "optional")
+    @policy = FactoryBot.create(:policy)
+    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name('countryName'), policy: @policy, min: 2, max: 2, default: "FR", strategy: "match")
+    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name('commonName'), policy: @policy, strategy: "supplied")
+    @subject_attribute = FactoryBot.create(:subject_attribute, oid: Oid.find_by_name('emailAddress'), policy: @policy, strategy: "optional")
 
-    @admin = FactoryGirl.create(:user, id: 1)
+    @admin = FactoryBot.create(:user, id: 1)
 
     sign_in(@admin)
   end

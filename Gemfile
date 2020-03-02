@@ -107,7 +107,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'poltergeist'
   gem 'cucumber-rails', require: false
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'spring-commands-cucumber'
   gem 'spring-commands-rspec'
   gem 'simplecov', require: false

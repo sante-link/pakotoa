@@ -4,8 +4,8 @@ class CertificateAuthoritiesControllerTest < ActionController::TestCase
   setup do
     load "#{Rails.root}/db/seeds.rb"
 
-    @certificate_authority = FactoryGirl.create(:certificate_authority)
-    @admin = FactoryGirl.create(:user, id: 1)
+    @certificate_authority = FactoryBot.create(:certificate_authority)
+    @admin = FactoryBot.create(:user, id: 1)
     sign_in(@admin)
   end
 

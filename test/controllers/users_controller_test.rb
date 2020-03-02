@@ -2,8 +2,8 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @certificate_authority = FactoryGirl.create(:certificate_authority)
-    @user = FactoryGirl.create(:user, id: 1)
+    @certificate_authority = FactoryBot.create(:certificate_authority)
+    @user = FactoryBot.create(:user, id: 1)
     @user.certificate_authorities << @certificate_authority
   end
 

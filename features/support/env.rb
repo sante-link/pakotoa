@@ -73,7 +73,7 @@ DatabaseCleaner.clean_with(:truncation)
 
 Capybara.ignore_hidden_elements = true
 
-World FactoryGirl::Syntax::Methods
+World FactoryBot::Syntax::Methods
 
 Before do
   load "#{Rails.root}/db/seeds.rb"

@@ -2,10 +2,10 @@ require 'test_helper'
 
 class CertificatesControllerTest < ActionController::TestCase
   setup do
-    @certificate_authority = FactoryGirl.create(:certificate_authority)
-    @certificate = FactoryGirl.create(:certificate, issuer: @certificate_authority)
+    @certificate_authority = FactoryBot.create(:certificate_authority)
+    @certificate = FactoryBot.create(:certificate, issuer: @certificate_authority)
 
-    @admin = FactoryGirl.create(:user, id: 1)
+    @admin = FactoryBot.create(:user, id: 1)
 
     sign_in(@admin)
   end
