@@ -1,7 +1,5 @@
 class CertificateAuthoritiesController < ApplicationController
 
-  respond_to :html
-
   load_and_authorize_resource :certificate_authority
 
   skip_load_resource :certificate_authority, only: :update

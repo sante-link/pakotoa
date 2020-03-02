@@ -7,6 +7,8 @@ class SubjectAttributesController < ApplicationController
   add_breadcrumb "policies.index.title", "policies_path"
   add_breadcrumb :policy_title, "policy_path(@policy)", except: :index
 
+  skip_before_action :verify_authenticity_token, only: [:sort]
+
   # GET /attributes
   def index
     @subject_attributes = @subject_attributes.order("position")
@@ -46,7 +48,6 @@ class SubjectAttributesController < ApplicationController
     params[:subject_attribute].each_with_index do |id, index|
       SubjectAttribute.update(id, position: index + 1)
     end
-    render nothing: true
   end
 
   private

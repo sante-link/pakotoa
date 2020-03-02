@@ -1,6 +1,4 @@
 class CertificatesController < ApplicationController
-  respond_to :html
-
   load_and_authorize_resource :certificate_authority
   load_and_authorize_resource :certificate, through: :certificate_authority
 

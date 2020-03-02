@@ -1,8 +1,6 @@
 class PoliciesController < ApplicationController
   load_and_authorize_resource :policy
 
-  respond_to :html
-
   def index
     respond_with @policies
   end
