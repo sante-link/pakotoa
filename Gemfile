@@ -40,10 +40,7 @@ gem 'cancancan'
 gem 'haml-rails'
 
 # Use omniauth to authenticate users against out OAuth2 provider
-gem 'omniauth'
-
-# Use our custom Medispo omniauth strategy
-# gem 'omniauth-medispo', git: 'ssh://git@dev.medispo.fr/sante-link/medispo/omniauth-medispo.git'
+# gem 'omniauth'
 
 gem 'acts_as_list'
 

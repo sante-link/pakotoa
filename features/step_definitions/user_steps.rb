@@ -1,7 +1,12 @@
 Étantdonné(/^un administrateur$/) do
-  OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(:medispo, { uid: 1, info: { email: 'user@example.com'}, extra: { raw_info: { roles: ['medispo_administrator'] } }})
-  visit user_omniauth_authorize_path(:medispo)
+  admin = create(:user)
+
+  visit '/users/sign_in'
+
+  fill_in 'Email', with: admin.email
+  fill_in 'Password', with: admin.password
+
+  click_on 'Log in'
 end
 
 Lorsqu(/^il visite la page des certificats de l'autorité de certification "([^"]*)"$/) do |subject|
