@@ -7,13 +7,14 @@ FactoryBot.define do
     end
 
     after(:build) do |certificate|
-      key = OpenSSL::PKey::RSA.new(1024)
+      key = OpenSSL::PKey::RSA.new(2048)
 
       cert = OpenSSL::X509::Certificate.new
       cert.version = 2
       cert.serial = Integer(certificate.serial, 16)
       cert.subject = OpenSSL::X509::Name.parse(certificate.subject)
       cert.issuer = cert.subject
+      cert.public_key = key.public_key
       cert.not_before = Time.now
       cert.not_after = Time.now + 1.hour
       ef = OpenSSL::X509::ExtensionFactory.new

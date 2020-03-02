@@ -6,7 +6,7 @@ FactoryBot.define do
     sequence(:subject) { |n| "/C=FR/O=Pakotoa/OU=Factory/CN=Test Certificate #{n}" }
 
     after(:build) do |certificate|
-      key = OpenSSL::PKey::RSA.new(1024)
+      key = OpenSSL::PKey::RSA.new(2048)
 
       cert = OpenSSL::X509::Certificate.new
       cert.version = 2
