@@ -1,5 +1,5 @@
 class Certificate < ActiveRecord::Base
-  belongs_to :issuer, class_name: 'CertificateAuthority'
+  belongs_to :issuer, class_name: 'CertificateAuthority', optional: true
 
   attr_accessor :method, :csr, :export_name
 

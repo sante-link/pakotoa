@@ -2,7 +2,7 @@ class CertificateAuthority < Certificate
   has_many :affiliations, dependent: :destroy
   has_many :users, through: :affiliations
   has_many :certificates, dependent: :destroy, foreign_key: "issuer_id"
-  belongs_to :policy
+  belongs_to :policy, optional: true
 
   validates :password, confirmation: true
 
