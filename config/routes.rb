@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   get 'api-docs' => 'docs#index'
 
-  use_doorkeeper
-
   resources :certificate_authorities do
     member do
       get :openssl_ca
@@ -42,8 +40,6 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'certificate_authorities#index'
 
-  mount Pakotoa::V10 => '/'
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -78,7 +74,7 @@ Rails.application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

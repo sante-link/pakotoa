@@ -16,8 +16,6 @@ module Pakotoa
       end
     end
 
-    doorkeeper_for :all, except: [ :'api-docs', :'api-docs/:name' ]
-
     desc 'Returns the API version', {
       http_codes: [
         [200, 'Success'],

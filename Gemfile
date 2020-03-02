@@ -53,15 +53,11 @@ gem 'simple_form'
 
 gem 'show_for'
 
-gem 'doorkeeper'
-
 gem 'exception_notification'
 
 gem 'grape'
 gem 'grape-swagger'
 gem 'swagger-ui_rails'
-
-gem 'grape-doorkeeper', github: 'fuCtor/grape-doorkeeper'
 
 # Webrick if buggy.
 gem 'thin', group: :development
