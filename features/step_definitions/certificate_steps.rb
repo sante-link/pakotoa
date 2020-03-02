@@ -5,5 +5,5 @@
 end
 
 Étantdonné(/^le certificat "([^"]*)" est révoqué$/) do |subject|
-  Certificate.find_by(subject: subject).update_attributes(revoked_at: Time.now)
+  Certificate.find_by(subject: subject).update(revoked_at: Time.now)
 end

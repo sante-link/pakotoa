@@ -18,7 +18,7 @@ class CertificateAuthority < Certificate
 
   def next_serial!
     serial = self.next_serial.try(:to_i)
-    update_attributes!(next_serial: (next_serial || 0) + 1)
+    update!(next_serial: (next_serial || 0) + 1)
     serial
   end
 
@@ -26,7 +26,7 @@ class CertificateAuthority < Certificate
     if self.password.blank? then
       write_attribute(:key, key.to_pem)
     else
-      cipher = OpenSSL::Cipher::Cipher.new("AES-128-CBC")
+      cipher = OpenSSL::Cipher.new("AES-128-CBC")
       write_attribute(:key, key.export(cipher, self.password))
     end
   end
@@ -156,7 +156,7 @@ class CertificateAuthority < Certificate
 
         next if issuer == ca # issue == nil for self-signed certificates
 
-        ca.update_attributes!(issuer: issuer)
+        ca.update!(issuer: issuer)
       end
     end
   end
