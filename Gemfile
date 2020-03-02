@@ -55,10 +55,6 @@ gem 'show_for'
 
 gem 'exception_notification'
 
-gem 'grape'
-gem 'grape-swagger'
-gem 'swagger-ui_rails'
-
 # Webrick if buggy.
 gem 'thin', group: :development
 
@@ -85,11 +81,6 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-end
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
 end
 
 group :test do

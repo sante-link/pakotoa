@@ -257,8 +257,6 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  API_KEYS = YAML::load_file("#{Rails.root}/config/api_keys.yml")[Rails.env]
-  config.omniauth :medispo, API_KEYS['medispo']['api_key'], API_KEYS['medispo']['api_secret'], API_KEYS['medispo']['options']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

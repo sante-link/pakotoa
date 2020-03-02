@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'api-docs' => 'docs#index'
 
   resources :certificate_authorities do
     member do

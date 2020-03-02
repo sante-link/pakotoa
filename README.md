@@ -16,7 +16,6 @@ A few files have to be created.  For each one, a *sample* file is available for
 further guidance:
 
 ```
-config/api_keys.yml
 config/database.yml
 ```
 
