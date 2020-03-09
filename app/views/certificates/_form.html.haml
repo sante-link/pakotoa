@@ -88,12 +88,15 @@
         = f.submit t(".save"), class: "btn btn-primary"
         = link_to t(".back"), @certificate.persisted? ? [@certificate_authority, @certificate] : certificate_authority_certificates_path(@certificate_authority), class: "btn btn-link"
 
-:coffeescript
-  $ ->
-    $(".nav-tabs a").on "shown.bs.tab", (e) ->
-      $("textarea:visible:enabled, input:visible:enabled").first().focus()
-    $(".nav-tabs a").click (e) ->
-      e.preventDefault()
-      $(this).tab('show')
-
+:javascript
+  $(()=>{
+    const elements = $(".nav-tabs a")
+    elements.on("shown.bs.tab", (e) => {
+      return $("textarea:visible:enabled, input:visible:enabled").first().focus();
+    });
+    return elements.click(function(e) {
+      e.preventDefault();
+      return $(this).tab('show');
+    });
+  })
 -# haml-lint:enable InstanceVariables, InlineStyles
