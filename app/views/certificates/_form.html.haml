@@ -1,8 +1,8 @@
 -# haml-lint:disable InstanceVariables, InlineStyles
 %ul.nav.nav-tabs
   %li.active= link_to "CSR", "#csr", data: { toggle: "nav" }
-  %li= link_to "SPKAC", "#spkac", data: { toggle: "nav" }
-  %li= link_to "Insecure", "#insecure", data: { toggle: "nav" }
+  %li.disabled= link_to "SPKAC", "#spkac", data: { toggle: "nav", disabled: true }
+  %li.disabled= link_to "Insecure", "#insecure", data: { toggle: "nav", disabled: true }
 
 .tab-content{ style: "padding: 15px; border: 1px solid #ddd; border-top: 0" }
   .tab-pane.active{ id: "csr" }
@@ -90,7 +90,7 @@
 
 :javascript
   $(()=>{
-    const elements = $(".nav-tabs a")
+    const elements = $(".nav-tabs a:not([data-disabled])")
     elements.on("shown.bs.tab", (e) => {
       return $("textarea:visible:enabled, input:visible:enabled").first().focus();
     });
