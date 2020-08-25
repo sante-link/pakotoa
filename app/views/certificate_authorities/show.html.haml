@@ -51,5 +51,8 @@
           - else
             .label.label-default= user.email
 
+    = link_to t(".download_pem"), certificate_authority_path(@certificate_authority, format: 'pem'), class: "btn btn-default btn-block"
+    = link_to t(".download_der"), certificate_authority_path(@certificate_authority, format: 'der'), class: "btn btn-default btn-block"
+    = link_to t(".download_crl"), certificate_authority_path(@certificate_authority, format: 'crl'), class: "btn btn-default btn-block"
     = link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-primary btn-block"
     = link_to t(".edit"), edit_certificate_authority_path(@certificate_authority), class: "btn btn-default btn-block"
