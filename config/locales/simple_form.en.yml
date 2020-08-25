@@ -29,6 +29,11 @@ en:
     # prompts:
     #   defaults:
     #     age: 'Select your age'
+    labels:
+      certificate_authority:
+        crl_ttl: CRL expiration date
     hints:
+      certificate_authority:
+        subject: /CN=example.com
       subject_attribute:
         description: Will be filled-in automatically if not specified.
