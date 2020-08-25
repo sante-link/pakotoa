@@ -113,6 +113,6 @@ class CertificateAuthoritiesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_authority_params
-      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password, :current_password, :policy_id, :export_root, :valid_until, :certify_for)
+      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password, :current_password, :policy_id, :export_root, :valid_until, :certify_for, :crl_ttl)
     end
 end
