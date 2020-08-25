@@ -16,6 +16,12 @@ class CertificateAuthoritiesController < ApplicationController
   # GET /certificate_authorities/1
   # GET /certificate_authorities/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.crl { render body: @certificate_authority.crl.to_pem }
+      format.der { render body: @certificate_authority.certificate.to_der }
+      format.pem { render body: @certificate_authority.certificate.to_pem }
+    end
   end
 
   # GET /certificate_authorities/1/openssl_req

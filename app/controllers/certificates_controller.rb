@@ -17,6 +17,11 @@ class CertificatesController < ApplicationController
 
   # GET /certificates/1
   def show
+    respond_to do |format|
+      format.html
+      format.der { render body: @certificate.certificate.to_der }
+      format.pem { render body: @certificate.certificate.to_pem }
+    end
   end
 
   # GET /certificates/new
