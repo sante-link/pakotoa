@@ -37,6 +37,10 @@
         = link_to @certificate_authority.policy.name, policy_path(@certificate_authority.policy)
       - else
         None
+    %p
+      %b CRL expiration date
+      %br
+      = @certificate_authority.crl_ttl
   .col-lg-4
     .panel.panel-default
       .panel-heading

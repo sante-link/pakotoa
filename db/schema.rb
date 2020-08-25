@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_102859) do
+ActiveRecord::Schema.define(version: 2020_08_25_182819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_102859) do
     t.string "export_root"
     t.datetime "revoked_at"
     t.string "certify_for", default: "2 years from now"
+    t.string "crl_ttl", default: "1 week from now"
     t.index ["issuer_id"], name: "index_certificates_on_issuer_id"
   end
 
