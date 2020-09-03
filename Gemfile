@@ -85,7 +85,7 @@ end
 group :test do
   # Rspec (use only "rspec-rails" once RSpec 4 is out.)
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: "master"
+    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: "main"
   end
   gem "database_cleaner"
   # Adds support for Capybara system testing and selenium driver
