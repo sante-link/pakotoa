@@ -32,7 +32,7 @@
       %pre= @certificate.certificate
 
   .col-lg-4
-    = link_to t(".download_pem"), certificate_authority_certificate_path(@certificate_authority, @certificate, format: 'pem'), class: "btn btn-default btn-block"
-    = link_to t(".download_der"), certificate_authority_certificate_path(@certificate_authority, @certificate, format: 'der'), class: "btn btn-default btn-block"
+    = link_to t(".download_pem"), certificate_authority_certificate_path(@certificate_authority, @certificate, format: "pem"), class: "btn btn-default btn-block"
+    = link_to t(".download_der"), certificate_authority_certificate_path(@certificate_authority, @certificate, format: "der"), class: "btn btn-default btn-block"
     - if @certificate.revoked_at.nil?
       = link_to t(".revoke"), revoke_certificate_authority_certificate_path(@certificate_authority, @certificate), method: :patch, data: { confirm: t(".confirm") }, class: "btn btn-warning btn-block"
