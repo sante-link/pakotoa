@@ -1,5 +1,6 @@
 exclude:
   - lib/templates/haml/**/*.haml
+  - vendor/**/*.haml
 
 linters:
   LineLength:
