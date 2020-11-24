@@ -64,6 +64,12 @@ class Certificate < ActiveRecord::Base
     write_attribute(:certificate, certificate.to_pem)
   end
 
+  def full_chain_pem
+    chain = ""
+    chain += issuer.full_chain_pem if issuer
+    chain + certificate.to_pem
+  end
+
   # OpenSSL subject is returned as a partially encoded UTF-8 string:
   #
   #     "/C=FR/O=Sant\\xC3\\xA9Link/O=..."

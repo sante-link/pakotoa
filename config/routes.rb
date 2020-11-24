@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     member do
       get :openssl_ca
       get :openssl_req
+      get :full_chain
     end
     resources :certificates do
       member do

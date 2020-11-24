@@ -24,6 +24,12 @@ class CertificateAuthoritiesController < ApplicationController
     end
   end
 
+  def full_chain
+    respond_to do |format|
+      format.pem { render body: @certificate_authority.full_chain_pem }
+    end
+  end
+
   # GET /certificate_authorities/1/openssl_req
   def openssl_req
     render layout: false
