@@ -19,6 +19,7 @@ en:
       back: Back
       commit: Commit
       creating_ca_title: Creating a Certification Authority
+      download_chain_pem: Download CA full chain (PEM)
       download_crl: Download Certificate Revocation List (PEM)
       download_der: Download CA certificate (DER)
       download_pem: Download CA certificate (PEM)

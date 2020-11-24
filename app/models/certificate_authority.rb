@@ -124,6 +124,12 @@ class CertificateAuthority < Certificate
     crl
   end
 
+  def full_chain_pem
+    chain = ""
+    chain += issuer.full_chain_pem if issuer
+    chain + certificate.to_pem
+  end
+
   def self.import(path)
     CertificateAuthority.transaction do
       logger.debug "Importing CA from #{path}"
