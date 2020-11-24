@@ -1,0 +1,42 @@
+name: Tests
+on:
+  - push
+  - pull_request
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Set up PostgreSQL
+        uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgresql user: test
+          postgresql password: password
+          postgresql db: pakotoa_test
+      - name: Node dependencies
+        run: |
+          npm install --global yarn
+          yarn install
+      - name: Rubocop
+        run: bundle exec rubocop
+      - name: Haml-lint
+        run: |
+          bundle exec haml-lint
+      - name: Prepare database
+        run: |
+          echo -e "test:\n  adapter: postgresql\n  url: postgres://test:password@localhost/pakotoa_test\n  encoding: unicode\n  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>" > config/database.yml
+          RAILS_ENV=test bundle exec rails db:setup
+      - name: RSpec
+        run: |
+          RAILS_ENV=test bundle exec rails spec
+      - name: Cucumber
+        run: |
+          RAILS_ENV=test bundle exec cucumber
