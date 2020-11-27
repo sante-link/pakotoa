@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.5"
+ruby "2.5.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.0.2", ">= 6.0.2.1"
@@ -67,6 +67,7 @@ gem "responders"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "rspec-rails"
   gem "rubocop"
   gem "rubocop-performance"
   gem "rubocop-rspec"
@@ -83,10 +84,6 @@ group :development do
 end
 
 group :test do
-  # Rspec (use only "rspec-rails" once RSpec 4 is out.)
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: "master"
-  end
   gem "database_cleaner"
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 2.15"

@@ -37,6 +37,10 @@
         = link_to @certificate_authority.policy.name, policy_path(@certificate_authority.policy)
       - else
         None
+    %p
+      %b CRL expiration date
+      %br
+      = @certificate_authority.crl_ttl
   .col-lg-4
     .panel.panel-default
       .panel-heading
@@ -51,5 +55,9 @@
           - else
             .label.label-default= user.email
 
+    = link_to t(".download_pem"), certificate_authority_path(@certificate_authority, format: "pem"), class: "btn btn-default btn-block"
+    = link_to t(".download_chain_pem"), full_chain_certificate_authority_path(@certificate_authority, format: "pem"), class: "btn btn-default btn-block"
+    = link_to t(".download_der"), certificate_authority_path(@certificate_authority, format: "der"), class: "btn btn-default btn-block"
+    = link_to t(".download_crl"), certificate_authority_path(@certificate_authority, format: "crl"), class: "btn btn-default btn-block"
     = link_to t(".manage_certificates"), certificate_authority_certificates_path(@certificate_authority), class: "btn btn-primary btn-block"
     = link_to t(".edit"), edit_certificate_authority_path(@certificate_authority), class: "btn btn-default btn-block"

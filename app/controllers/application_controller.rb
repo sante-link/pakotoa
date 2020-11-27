@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     else
       title = I18n.t(title)
     end
-    url = eval(url) if url =~ /_url|_path/
+    url = eval(url) if /_url|_path/.match?(url)
     @breadcrumb << [title, url]
   end
 

@@ -14,4 +14,6 @@ en:
       title: Create Certificate
     show:
       confirm: *confirm
+      download_der: Download certificate (DER)
+      download_pem: Download certificate (PEM)
       revoke: *revoke

@@ -112,7 +112,7 @@ class CertificateAuthority < Certificate
     crl.version = 0
     crl.issuer = certificate.subject
     crl.last_update = Time.now.utc
-    crl.next_update = Time.now.utc + 1.week # FIXME
+    crl.next_update = Chronic.parse(crl_ttl)
     certificates.where("revoked_at IS NOT NULL AND not_after > ?", Time.now).each do |cert|
       rev = OpenSSL::X509::Revoked.new
       rev.serial = cert.certificate.serial

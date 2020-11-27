@@ -16,6 +16,18 @@ class CertificateAuthoritiesController < ApplicationController
   # GET /certificate_authorities/1
   # GET /certificate_authorities/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.crl { render body: @certificate_authority.crl.to_pem }
+      format.der { render body: @certificate_authority.certificate.to_der }
+      format.pem { render body: @certificate_authority.certificate.to_pem }
+    end
+  end
+
+  def full_chain
+    respond_to do |format|
+      format.pem { render body: @certificate_authority.full_chain_pem }
+    end
   end
 
   # GET /certificate_authorities/1/openssl_req
@@ -113,6 +125,6 @@ class CertificateAuthoritiesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def certificate_authority_params
-      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password, :current_password, :policy_id, :export_root, :valid_until, :certify_for)
+      params.require(:certificate_authority).permit(:subject, :key_length, :password, :password_confirmation, :issuer_id, :issuer_password, :current_password, :policy_id, :export_root, :valid_until, :certify_for, :crl_ttl)
     end
 end
