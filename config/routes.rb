@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :certificate_authorities do
     member do
@@ -27,5 +29,5 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  root 'certificate_authorities#index'
+  root "certificate_authorities#index"
 end
